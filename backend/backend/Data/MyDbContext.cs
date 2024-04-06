@@ -9,8 +9,10 @@ namespace backend.Data
 
         #region DbSet
         public DbSet<HangHoa> HangHoas { get; set;}
-        public DbSet<DonHang> DonHang { get; set;}
+        public DbSet<DonHang> DonHangs { get; set;}
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set;}
+        public DbSet<Admin> Admins { get; set;}
+        public DbSet<User> Users { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +36,13 @@ namespace backend.Data
                 .WithMany(e => e.ChiTietDonHangs)
                 .HasForeignKey(e => e.MaHangHoa)
                 .HasConstraintName("FK_ChiTietDonHang_HangHoa");
+            });
+            modelBuilder.Entity<Admin>(e =>
+            {
+                e.ToTable("Admin");
+                e.HasKey(e => e.Id);
+                e.Property(e => e.Id)
+                .ValueGeneratedOnAdd();
             });
         }
     }

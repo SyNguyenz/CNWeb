@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ylT7KZbU7reS+qpNZ8jzepgv7e5MBN+JtEe7HGzdaV9bIhyxKBqmVdlsSvz7+YbOLNMQdx6BT8Vk5vvSAUHC1A==",
+  "dgSpecHash": "rJzXNz07HWnymaeceqC5cueFKrz9eTTkHJ9cINC3NV0kuvTVyUnMwMAe1Rj9D07Kb3c6DLXEFp1QTRs/CUQRxw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\nguye\\Source\\Repos\\CNWeb\\backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nguye\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\nguye\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
