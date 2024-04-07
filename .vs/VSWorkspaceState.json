@@ -3,8 +3,9 @@
     "",
     "\\backend",
     "\\backend\\backend",
-    "\\backend\\backend\\Controllers"
+    "\\backend\\backend\\Controllers",
+    "\\backend\\backend\\Data"
   ],
-  "SelectedNode": "\\backend\\backend.sln",
+  "SelectedNode": "\\backend\\backend\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

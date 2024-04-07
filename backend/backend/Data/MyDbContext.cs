@@ -43,6 +43,18 @@ namespace backend.Data
                 e.HasKey(e => e.Id);
                 e.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
+                e.HasIndex(e => e.Account).IsUnique();
+                e.Property(e => e.Password).IsRequired();
+            });
+            modelBuilder.Entity<User>(e =>
+            {
+                e.ToTable("Users");
+                e.HasKey(e => e.UserId);
+                e.Property(e => e.UserId)
+                .ValueGeneratedOnAdd();
+                e.HasIndex(e => e.PhoneNumber).IsUnique();
+                e.Property(e => e.UserName).IsRequired();
+                e.Property(e => e.Password).IsRequired();
             });
         }
     }

@@ -10,6 +10,7 @@ namespace backend.Data
         [Required]
         [Range(9,10)]
         public string PhoneNumber { get; set; }
+        public string Password { get; set; }
         public string DiaChi { get; set; }
     }
 }

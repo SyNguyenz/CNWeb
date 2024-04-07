@@ -135,3 +135,4 @@ C:\Users\nguye\source\repos\CNWeb\backend\backend\obj\Debug\net8.0\refint\backen
 C:\Users\nguye\source\repos\CNWeb\backend\backend\obj\Debug\net8.0\backend.pdb
 C:\Users\nguye\source\repos\CNWeb\backend\backend\obj\Debug\net8.0\backend.genruntimeconfig.cache
 C:\Users\nguye\source\repos\CNWeb\backend\backend\obj\Debug\net8.0\ref\backend.dll
+C:\Users\nguye\Source\Repos\CNWeb\backend\backend\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
