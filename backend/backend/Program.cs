@@ -18,7 +18,7 @@ var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
-    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    opt.TokenValidationParameters = new TokenValidationParameters
     {
         //tự cấp token
         ValidateIssuer = false,
