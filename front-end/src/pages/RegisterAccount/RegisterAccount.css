@@ -1,0 +1,31 @@
+.Register-Page{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(4, 247, 255);
+}
+.Register-form{
+    width: 520px;
+    padding: 48px;
+    background: white;
+    border: 1px solid black ;
+    border-radius: 1%;
+}
+.form-label{
+    width: 100%;
+}
+.form-control{
+    height: 40px;
+    display: block;
+    width: 100%;
+    padding: 6px 12px;
+}
+.submit-btn{
+    height: 40px;
+    width: 120px;
+    cursor: pointer;
+}
+.mb-2{
+    margin-bottom: 20px;
+}
