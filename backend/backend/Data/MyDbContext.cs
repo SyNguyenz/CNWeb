@@ -8,6 +8,7 @@ namespace backend.Data
 
 
         #region DbSet
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<HangHoa> HangHoas { get; set;}
         public DbSet<DonHang> DonHangs { get; set;}
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set;}
