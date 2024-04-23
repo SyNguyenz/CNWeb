@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Button, Modal, Space, Table, message } from "antd";
-import { PlusCircleFilled } from "@ant-design/icons";
+import {
+  PlusCircleFilled,
+  DeleteFilled,
+  ExclamationCircleFilled,
+} from "@ant-design/icons";
 import AddProduct from "../AddProduct/AddProduct";
+import ProductDetails from "./ProductDetails";
+import "./AdminProduct.css";
 const data = [
   {
     key: "1",
@@ -143,6 +149,19 @@ const data = [
 const AdminProduct = () => {
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+  const [products, setProducts] = useState(data);
+
+  const [modalChild, setModalChild] = useState(null);
+
+  const deleteProduct = (record) => {
+    // Thực hiện xóa sản phẩm
+
+    const updatedProducts = products.filter(
+      (product) => product.key !== record.key
+    ); // Lọc ra các sản phẩm khác với sản phẩm cần xóa
+    setProducts(updatedProducts);
+    message.success(`Đã xóa sản phẩm: ${record.tenHangHoa}`);
+  };
   const handleChange = (pagination, filters, sorter) => {
     console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
@@ -161,15 +180,26 @@ const AdminProduct = () => {
       columnKey: "age",
     });
   };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
+
+  const showAddProduct = () => {
+    setModalChild(<AddProduct onClose={() => setModalChild(null)} />);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
+
+  const showProductDetails = (product) => {
+    setModalChild(<ProductDetails product={product} onClose={() => setModalChild(null)} />);
+  }
+
+  const { confirm } = Modal;
+  const showDeleteConfirm = (product) => {
+    confirm({
+      title: `Xác nhận xóa sản phẩm ${product.tenHangHoa}!`,
+      icon: <ExclamationCircleFilled />,
+      content: `Mã sản phẩm: ${product.maHangHoa}`,
+      onOk() {
+        deleteProduct(product);
+      },
+      onCancel() {},
+    });
   };
   const addProduct = () => {};
   const columns = [
@@ -225,9 +255,26 @@ const AdminProduct = () => {
       key: "rating",
       ellipsis: true,
     },
+    {
+      width: 62,
+      render: (_, record) => (
+        <Button
+          className="deleteButton"
+          type="text"
+          size="small"
+          shape="circle"
+          danger
+          icon={<DeleteFilled />}
+          onClick={(e) => {
+            e.stopPropagation();
+            showDeleteConfirm(record);
+          }}
+        />
+      ),
+    },
   ];
   return (
-    <>
+    <div style={{paddingLeft: 8}}>
       <Space
         style={{
           marginBottom: 16,
@@ -236,35 +283,29 @@ const AdminProduct = () => {
         <Button onClick={setAgeSort}>Sort age</Button>
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={showAddProduct}>
           <PlusCircleFilled />
           Thêm sản phẩm
         </Button>
-        <Modal
-          title="Thêm sản phẩm"
-          centered
-          open={isModalOpen}
-          // onOk={handleOk}
-          onCancel={handleCancel}
-          maskClosable={false}
-          footer={null}
-          destroyOnClose={true}
-        >
-          <AddProduct onClose={handleCancel} />
-        </Modal>
       </Space>
+      <Modal
+        title={false}
+        centered
+        open={modalChild !== null}
+        onCancel={() => setModalChild(null)}
+        maskClosable={false}
+        footer={null}
+        destroyOnClose={true}
+        width="auto"
+      >
+        {modalChild}
+      </Modal>
       <Table
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
+              showProductDetails(record);
               message.info(`Click on row: ${record.tenHangHoa}`);
-            },
-            onDoubleClick: () => {
-              message.info(`Double click on row: ${record.tenHangHoa}`);
-            },
-            onContextMenu: (event) => {
-              event.preventDefault(); // Prevent the browser context menu
-              message.info(`Right click on row: ${record.tenHangHoa}`);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
@@ -275,10 +316,10 @@ const AdminProduct = () => {
           };
         }}
         columns={columns}
-        dataSource={data}
+        dataSource={products}
         onChange={handleChange}
       />
-    </>
+    </div>
   );
 };
 export default AdminProduct;
