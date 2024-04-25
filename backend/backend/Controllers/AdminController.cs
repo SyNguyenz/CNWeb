@@ -14,10 +14,23 @@ namespace backend.Controllers
             _context = context;
         }
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int? id)
         {
-            return Ok(_context.Admins);
+            if (id.HasValue)
+            {
+                var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
+                if (admin == null)
+                {
+                    return NotFound();
+                }
+                return Ok(admin);
+            }
+            else
+            {
+                return Ok(_context.Admins);
+            }
         }
+
         [HttpPost]
         public IActionResult Post([FromBody] Admin a)
         {
@@ -39,5 +52,40 @@ namespace backend.Controllers
             // Return the created Admin object if needed
             return Ok(_context.Admins);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateAdmin(int id, [FromBody] Admin a)
+        {
+            var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
+            if(admin == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                admin.Name = a.Name;
+                admin.Account = a.Account;
+                admin.Password = a.Password;
+                _context.SaveChanges();
+                return Ok(admin);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAdmin(int id)
+        {
+            var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
+            if (admin == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _context.Admins.Remove(admin);
+                _context.SaveChanges(); 
+                return Ok(admin);
+            }
+        }
+
     }
 }

@@ -13,6 +13,9 @@ namespace backend.Data
         [MaxLength(100)]
         public string TenHangHoa { get; set; }
 
+        [Required]
+        public string LoaiHangHoa { get; set; }
+
         public string ThongTin { get; set; }
 
         [Range(0, double.MaxValue)]

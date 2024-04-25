@@ -1,7 +1,24 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\controllers\\ordercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\data\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\data\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -18,6 +35,58 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\UserController.cs",
+              "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\UserController.cs",
+              "RelativeToolTip": "backend\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAAYBAAAAAAAAAAAwwBgBAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T14:36:12.084Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrderController.cs",
+              "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\OrderController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\OrderController.cs",
+              "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\OrderController.cs",
+              "RelativeToolTip": "backend\\Controllers\\OrderController.cs",
+              "ViewState": "AQIAADsAAAAAAAAAAAAgwDYAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T14:36:11.19Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Data\\Admin.cs",
+              "RelativeDocumentMoniker": "backend\\Data\\Admin.cs",
+              "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Data\\Admin.cs",
+              "RelativeToolTip": "backend\\Data\\Admin.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T14:30:43.348Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "backend\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "backend\\Controllers\\AdminController.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAswFUAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-25T14:30:14.292Z",
+              "EditorCaption": ""
             }
           ]
         },
