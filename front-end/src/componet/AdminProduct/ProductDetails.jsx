@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Card,
-  Carousel,
   Col,
   ConfigProvider,
   Image,
@@ -12,16 +10,9 @@ import {
   Typography,
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";
+import EditProduct from "./EditProduct";
 const { Paragraph } = Typography;
 
-const images = [
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d70au72d",
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d71pen39",
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d733z3dd",
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d74ijjfb",
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d75x3z16",
-  "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd2lk76ilzz7c",
-];
 const CustomRow = ({ label, value }) => (
   <Row gutter={[16, 16]}>
     <Col span={8} style={{ fontSize: 16, color: "#929292" }}>
@@ -36,15 +27,12 @@ const formatPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
-const ProductDetails = ({ product }) => {
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+const ProductDetails = ({ product, setModalChild }) => {
+  const images = product.img;
+  const [selectedImage, setSelectedImage] = useState(images && images.length > 0 ? images[0] : null);
 
-  const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl);
-  };
   return (
     <div style={{ width: 1000, }}>
-      {/* <h2 style={{ marginTop: 0 }}>Chi tiết sản phẩm</h2> */}
       <Row gutter={16}>
         <Col flex="0 0 400px">
           <Row justify="start">
@@ -179,7 +167,9 @@ const ProductDetails = ({ product }) => {
         </Col>
       </Row>
       <Row justify="end">
-        <Button type="primary" icon={<EditOutlined />}>
+        <Button type="primary" icon={<EditOutlined />} onClick={() => {
+          console.log("gg");
+          setModalChild(<EditProduct product={product} setModalChild={setModalChild}/>)}}>
           Chỉnh sửa
         </Button>
       </Row>

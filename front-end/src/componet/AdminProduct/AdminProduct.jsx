@@ -17,6 +17,7 @@ const data = [
     giamGia: 0.1, // Giảm giá 10%
     soLuongTon: 100,
     rating: 4.8,
+    img: []
   },
   {
     key: "2",
@@ -26,6 +27,7 @@ const data = [
     giamGia: 0.15, // Giảm giá 15%
     soLuongTon: 50,
     rating: 4.7,
+    img: []
   },
   {
     key: "3",
@@ -35,6 +37,14 @@ const data = [
     giamGia: 0.05, // Giảm giá 5%
     soLuongTon: 200,
     rating: 4.9,
+    img: [
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d70au72d",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d71pen39",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d733z3dd",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d74ijjfb",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d75x3z16",
+      "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd2lk76ilzz7c"
+    ]
   },
   {
     key: "4",
@@ -44,6 +54,7 @@ const data = [
     giamGia: 0.12, // Giảm giá 12%
     soLuongTon: 80,
     rating: 4.5,
+    img: []
   },
   {
     key: "5",
@@ -53,6 +64,7 @@ const data = [
     giamGia: 0.08, // Giảm giá 8%
     soLuongTon: 60,
     rating: 4.7,
+    img: []
   },
   {
     key: "6",
@@ -62,6 +74,7 @@ const data = [
     giamGia: 0.0, // Không giảm giá
     soLuongTon: 300,
     rating: 4.8,
+    img: []
   },
   {
     key: "7",
@@ -71,6 +84,7 @@ const data = [
     giamGia: 0.1, // Giảm giá 10%
     soLuongTon: 120,
     rating: 4.6,
+    img: []
   },
   {
     key: "8",
@@ -80,6 +94,7 @@ const data = [
     giamGia: 0.0, // Không giảm giá
     soLuongTon: 180,
     rating: 4.9,
+    img: []
   },
   {
     key: "9",
@@ -89,6 +104,7 @@ const data = [
     giamGia: 0.05, // Giảm giá 5%
     soLuongTon: 90,
     rating: 4.8,
+    img: []
   },
   {
     key: "10",
@@ -98,6 +114,7 @@ const data = [
     giamGia: 0.1, // Giảm giá 10%
     soLuongTon: 150,
     rating: 4.7,
+    img: []
   },
   {
     key: "11",
@@ -107,6 +124,7 @@ const data = [
     giamGia: 0.0, // Không giảm giá
     soLuongTon: 70,
     rating: 4.5,
+    img: []
   },
   {
     key: "12",
@@ -116,6 +134,7 @@ const data = [
     giamGia: 0.0, // Không giảm giá
     soLuongTon: 200,
     rating: 4.8,
+    img: []
   },
   {
     key: "13",
@@ -125,6 +144,7 @@ const data = [
     giamGia: 0.15, // Giảm giá 15%
     soLuongTon: 40,
     rating: 4.6,
+    img: []
   },
   {
     key: "14",
@@ -134,6 +154,7 @@ const data = [
     giamGia: 0.0, // Không giảm giá
     soLuongTon: 100,
     rating: 4.7,
+    img: []
   },
   {
     key: "15",
@@ -143,8 +164,10 @@ const data = [
     giamGia: 0.1, // Giảm giá 10%
     soLuongTon: 150,
     rating: 4.6,
+    img: []
   },
 ];
+
 
 const AdminProduct = () => {
   const [filteredInfo, setFilteredInfo] = useState({});
@@ -181,13 +204,6 @@ const AdminProduct = () => {
     });
   };
 
-  const showAddProduct = () => {
-    setModalChild(<AddProduct onClose={() => setModalChild(null)} />);
-  };
-
-  const showProductDetails = (product) => {
-    setModalChild(<ProductDetails product={product} onClose={() => setModalChild(null)} />);
-  }
 
   const { confirm } = Modal;
   const showDeleteConfirm = (product) => {
@@ -283,11 +299,12 @@ const AdminProduct = () => {
         <Button onClick={setAgeSort}>Sort age</Button>
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
-        <Button type="primary" onClick={showAddProduct}>
+        <Button type="primary" onClick={()=>setModalChild(<AddProduct setModalChild={setModalChild} />)}>
           <PlusCircleFilled />
           Thêm sản phẩm
         </Button>
       </Space>
+
       <Modal
         title={false}
         centered
@@ -304,8 +321,8 @@ const AdminProduct = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              showProductDetails(record);
-              message.info(`Click on row: ${record.tenHangHoa}`);
+              console.log(record);
+              setModalChild(<ProductDetails product={record} setModalChild={setModalChild} />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
