@@ -1,0 +1,197 @@
+/* Reset CSS */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+   
+}
+
+/* Header */
+.header {
+    width: 100%;
+    height: 80px;
+    background: #2c7826;
+    position: sticky;
+    top: 0;
+    z-index: 10000;
+}
+
+.menu {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    justify-content: flex-start;
+}
+
+
+.logo {
+  align-items: center;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
+  line-height: 1.5;
+  position: relative;
+}
+
+.logo img {
+  height: 46px;
+  padding: 5px;
+}
+  
+
+.menu-list {
+    display: flex;
+    justify-content: space-between;
+    
+}
+.menu-list1 {
+    background: hsla(0, 0%, 100%, .2);
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
+
+
+.about-contact {
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  width: 100px;
+  padding: 5px 5px;
+  position: relative;
+  text-decoration: none !important;
+}
+.about-delivery-tracking {
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  width: 100px;
+  padding: 5px 5px;
+  position: relative;
+  text-decoration: none !important;
+}
+.shop-cart {
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  height: 50px;
+  width: 100px;
+  padding: 5px 5px;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.box-content {
+  color: #fff;
+  font-size: 14px;
+  line-height: 2.0;
+}
+.box-content .title {
+  line-height: 1;
+  width: 100px;
+}
+.my-icon {
+  position: relative;
+  top: 2px;
+  color: white;
+  padding: 2px;
+}
+
+.fa-h-24px {
+  height: 24px;
+}
+.count {
+  align-items: center;
+  bottom: 15%;
+  color: green;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  height: 20px;
+  justify-content: center;
+  left: 8%;
+  position: absolute;
+  width: 20px;
+}
+
+.header-item.about-member {
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  height: px;
+  width: 100px;
+  padding: 5px 5px;
+  position: relative;
+  text-decoration: none !important;
+  background: hsla(0, 0%, 100%, .2);
+}
+
+/* PC */
+
+@media only screen and (min-width: 1200px) {
+    .menu {
+        max-width: auto;
+        padding: 0 10px;
+        width: 100% !important;
+    }
+    .search input{
+      width: 300px;
+    }
+}
+/* Tablet */
+@media only screen and (max-width: 1199px) and (min-width: 740px ) {
+    .search input {
+        width: 250px;
+    }
+
+    .about-delivery-tracking {
+        display: none;
+    }
+    .about-contact{
+      display: none;
+    }
+    .about-name{
+      display: none;
+    }
+    .menu{
+      gap: 20px;
+    }
+}
+
+/* Mobile*/
+
+@media screen and (max-width: 739px) {
+   .search input {
+        width: 220px;
+    }
+
+    .about-delivery-tracking {
+        display: none;
+    }
+    .about-contact{
+      display: none;
+    }
+    .about-name{
+      display: none;
+    }
+    .menu-list1{
+      display: none;
+    }
+    
+    .header-item.about-member{
+      display: none;
+    }
+}
