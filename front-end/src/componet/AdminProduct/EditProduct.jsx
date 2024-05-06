@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, InputNumber, Form, Space } from "antd";
+import { Button, Input, InputNumber, Form, Space, message } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { Image, Upload } from "antd";
 import ProductDetails from "./ProductDetails";
+import { updateProduct } from "./API";
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const EditProduct = ({ product, setModalChild }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -21,13 +30,15 @@ const EditProduct = ({ product, setModalChild }) => {
         soLuongTon: product.soLuongTon,
         image: product.img,
       });
-      console.log(product);
-      setFileList(product.img.map(url => ({ url })));
+      setFileList(product.img.map((url) => ({ url })));
     }
   }, [product, form]);
 
   const handlePreview = async (file) => {
-    setPreviewImage(`http://localhost:8080${file.url}`);
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
   };
 
@@ -42,9 +53,28 @@ const EditProduct = ({ product, setModalChild }) => {
     // setFileList([]);
   };
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    setModalChild(null);
+  const onFinish = async (values) => {
+    try {
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => {
+        if (key !== "image") {
+          formData.append(key, values[key]);
+        }
+      });
+
+      fileList.forEach((file) => {
+        if (file.originFileObj) {
+          formData.append("img", file.originFileObj);
+        }
+      });
+
+      await updateProduct(formData);
+
+      message.success("Sản phẩm đã được cập nhật thành công");
+      setModalChild(null);
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -72,7 +102,7 @@ const EditProduct = ({ product, setModalChild }) => {
 
   return (
     <div style={{ width: 600 }}>
-      <h2 style={{ marginTop: 0 }}>Chỉnh sửa Sản Phẩm</h2>
+      <h2 style={{ marginTop: 0 }}>Chỉnh sửa</h2>
       <Form
         form={form}
         name="editProduct"
@@ -136,6 +166,7 @@ const EditProduct = ({ product, setModalChild }) => {
             onPreview={handlePreview}
             onChange={handleChange}
             onRemove={handleRemove}
+            beforeUpload={() => false}
           >
             {fileList.length >= 8 ? null : uploadButton}
           </Upload>

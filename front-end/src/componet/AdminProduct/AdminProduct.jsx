@@ -9,7 +9,6 @@ import {
 import Highlighter from 'react-highlight-words';
 import AddProduct from "./AddProduct";
 import ProductDetails from "./ProductDetails";
-import "./AdminProduct.css";
 import data from "./demoData";
 
 const AdminProduct = () => {
@@ -170,12 +169,12 @@ const AdminProduct = () => {
       sorter: (a, b) => a.gia - b.gia,
       sortDirections: ['descend', 'ascend'],
     },
-    {
-      title: "Giảm giá",
-      dataIndex: "giamGia",
-      key: "giamGia",
-      ellipsis: true,
-    },
+    // {
+    //   title: "Giảm giá",
+    //   dataIndex: "giamGia",
+    //   key: "giamGia",
+    //   ellipsis: true,
+    // },
     {
       title: "Số lượng",
       dataIndex: "soLuongTon",

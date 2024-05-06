@@ -5,181 +5,306 @@ import {
   Input,
   InputNumber,
   Space,
+  Row,
+  Col,
+  Divider,
+  message,
+  Upload,
+  Image,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { Image, Upload } from "antd";
+import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
+import { addProduct } from "./API";
+
+const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const AddProduct = ({ setModalChild }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState([]);
+  const [variants, setVariants] = useState([]);
 
   const handlePreview = async (file) => {
-    setPreviewImage(`http://localhost:8080${file.url}`);
-    setPreviewOpen(true);
-  };
-
-  const handleChange = ({ fileList: newFileList, file: newFile }) => {
-    if (newFile.response) {
-      newFile.url = newFile.response.url;
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
     }
-    setFileList(newFileList);
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    console.log(variants);
   };
 
-  const handleRemove = () => {};
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    setModalChild(null);
-  };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+  const addVariant = () => {
+    setVariants([
+      ...variants,
+      { key: Date.now(), color: "", quantity: "", sale: "", image: [] },
+    ]);
+  };
+
+  const removeVariant = (key) => {
+    setVariants(variants.filter((variant) => variant.key !== key));
+  };
+
+  const handleVariantChange = (key, field, value) => {
+    setVariants(
+      variants.map((variant) =>
+        variant.key === key ? { ...variant, [field]: value } : variant
+      )
+    );
+  };
+
+  const handleVariantImageChange = (
+    key,
+    { fileList: newFileList, file: newFile }
+  ) => {
+    setVariants(
+      variants.map((variant) =>
+        variant.key === key ? { ...variant, image: newFileList } : variant
+      )
+    );
+  };
+  const handleVariantImageRemove = (key, file) => {
+    setVariants(
+      variants.map((variant) =>
+        variant.key === key ? { ...variant, image: [] } : variant
+      )
+    );
+  };
+
+  const onFinish = async (values) => {
+    try {
+        const formData = new FormData();
+      
+      const data = {
+        maHangHoa: values.maHangHoa,
+        tenHangHoa: values.tenHangHoa,
+        thongTin: values.thongTin,
+        thongSo: values.thongSo,
+        gia: values.gia,
+        variants: [],
+      };
+      var images = [];
+      // Lặp qua mảng variants và thêm dữ liệu của mỗi phần tử vào mảng variants của đối tượng data
+      variants.forEach((variant, index) => {
+        if (variant.image[0].url) {
+          data.variants.push({
+            color: variant.color,
+            quantity: variant.quantity,
+            sale: variant.sale,
+            image: variant.image[0].url,
+          });
+        } else {
+          data.variants.push({
+            color: variant.color,
+            quantity: variant.quantity,
+            sale: variant.sale,
+            image: null,
+          });
+          images.push(variant.image[0].originFileObj);
+        }
+      });
+      for (var i =0; i< images.length; i++) {
+        formData.append('images', images[i]);
+      }
+      var jsonObject = JSON.stringify(data);
+      formData.append('jsonObject', jsonObject);
+
+      await addProduct(formData);
+      message.success("Sản phẩm được cập nhật thành công!");
+      setModalChild(null);
+    } catch (e) {
+      message.error(e.message);
+    }
+  };
+
   const uploadButton = (
-    <button
-      style={{
-        border: 0,
-        background: "none",
-      }}
-      type="button"
-    >
-      <PlusOutlined />
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </button>
+    <Button icon={<PlusOutlined />} style={{ border: 0, background: "none" }} />
   );
 
   return (
-    <div style={{ width: 600 }}>
+    <div style={{ width: 1200 }}>
       <h2 style={{ marginTop: 0 }}>Thêm Sản Phẩm</h2>
       <Form
-        preserve={false}
         name="themSanPham"
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 20,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
-        initialValues={{
-          remember: true,
-        }}
+        labelCol={{ span: 4 }}
+        wrapperCol={{ span: 20 }}
+        initialValues={{ remember: true }}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Mã"
-          name="maHangHoa"
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập mã sản phẩm!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              label="Mã"
+              name="maHangHoa"
+              rules={[{ required: true, message: "Hãy nhập mã sản phẩm!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Tên"
+              name="tenHangHoa"
+              rules={[{ required: true, message: "Hãy nhập tên sản phẩm!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Thông tin"
+              name="thongTin"
+              rules={[
+                { required: true, message: "Hãy nhập thông tin sản phẩm!" },
+              ]}
+            >
+              <Input.TextArea rows={4} />
+            </Form.Item>
+            <Form.Item
+              label="Thông số"
+              name="thongSo"
+              rules={[
+                { required: true, message: "Hãy nhập thông số sản phẩm!" },
+              ]}
+            >
+              <Input.TextArea rows={4} />
+            </Form.Item>
+            <Form.Item
+              label="Giá"
+              name="gia"
+              wrapperCol={{ span: 12 }}
+              rules={[{ required: true, message: "Hãy nhập giá sản phẩm!" }]}
+            >
+              <InputNumber
+                min={0}
+                addonAfter="₫"
+                formatter={(value) =>
+                  `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12} style={{ paddingLeft: 10 }}>
+            <h3 style={{ margin: 0 }}>Biến thể</h3>
+            {variants.map((variant) => (
+              <div key={variant.key} style={{ marginBottom: 8 }}>
+                <Divider style={{ margin: 10 }} />
+                <Row>
+                  <Col span={12}>
+                    <Form.Item
+                      label="Màu sắc"
+                      labelCol={{ span: 8 }}
+                      wrapperCol={{ span: 16 }}
+                      rules={[{ required: true, message: "Hãy nhập màu sắc!" }]}
+                    >
+                      <Input
+                        placeholder="Màu sắc"
+                        value={variant.color}
+                        onChange={(e) =>
+                          handleVariantChange(
+                            variant.key,
+                            "color",
+                            e.target.value
+                          )
+                        }
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      label="Số lượng"
+                      labelCol={{ span: 8 }}
+                      rules={[
+                        { required: true, message: "Hãy nhập số lượng!" },
+                      ]}
+                    >
+                      <InputNumber
+                        min={0}
+                        value={variant.quantity}
+                        onChange={(value) =>
+                          handleVariantChange(variant.key, "quantity", value)
+                        }
+                      />
+                    </Form.Item>
+                    <Form.Item
+                      label="Giảm giá"
+                      labelCol={{ span: 8 }}
+                      style={{ marginBottom: 0 }}
+                    >
+                      <InputNumber
+                        min={0}
+                        addonAfter="%"
+                        value={variant.sale}
+                        onChange={(value) =>
+                          handleVariantChange(variant.key, "sale", value)
+                        }
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={10}>
+                    <Form.Item label="Hình ảnh" labelCol={{ span: 8 }}>
+                      <Upload
+                        listType="picture-card"
+                        fileList={variant.image}
+                        onPreview={handlePreview}
+                        onChange={(info) =>
+                          handleVariantImageChange(variant.key, info)
+                        }
+                        onRemove={(file) =>
+                          handleVariantImageRemove(variant.key, file)
+                        }
+                        beforeUpload={() => false}
+                        maxCount={1}
+                      >
+                        {!variant.image.length ? uploadButton : null}
+                      </Upload>
+                    </Form.Item>
+                  </Col>
+                  <Col
+                    span={2}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <Button
+                      type="dashed"
+                      onClick={() => removeVariant(variant.key)}
+                      icon={<MinusCircleOutlined />}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            ))}
 
-        <Form.Item
-          label="Tên"
-          name="tenHangHoa"
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập tên sản phẩm!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Thông tin"
-          name="thongTin"
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập thông tin sản phẩm!",
-            },
-          ]}
-        >
-          <Input.TextArea rows={4} />
-        </Form.Item>
-
-        <Form.Item
-          label="Giá"
-          name="gia"
-          wrapperCol={{ span: 12 }}
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập giá sản phẩm!",
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Giảm giá" name="giamGia" wrapperCol={{ span: 12 }}>
-          <Input />
-        </Form.Item>
-
-        <Form.Item label="Số lượng" name="soLuongTon">
-          <InputNumber
-            min={0}
-            formatter={(value) => `${value}`.replace(/[^0-9]/g, "")} // Loại bỏ các ký tự không phải số
+            <Button
+              type="dashed"
+              onClick={addVariant}
+              icon={<PlusOutlined />}
+              style={{ width: "100%", marginBottom: 20 }}
+            >
+              Thêm biến thể
+            </Button>
+          </Col>
+        </Row>
+        {previewImage && (
+          <Image
+            wrapperStyle={{ display: "none" }}
+            preview={{
+              visible: previewOpen,
+              onVisibleChange: (visible) => setPreviewOpen(visible),
+            }}
+            src={previewImage}
           />
-        </Form.Item>
-        <Form.Item label="Hình ảnh" name="image">
-          <Upload
-            action="http://localhost:8080/api/upload"
-            listType="picture-card"
-            fileList={fileList}
-            onPreview={handlePreview}
-            onChange={handleChange}
-            onRemove={handleRemove}
-          >
-            {fileList.length >= 8 ? null : uploadButton}
-          </Upload>
-          {previewImage && (
-            <Image
-              wrapperStyle={{
-                display: "none",
-              }}
-              preview={{
-                visible: previewOpen,
-                onVisibleChange: (visible) => setPreviewOpen(visible),
-                afterOpenChange: (visible) => !visible && setPreviewImage(""),
-              }}
-              src={previewImage}
-            />
-          )}
-        </Form.Item>
-
+        )}
         <Form.Item
-          style={{
-            margin: 0,
-          }}
           wrapperCol={{
-            offset: 18,
-            span: 4,
+            offset: 21,
+            span: 3,
           }}
         >
           <Space>
-            <Button
-              type="primary"
-              htmlType="submit"
-              style={{ marginRight: 10 }}
-            >
+            <Button type="primary" htmlType="submit">
               OK
             </Button>
             <Button type="default" onClick={() => setModalChild(null)}>
@@ -191,4 +316,5 @@ const AddProduct = ({ setModalChild }) => {
     </div>
   );
 };
+
 export default AddProduct;
