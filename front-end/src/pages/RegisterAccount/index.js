@@ -3,24 +3,24 @@ import { useState } from "react";
 import "./RegisterAccount.css";
 
 export default function RegisterPage(){
-    const [email,setEmail] = useState("");
+    const [phonenumber,setPhonenumber] = useState("");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [rePassword,setRePassword] = useState("");
     const [errors,setErrors] = useState("");
 
-    const validateEmail = (email) => {
-        return /\S+@\S+\.\S+/.test(email);//kiểm tra email hợp lệ
+    const validatePhonenumber = (phonenumber) => {
+        return /\S+@\S+\.\S+/.test(phonenumber);//kiểm tra phonenumber hợp lệ
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         const errors = {};
-        if (!email) {
-            errors.email = "Hãy nhập email!";
-        } else if (!validateEmail(email)) {
-            errors.email = "Email không hợp lệ!";
+        if (!phonenumber) {
+            errors.phonenumber = "Hãy nhập số điện thoại!";
+        } else if (!validatePhonenumber(phonenumber)) {
+            errors.phonenumber = "Số điện thoại không hợp lệ!";
         }
         if (!username) {
             errors.username = "Hãy tạo tên người dùng!";
@@ -35,9 +35,9 @@ export default function RegisterPage(){
             errors.rePassword = "Hãy xác nhận lại mật khẩu!"
         }
         
-        const user = await checkUserExists(email);
+        const user = await checkUserExists(phonenumber);
         if (user) {
-            errors.email = "Email đã được sử dụng!";
+            errors.phonenumber = "Số điện thoại đã được sử dụng!";
         }
 
         setErrors(errors);
@@ -47,25 +47,24 @@ export default function RegisterPage(){
             // Tạo user mới và thêm vào database
             // Sửa phần dưới đây
             const newUser = {
-                email: email,
-                username: username,
-                password: password
+                Phonenumber: phonenumber,
+                UserName: username,
+                Password: password
             };
-            // tạo user mới 
-            
+            const savedUser = await newUser.save(); // Lưu người dùng vào cơ sở dữ liệu
+            console.log('Người dùng đã được thêm vào cơ sở dữ liệu:', savedUser);
         }
-    
     };
 
     //Lấy dữ liệu từ database
     //Sửa hàm này để lấy dữ liệu người dùng từ database
-    const checkUserExists = async (email) => {
+    const checkUserExists = async (phonenumber) => {
 
         const sampleUser = {
-            email: "example@example.com",
+            Phonenumber: "0434335464",
             password: "password123"
         };
-        if (email === sampleUser.email) {
+        if (phonenumber === sampleUser.Phonenumber) {
             return sampleUser;
         } else {
             return null;
@@ -81,11 +80,11 @@ export default function RegisterPage(){
                 <form  onSubmit={handleSubmit}>
                     <div class="input-container">
                         <div>
-                            <label for="email">Email</label>
-                            <input type="text" id="email"onChange={(e) => setEmail(e.target.value)}/>
+                            <label for="phonenumber">Số điện thoại</label>
+                            <input type="text" id="phonenumber"onChange={(e) => setPhonenumber(e.target.value)}/>
                             
                         </div>
-                        {errors.email && <div className="error">{errors.email}</div>}
+                        {errors.phonenumber && <div className="error">{errors.phonenumber}</div>}
                     </div>
                     
                     <div class="input-container">

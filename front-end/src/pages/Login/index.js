@@ -3,33 +3,29 @@ import "./Login.css";
 import { useState } from "react";
 
 export default function LoginPage(){
-    const [email, setEmail]=useState("");
+    const [phonenumber, setPhonenumber]=useState("");
     const [password, setPassword]=useState("");
     const [errors, setErrors]=useState("");
 
-    const validateEmail = (email)   => {
-        return /\S+@\S+\.\S+/.test(email);
-    };
-    
     const handleSubmit =async (event) => {
         event.preventDefault();
 
         const errors = {};
 
         //Kiểm tra định dạng các trường dữ liệu nhập vào
-        if (!email) {
-            errors.email = "Hãy nhập email!";
-        } else if(!validateEmail(email)) {
-            errors.email = "Hãy nhập email!";
+        if (!phonenumber) {
+            errors.phonenumber = "Hãy nhập số điện thoại";
+        } else if(phonenumber.length!==10) {
+            errors.phonenumber = "Hãy nhập số điện thoại hợp lệ!";
         }
         if (!password) {
             errors.password = "Hãy nhập mật khẩu!";
         }
         //Kiểm tra user trong database
 
-        const user = await checkUserExists(email);
+        const user = await checkUserExists(phonenumber);
         if(!user) {
-            errors.email = "Email không tồn tại!";
+            errors.phonenumber = "Số điện thoại không tồn tại!";
         }
 
         if(user.password !== password) {
@@ -40,19 +36,21 @@ export default function LoginPage(){
     };
 
     //Lấy dữ liệu từ database
-    const checkUserExists = async (email) => {//Sửa hàm này để lấy dữ liệu người dùng từ database
+    const checkUserExists = async (phonenumber) => {//Sửa hàm này để lấy dữ liệu người dùng từ database
 
         const sampleUser = {
-            email: "example@example.com",
+            phonenumber: "0796875858",
             password: "password123"
         };
-        if (email === sampleUser.email) {
+        if (phonenumber === sampleUser.phonenumber) {
             return sampleUser;
         } else {
             return null;
         }
         //
     };
+
+   
 
     return(
         <div className="container">
@@ -62,10 +60,10 @@ export default function LoginPage(){
                 <form onSubmit={handleSubmit}>
                     <div class="input-container">
                         <div>
-                            <label for="email">Email</label>
-                            <input type="text" id="email" onChange={(e) =>setEmail(e.target.value)}/>
+                            <label for="phonenumber">Số điện thoại</label>
+                            <input type="text" id="phonenumber" onChange={(e) =>setPhonenumber(e.target.value)}/>
                         </div>
-                        {errors.email&&<div className="error">{errors.email}</div>}
+                        {errors.phonenumber&&<div className="error">{errors.phonenumber}</div>}
 
                             
                     </div>
