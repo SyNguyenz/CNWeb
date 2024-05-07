@@ -3,39 +3,25 @@ import "./Login.css";
 
 export default function LoginPage(){
     return(
-        <div className="Login-Page">
-            <div className="Login-form">
-                <h1 className="title">Đăng nhập tài khoản</h1>
-
+        <div className="container">
+            <div className="login-form">
+                <div class="title">Chào mừng quay lại với <span class="app-name">App</span></div>
+                <div class="subtitle">Đăng nhập vào tài khoản của bạn</div>
                 <form>
-
-                    <div className="mb-2">
-                        <label htmlFor="user-name" className="form-label">
-                            Tên người dùng
-                        </label>
-                        <input
-                            id="user-name"
-                            className="form-control"
-                            type="text"
-                            name="UserName"
-                        />
+                    <div class="input-container">
+                        <label for="email">Email</label>
+                        <input type="text" id="email"/>
                     </div>
-                    <div className="mb-2">
-                        <label htmlFor="pass-word" className="form-label">
-                            Mật khẩu
-                        </label>
-                        <input
-                            id="pass-word"
-                            className="form-control"
-                            type="text"
-                            name="Password"
-                        />
+                    <div class="input-container">
+                        <label for="password">Mật khẩu</label>
+                        <input type="password" id="password"/>
                     </div>
-                    <button type="submit" className="submit-btn">
-                        Đăng nhập
-                    </button>
-                    
+                    <div class="forgot-password">
+                        <a href="#">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit">Đăng nhập</button>
                 </form>
+                <div class="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
             </div>
         </div>
     );
