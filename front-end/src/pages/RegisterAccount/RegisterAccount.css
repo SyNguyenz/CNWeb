@@ -85,3 +85,9 @@ button {
     color: #ff4747;
     text-decoration: none;
 }
+.error{
+    color: red;
+    font-size: 12px;
+    margin-top: 10px;
+
+}
