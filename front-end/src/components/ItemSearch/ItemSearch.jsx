@@ -12,7 +12,7 @@ function ItemSearch(props) {
   return (
     <div className='item1'>
       <div className="item-info">
-        <Link to={`/product/${props.id}`}>
+        <Link to={`/Product/${props.id}`}>
           <div className="item-image">
             <img src={props.image} alt={props.name} />
           </div>

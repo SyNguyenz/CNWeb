@@ -6,6 +6,7 @@ import Search from "../Search";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBagShopping, faCircleUser, faList, faPhoneVolume, faTruckField } from '@fortawesome/free-solid-svg-icons'
 import HeadlessTippy  from '@tippyjs/react/headless';
+import MenuBar from "../MenuBar/MenuBar";
 
 
 function Header() {
@@ -26,8 +27,10 @@ const userInfo = null;
         <HeadlessTippy
          interactive
          placement="bottom"
+         delay={[0,700]}
          render={(attrs) => (
-             <div className="" tabIndex="-1" {...attrs}>               
+             <div className="menuBar" tabIndex="-1" {...attrs}>    
+             <MenuBar/>         
              </div>
          )}
         >

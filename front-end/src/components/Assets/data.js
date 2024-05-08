@@ -1,67 +1,152 @@
-import p1_img from './product_1.png'
-import p2_img from './product_2.png'
-import p3_img from './product_3.png'
-import p4_img from './product_4.png'
+import iphone13_pink from './images/iphone13_pink.jpg'
+import iphone13_black from './images/iphone13_black.jpg'
+import iphone13_blue from './images/iphone13_blue.jpg'
+import iphone13_white from './images/iphone13_white.jpg'
 
-let data_product = [
+const data_product = [
   {
-    id:1,
-    name:"iphone 1",
-    image:p1_img,
-    new_price:15000000,
-    old_price:18000000,
+    "id": 1,
+    "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
+    "new_price": 13000000,
+    "old_price": 18000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "Đen", "price": 13000000, "memory": "128GB"},
+      {"color": "Trắng", "price": 13000000, "memory": "128GB"},
+      {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
+      {"color": "Hồng", "price": 13500000, "memory": "128GB"},]
+    },
+  {
+    "id": 2,
+    "name": "Điện thoại iPhone 12 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_pink, iphone13_white, iphone13_blue],
+    "new_price": 10000000,
+    "old_price": 15000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "pink", "price": 10000000, "memory": "64GB"},
+      {"color": "white", "price": 10500000, "memory": "64GB"},
+      {"color": "blue", "price": 10000000, "memory": "64GB"},
+    ]
   },
-  {id:2,
-    name:"iphone 2",
-    image:p2_img,
-    new_price:85.00,
-    old_price:120.50,
-  },
-  {id:3,
-    name:"iphone 3",
-    image:p3_img,
-    new_price:60.00,
-    old_price:100.50,
-  },
-  {id:4,
-    name:"iphone 4",
-    image:p4_img,
-    new_price:100.00,
-    old_price:150.00,
+  {"id": 3,
+    "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
+    "new_price": 13000000,
+    "old_price": 18000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "Đen", "price": 13000000, "memory": "128GB"},
+      {"color": "Trắng", "price": 13000000, "memory": "128GB"},
+      {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
+      {"color": "Hồng", "price": 13500000, "memory": "128GB"},]
+    },
+  {
+    "id": 4,
+    "name": "Điện thoại iPhone 12 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_pink, iphone13_white, iphone13_blue],
+    "new_price": 10000000,
+    "old_price": 15000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "pink", "price": 10000000, "memory": "64GB"},
+      {"color": "white", "price": 10500000, "memory": "64GB"},
+      {"color": "blue", "price": 10000000, "memory": "64GB"},
+      
+    ]
   },
   {
-    id:5,
-    name:"iphone 5",
-    image:p1_img,
-    new_price:50.00,
-    old_price:80.50,
-  },{
-    id:6,
-    name:"iphone 6",
-    image:p1_img,
-    new_price:50.00,
-    old_price:80.50,
+  "id": 5,
+    "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
+    "new_price": 13000000,
+    "old_price": 18000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "Đen", "price": 13000000, "memory": "128GB"},
+      {"color": "Trắng", "price": 13000000, "memory": "128GB"},
+      {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
+      {"color": "Hồng", "price": 13500000, "memory": "128GB"},]
+    },
+  {
+    "id": 6,
+    "name": "Điện thoại iPhone 12 (128GB) - Chính hãng VN/A",
+    "images": [iphone13_pink, iphone13_white, iphone13_blue],
+    "new_price": 10000000,
+    "old_price": 15000000,
+    "category": "Smart Phone",
+    "brand": "Apple",
+    "variants": [
+      {"color": "pink", "price": 10000000, "memory": "64GB"},
+      {"color": "white", "price": 10500000, "memory": "64GB"},
+      {"color": "blue", "price": 10000000, "memory": "64GB"},
+      
+    ]
   },
   {
-  id:7,
-    name:"iphone 7",
-    image:p1_img,
-    new_price:15000000,
-    old_price:18000000,
-  },
-  {id:8,
-    name:"iphone 8",
-    image:p2_img,
-    new_price:85.00,
-    old_price:120.50,
-  },
-  {id:9,
-    name:"iphone 9",
-    image:p3_img,
-    new_price:60.00,
-    old_price:100.50,
-  },
-
+    "id": 7,
+      "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+      "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
+      "new_price": 13000000,
+      "old_price": 18000000,
+      "category": "Smart Phone",
+      "brand": "Apple",
+      "variants": [
+        {"color": "Đen", "price": 13000000, "memory": "128GB"},
+        {"color": "Trắng", "price": 13000000, "memory": "128GB"},
+        {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
+        {"color": "Hồng", "price": 13500000, "memory": "128GB"},]
+      },
+    {
+      "id": 8,
+      "name": "Điện thoại iPhone 12 (128GB) - Chính hãng VN/A",
+      "images": [iphone13_pink, iphone13_white, iphone13_blue],
+      "new_price": 10000000,
+      "old_price": 15000000,
+      "category": "Smart Phone",
+      "brand": "Apple",
+      "variants": [
+        {"color": "pink", "price": 10000000, "memory": "64GB"},
+        {"color": "white", "price": 10500000, "memory": "64GB"},
+        {"color": "blue", "price": 10000000, "memory": "64GB"},
+        
+      ]
+    },
+    {
+      "id": 9,
+        "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+        "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
+        "new_price": 13000000,
+        "old_price": 18000000,
+        "category": "Smart Phone",
+        "brand": "Apple",
+        "variants": [
+          {"color": "Đen", "price": 13000000, "memory": "128GB"},
+          {"color": "Trắng", "price": 13000000, "memory": "128GB"},
+          {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
+          {"color": "Hồng", "price": 13500000, "memory": "128GB"},]
+        },
+      {
+        "id": 10,
+        "name": "Điện thoại iPhone 12 (128GB) - Chính hãng VN/A",
+        "images": [iphone13_pink, iphone13_white, iphone13_blue],
+        "new_price": 10000000,
+        "old_price": 15000000,
+        "category": "Smart Phone",
+        "brand": "Apple",
+        "variants": [
+          {"color": "pink", "price": 10000000, "memory": "64GB"},
+          {"color": "white", "price": 10500000, "memory": "64GB"},
+          {"color": "blue", "price": 10000000, "memory": "64GB"},
+          
+        ]
+      },
 ];
 
 export default data_product;

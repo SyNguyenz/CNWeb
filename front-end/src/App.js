@@ -1,25 +1,27 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {publicRoutes} from './routers'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+// Import Header and Footer Components
 import Header from './components/Header';
-import Home from './pages/Home/index.js';
+import Footer from './components/Footer'
+
+// Import Pages
+import Home from './pages/Home';
+import Product from './pages/Product/Product'
 
 function App() {
   return (
-    <Router>
-      <div className="App">
+    <>
+      <BrowserRouter>
+        <Header />
         <Routes>
-            {publicRoutes.map((route, index)=> {
-              const Layout = route.layout || Home
-              const Page = route.component
-              return <Route key = {index} path = {route.path} element={
-              <Layout><Page/></Layout>
-            }
-              />;
-            }
-              ) }
+          <Route path='/' element={<Home />} />
+          <Route path='/product' element={<Product />}>
+            <Route path=':productId' element={<Product />} />
+          </Route>
         </Routes>
-      </div>
-    </Router>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 }
 

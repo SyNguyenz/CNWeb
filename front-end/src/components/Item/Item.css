@@ -5,7 +5,7 @@
     justify-content: space-between;
     position: relative;
     min-width: 200px;
-    min-height: 232px;
+    min-height: 200px;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
@@ -33,7 +33,7 @@
 .item .item-info a .item-image img {
     margin: 10px 0 0 0;
     width: 160px;
-    height: 200px;
+    height: 160px;
 }
 
 .item .item-info a .item-name {
@@ -105,7 +105,7 @@
 
 .item .item-info a .box-price .item-price-percent {
     background: url(../Assets/pricetag3.jpg) 50% no-repeat;
-    height: 28px;
+    height: 24px;
     width: 150px;
     position: absolute;
     top: -1px;

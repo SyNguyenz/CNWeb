@@ -3,7 +3,7 @@ import './Popular.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import data_product from '../Assets/data'
+import data_product from '../Assets/data.js'
 import Item from '../Item/Item'
 
 function Popular() {
@@ -64,7 +64,7 @@ function Popular() {
         setIndex((data_product.length > 2) ? (-(data_product.length - 2)) : 0);
       }
     }
-    console.log(2);
+ 
   }, [maxIndex, index])
 
   return (
@@ -94,7 +94,7 @@ function Popular() {
                             key={index} 
                             id={item.id}
                             name={item.name} 
-                            image={item.image} 
+                            image={item.images[0]}
                             new_price={item.new_price} 
                             old_price={item.old_price} 
                         />
