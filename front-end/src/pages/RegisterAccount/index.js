@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./RegisterAccount.css";
-import axios from "axios";
+import AllApi from "../../api/api";
 
 export default function RegisterPage(){
     const [phonenumber,setPhonenumber] = useState("");
@@ -35,11 +35,6 @@ export default function RegisterPage(){
         else if(password !== rePassword){
             errors.rePassword = "Hãy xác nhận lại mật khẩu!"
         }
-        
-        const user = await checkUserExists(phonenumber);
-        if (user) {
-            errors.phonenumber = "Số điện thoại đã được sử dụng!";
-        }
 
         setErrors(errors);
 
@@ -59,39 +54,13 @@ export default function RegisterPage(){
     };
 
     //Lấy dữ liệu từ database
-    //Sửa hàm này để lấy dữ liệu người dùng từ database
-    const checkUserExists = async (phonenumber) => {
-
-        try {
-            // Gửi yêu cầu GET đến API backend để kiểm tra xem số điện thoại có tồn tại trong cơ sở dữ liệu không
-            const response = await axios.get('https://localhost:7006/api/User', {
-                params: {
-                    phone: phonenumber
-                }
-            });
-    
-            // Kiểm tra phản hồi từ API
-            if (response.status === 200) {
-                // Nếu số điện thoại tồn tại, trả về dữ liệu người dùng từ phản hồi
-                return response.data;
-            } else if (response.status === 404) {
-                // Nếu số điện thoại không tồn tại, trả về null
-                return null;
-            }
-        } catch (error) {
-            // Xử lý lỗi nếu có
-            console.error('Error occurred while checking user:', error);
-            return null;
-        }
-    };
-
     //thêm user vào database
     const addUser = async (newUser) => {
         try {
             //gửi yêu cầu POST đến API backend
-            const response = await axios.post('https://localhost:7006/api/User', newUser);
+            const response = await AllApi.register(newUser);
             // Kiểm tra phản hồi từ API
-            if (response.status === 200) {
+            if (response.status === 201) {
                 // Thêm thành công
                 return response.data;
             } else {
@@ -99,9 +68,16 @@ export default function RegisterPage(){
                 return null;
             }
         } catch (error) {
-            // Xử lý lỗi nếu có
+            if (error.response.status === 409) {
+                
+                errors.phonenumber = "Số điện thoại đã được sử dụng!";
+                setErrors(errors);
+            }
+            else {
+                // Xử lý lỗi nếu có
             console.error('Error occurred while checking user:', error);
             return null;
+            }
         }
     };
 

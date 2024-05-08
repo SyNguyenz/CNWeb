@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\data\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\data\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\data\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|solutionrelative:backend\\data\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7DEB053A-0BA2-465F-B3CF-8396D73AA74F}|backend\\backend.csproj|c:\\users\\nguye\\source\\repos\\cnweb\\backend\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,13 +42,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "MyDbContext.cs",
               "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Data\\MyDbContext.cs",
               "RelativeDocumentMoniker": "backend\\Data\\MyDbContext.cs",
               "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Data\\MyDbContext.cs",
               "RelativeToolTip": "backend\\Data\\MyDbContext.cs",
-              "ViewState": "AQIAACUAAAAAAAAAAADwvzYAAAAiAAAA",
+              "ViewState": "AQIAABYAAAAAAAAAAADwvzYAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-05-08T06:25:40.705Z",
               "EditorCaption": ""
@@ -67,15 +67,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "backend\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\nguye\\source\\repos\\CNWeb\\backend\\backend\\Controllers\\UserController.cs",
               "RelativeToolTip": "backend\\Controllers\\UserController.cs",
-              "ViewState": "AQIAAAkBAAAAAAAAAAAwwBMBAAAwAAAA",
+              "ViewState": "AQIAAAcBAAAAAAAAAAAswA4BAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-25T14:36:12.084Z"
+              "WhenOpened": "2024-04-25T14:36:12.084Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
