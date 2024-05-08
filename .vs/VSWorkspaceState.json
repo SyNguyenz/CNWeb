@@ -6,6 +6,6 @@
     "\\backend\\backend\\Controllers",
     "\\backend\\backend\\Data"
   ],
-  "SelectedNode": "\\backend\\backend\\Data\\HangHoa.cs",
+  "SelectedNode": "\\backend\\backend\\Controllers\\UserController.cs",
   "PreviewInSolutionExplorer": false
 }

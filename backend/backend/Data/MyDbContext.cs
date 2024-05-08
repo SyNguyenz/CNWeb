@@ -52,7 +52,7 @@ namespace backend.Data
                 e.ToTable("Users");
                 e.HasKey(e => e.UserId);
                 e.Property(e => e.UserId)
-                .ValueGeneratedOnAdd();
+                .UseIdentityColumn();
                 e.HasIndex(e => e.PhoneNumber).IsUnique();
                 e.Property(e => e.UserName).IsRequired();
                 e.Property(e => e.Password).IsRequired();

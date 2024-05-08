@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import "./RegisterAccount.css";
+import axios from "axios";
 
 export default function RegisterPage(){
     const [phonenumber,setPhonenumber] = useState("");
@@ -9,8 +10,8 @@ export default function RegisterPage(){
     const [rePassword,setRePassword] = useState("");
     const [errors,setErrors] = useState("");
 
-    const validatePhonenumber = (phonenumber) => {
-        return /\S+@\S+\.\S+/.test(phonenumber);//kiểm tra phonenumber hợp lệ
+    const validatePhoneNumber = (phoneNumber) => {
+        return /^(0)[3|5|7|8|9][0-9]{8}$/.test(phoneNumber); //kiểm tra phonenumber hợp lệ
     };
 
     const handleSubmit = async (event) => {
@@ -19,7 +20,7 @@ export default function RegisterPage(){
         const errors = {};
         if (!phonenumber) {
             errors.phonenumber = "Hãy nhập số điện thoại!";
-        } else if (!validatePhonenumber(phonenumber)) {
+        } else if (!validatePhoneNumber(phonenumber)) {
             errors.phonenumber = "Số điện thoại không hợp lệ!";
         }
         if (!username) {
@@ -47,11 +48,12 @@ export default function RegisterPage(){
             // Tạo user mới và thêm vào database
             // Sửa phần dưới đây
             const newUser = {
-                Phonenumber: phonenumber,
-                UserName: username,
-                Password: password
+                userName: username,
+                phonenumber: phonenumber,
+                password: password,
+                diaChi: ""
             };
-            const savedUser = await newUser.save(); // Lưu người dùng vào cơ sở dữ liệu
+            const savedUser = await addUser(newUser); // Lưu người dùng vào cơ sở dữ liệu
             console.log('Người dùng đã được thêm vào cơ sở dữ liệu:', savedUser);
         }
     };
@@ -60,16 +62,47 @@ export default function RegisterPage(){
     //Sửa hàm này để lấy dữ liệu người dùng từ database
     const checkUserExists = async (phonenumber) => {
 
-        const sampleUser = {
-            Phonenumber: "0434335464",
-            password: "password123"
-        };
-        if (phonenumber === sampleUser.Phonenumber) {
-            return sampleUser;
-        } else {
+        try {
+            // Gửi yêu cầu GET đến API backend để kiểm tra xem số điện thoại có tồn tại trong cơ sở dữ liệu không
+            const response = await axios.get('https://localhost:7006/api/User', {
+                params: {
+                    phone: phonenumber
+                }
+            });
+    
+            // Kiểm tra phản hồi từ API
+            if (response.status === 200) {
+                // Nếu số điện thoại tồn tại, trả về dữ liệu người dùng từ phản hồi
+                return response.data;
+            } else if (response.status === 404) {
+                // Nếu số điện thoại không tồn tại, trả về null
+                return null;
+            }
+        } catch (error) {
+            // Xử lý lỗi nếu có
+            console.error('Error occurred while checking user:', error);
             return null;
         }
-        //
+    };
+
+    //thêm user vào database
+    const addUser = async (newUser) => {
+        try {
+            //gửi yêu cầu POST đến API backend
+            const response = await axios.post('https://localhost:7006/api/User', newUser);
+            // Kiểm tra phản hồi từ API
+            if (response.status === 200) {
+                // Thêm thành công
+                return response.data;
+            } else {
+                // Nếu có lỗi, trả về null
+                return null;
+            }
+        } catch (error) {
+            // Xử lý lỗi nếu có
+            console.error('Error occurred while checking user:', error);
+            return null;
+        }
     };
 
     return(

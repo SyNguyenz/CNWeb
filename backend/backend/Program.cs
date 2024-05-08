@@ -36,7 +36,21 @@ builder.Services.AddDbContext<MyDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CNWeb"));
 });
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
+// Configure CORS
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
