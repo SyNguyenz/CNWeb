@@ -1,162 +1,149 @@
-const data = [
-    {
-      key: "1",
-      maHangHoa: "DT001",
-      tenHangHoa: "Điện thoại di động",
-      gia: 15000000,
-      giamGia: 0.1,
-      soLuongTon: 100,
-      rating: 4.8,
-      img: []
-    },
-    {
-      key: "2",
-      maHangHoa: "MT001",
-      tenHangHoa: "Máy tính xách tay",
-      gia: 25000000,
-      giamGia: 0.15,
-      soLuongTon: 50,
-      rating: 4.7,
-      img: []
-    },
-    {
-      key: "3",
-      maHangHoa: "TN001",
-      tenHangHoa: "Tai nghe không dây",
-      gia: 3500000,
-      giamGia: 0.05,
-      soLuongTon: 200,
-      rating: 4.9,
-      img: [
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d70au72d",
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d71pen39",
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d733z3dd",
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d74ijjfb",
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd1u9d75x3z16",
-        "https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lmd2lk76ilzz7c"
-      ]
-    },
-    {
-      key: "4",
-      maHangHoa: "MT002",
-      tenHangHoa: "Máy tính để bàn",
-      gia: 18000000,
-      giamGia: 0.12,
-      soLuongTon: 80,
-      rating: 4.5,
-      img: []
-    },
-    {
-      key: "5",
-      maHangHoa: "DS001",
-      tenHangHoa: "Màn hình cong OLED",
-      gia: 12000000,
-      giamGia: 0.08,
-      soLuongTon: 60,
-      rating: 4.7,
-      img: []
-    },
-    {
-      key: "6",
-      maHangHoa: "DP001",
-      tenHangHoa: "Dây cáp sạc nhanh",
-      gia: 500000,
-      giamGia: 0.0,
-      soLuongTon: 300,
-      rating: 4.8,
-      img: []
-    },
-    {
-      key: "7",
-      maHangHoa: "SM001",
-      tenHangHoa: "Smartwatch",
-      gia: 8000000,
-      giamGia: 0.1,
-      soLuongTon: 120,
-      rating: 4.6,
-      img: []
-    },
-    {
-      key: "8",
-      maHangHoa: "MS001",
-      tenHangHoa: "Mouse gaming",
-      gia: 1200000,
-      giamGia: 0.0,
-      soLuongTon: 180,
-      rating: 4.9,
-      img: []
-    },
-    {
-      key: "9",
-      maHangHoa: "KB001",
-      tenHangHoa: "Bàn phím cơ",
-      gia: 1500000,
-      giamGia: 0.05,
-      soLuongTon: 90,
-      rating: 4.8,
-      img: []
-    },
-    {
-      key: "10",
-      maHangHoa: "TS001",
-      tenHangHoa: "Tai nghe gaming",
-      gia: 2500000,
-      giamGia: 0.1,
-      soLuongTon: 150,
-      rating: 4.7,
-      img: []
-    },
-    {
-      key: "11",
-      maHangHoa: "MT003",
-      tenHangHoa: "Máy tính bảng",
-      gia: 6000000,
-      giamGia: 0.0,
-      soLuongTon: 70,
-      rating: 4.5,
-      img: []
-    },
-    {
-      key: "12",
-      maHangHoa: "PS001",
-      tenHangHoa: "Pin dự phòng",
-      gia: 800000,
-      giamGia: 0.0,
-      soLuongTon: 200,
-      rating: 4.8,
-      img: []
-    },
-    {
-      key: "13",
-      maHangHoa: "CV001",
-      tenHangHoa: "Camera an ninh",
-      gia: 3000000,
-      giamGia: 0.15,
-      soLuongTon: 40,
-      rating: 4.6,
-      img: []
-    },
-    {
-      key: "14",
-      maHangHoa: "MS002",
-      tenHangHoa: "Màn hình máy tính",
-      gia: 5000000,
-      giamGia: 0.0,
-      soLuongTon: 100,
-      rating: 4.7,
-      img: []
-    },
-    {
-      key: "15",
-      maHangHoa: "TN002",
-      tenHangHoa: "Tai nghe Bluetooth",
-      gia: 2000000,
-      giamGia: 0.1,
-      soLuongTon: 150,
-      rating: 4.6,
-      img: []
-    },
-  ];
-  
-  export default data;
-  
+const products = [
+  {
+    maHangHoa: 'P001',
+    tenHangHoa: 'Laptop Dell XPS 13',
+    hangSanXuat: 'Dell',
+    thongTin: 'Laptop cao cấp với màn hình 13 inch, hiệu suất cao và thiết kế mỏng nhẹ.',
+    thongSo: 'CPU: Intel Core i7, RAM: 16GB, SSD: 512GB, Display: 13.3" 4K UHD',
+    gia: 35000000,
+    rating: 4.5,
+    star5: 120,
+    star4: 30,
+    star3: 10,
+    star2: 5,
+    star1: 3,
+    loaiHangHoa: 'Laptop',
+    variants: [
+      {
+        color: 'Silver',
+        quantity: 10,
+        sale: 10, // Giảm giá 10%
+        image: 'https://laptops.vn/uploads/dell-xps-13-2024_1710930026.jpg',
+      },
+      {
+        color: 'Black',
+        quantity: 5,
+        sale: 5, // Giảm giá 5%
+        image: 'https://laptopcuongphat.com/hoanghung/5/images/dell-xps-9365-mat-lung-nam-anh-lap-top.jpg',
+      },
+    ],
+  },
+  {
+    maHangHoa: 'P002',
+    tenHangHoa: 'Smartphone Samsung Galaxy S21',
+    hangSanXuat: 'Samsung',
+    thongTin: 'Điện thoại thông minh với màn hình 6.2 inch, camera chất lượng cao và hiệu suất vượt trội.',
+    thongSo: 'CPU: Exynos 2100, RAM: 8GB, Storage: 128GB, Display: 6.2" FHD+',
+    gia: 20000000,
+    rating: 4.7,
+    star5: 200,
+    star4: 50,
+    star3: 15,
+    star2: 4,
+    star1: 1,
+    loaiHangHoa: 'Smartphone',
+    variants: [
+      {
+        color: 'Phantom Gray',
+        quantity: 15,
+        sale: 15, // Giảm giá 15%
+        image: 'https://example.com/images/samsung-galaxy-s21-gray.jpg',
+      },
+      {
+        color: 'Phantom White',
+        quantity: 7,
+        sale: 20, // Giảm giá 20%
+        image: 'https://example.com/images/samsung-galaxy-s21-white.jpg',
+      },
+    ],
+  },
+  {
+    maHangHoa: 'P003',
+    tenHangHoa: 'Apple MacBook Pro 16',
+    hangSanXuat: 'Apple',
+    thongTin: 'MacBook Pro với màn hình 16 inch, hiệu suất cực mạnh và thiết kế sang trọng.',
+    thongSo: 'CPU: Apple M1 Pro, RAM: 16GB, SSD: 1TB, Display: 16" Retina',
+    gia: 60000000,
+    rating: 4.8,
+    star5: 150,
+    star4: 40,
+    star3: 8,
+    star2: 2,
+    star1: 0,
+    loaiHangHoa: 'Laptop',
+    variants: [
+      {
+        color: 'Space Gray',
+        quantity: 8,
+        sale: 5, // Giảm giá 5%
+        image: 'https://example.com/images/macbook-pro-16-space-gray.jpg',
+      },
+      {
+        color: 'Silver',
+        quantity: 10,
+        sale: 10, // Giảm giá 10%
+        image: 'https://example.com/images/macbook-pro-16-silver.jpg',
+      },
+    ],
+  },
+  {
+    maHangHoa: 'P004',
+    tenHangHoa: 'Sony WH-1000XM4',
+    hangSanXuat: 'Sony',
+    thongTin: 'Tai nghe không dây chống ồn hàng đầu với chất lượng âm thanh tuyệt vời.',
+    thongSo: 'Battery Life: 30 hours, Connectivity: Bluetooth 5.0, Noise Cancelling: Yes',
+    gia: 7000000,
+    rating: 4.6,
+    star5: 180,
+    star4: 60,
+    star3: 12,
+    star2: 6,
+    star1: 2,
+    loaiHangHoa: 'Tai nghe',
+    variants: [
+      {
+        color: 'Black',
+        quantity: 20,
+        sale: 10, // Giảm giá 10%
+        image: 'https://example.com/images/sony-wh1000xm4-black.jpg',
+      },
+      {
+        color: 'Silver',
+        quantity: 15,
+        sale: 8, // Giảm giá 8%
+        image: 'https://example.com/images/sony-wh1000xm4-silver.jpg',
+      },
+    ],
+  },
+  {
+    maHangHoa: 'P005',
+    tenHangHoa: 'Apple iPad Pro 11',
+    hangSanXuat: 'Apple',
+    thongTin: 'Máy tính bảng với màn hình 11 inch, hiệu suất mạnh mẽ và hỗ trợ Apple Pencil.',
+    thongSo: 'CPU: Apple M1, RAM: 8GB, Storage: 256GB, Display: 11" Liquid Retina',
+    gia: 25000000,
+    rating: 4.9,
+    star5: 250,
+    star4: 30,
+    star3: 5,
+    star2: 2,
+    star1: 1,
+    loaiHangHoa: 'Máy tính bảng',
+    variants: [
+      {
+        color: 'Space Gray',
+        quantity: 12,
+        sale: 10, // Giảm giá 10%
+        image: 'https://example.com/images/ipad-pro-11-space-gray.jpg',
+      },
+      {
+        color: 'Silver',
+        quantity: 10,
+        sale: 12, // Giảm giá 12%
+        image: 'https://example.com/images/ipad-pro-11-silver.jpg',
+      },
+    ],
+  },
+];
+
+export default products;

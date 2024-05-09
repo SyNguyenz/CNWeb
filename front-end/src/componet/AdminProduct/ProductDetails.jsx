@@ -4,6 +4,7 @@ import {
   Col,
   ConfigProvider,
   Image,
+  Radio,
   Rate,
   Row,
   Space,
@@ -26,48 +27,36 @@ const CustomRow = ({ label, value }) => (
 const formatPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
+const getSoLuong = (product) => {
+  return product.variants.reduce(
+    (total, variant) => total + variant.quantity,
+    0
+  );
+};
 
 const ProductDetails = ({ product, setModalChild }) => {
-  const images = product.img;
-  const [selectedImage, setSelectedImage] = useState(images && images.length > 0 ? images[0] : null);
+  var options = product.variants.map((variant) => ({
+    label: variant.color,
+    value: variant,
+  }));
+  console.log(options);
+  const [variant, setVariant] = useState(options[0].value || null);
+
+  const onChange = ({ target: { value } }) => {
+    console.log("radio3 checked", value);
+    setVariant(value);
+  };
 
   return (
-    <div style={{ width: 1000, }}>
+    <div style={{ width: 1000 }}>
       <Row gutter={16}>
-        <Col flex="0 0 400px">
-          <Row justify="start">
-            {selectedImage && (
-              <Image
-                src={selectedImage}
-                height={400}
-                width={400}
-                style={{ marginBottom: "20px", objectFit: "contain" }}
-              />
-            )}
-          </Row>
-          <Row justify="start" style={{ marginTop: 5 }}>
-            <div style={{ overflowX: "auto", width: 400 }}>
-              <Space size={10}>
-                {images.map((imageUrl, index) => (
-                  <Image
-                    key={index}
-                    src={imageUrl}
-                    width={80}
-                    height={80}
-                    preview={false}
-                    style={{
-                      objectFit: "cover",
-                      border:
-                        selectedImage === imageUrl
-                          ? "2px solid #d0011b"
-                          : "none",
-                    }}
-                    onMouseEnter={() => setSelectedImage(imageUrl)}
-                  />
-                ))}
-              </Space>
-            </div>
-          </Row>
+        <Col flex="0 1 400px">
+          <Image
+            src={variant.image}
+            height={400}
+            width={400}
+            style={{ marginBottom: "20px", objectFit: "contain" }}
+          />
         </Col>
         <Col flex="1 0 400px">
           <span
@@ -122,13 +111,32 @@ const ProductDetails = ({ product, setModalChild }) => {
                   marginRight: 5,
                 }}
               >
-                123
+                {product.star1 +
+                  product.star2 +
+                  product.star3 +
+                  product.star4 +
+                  product.star5}
               </span>
               <span>Đánh giá</span>
             </Col>
           </Row>
 
           <CustomRow label="Mã hàng hóa" value={product.maHangHoa} />
+          <CustomRow label="Loại hàng hóa" value={product.loaiHangHoa} />
+          <CustomRow label="Hãng sản xuất" value={product.hangSanXuat} />
+          <CustomRow label="Tổng số lượng" value={getSoLuong(product)} />
+          <CustomRow
+            label="Màu"
+            value={
+              <Radio.Group
+                options={options}
+                onChange={onChange}
+                value={variant}
+                optionType="button"
+              />
+            }
+          />
+
           <Row gutter={[16, 16]}>
             <Col span={8} style={{ fontSize: 16, color: "#929292" }}>
               Giá gốc:
@@ -149,13 +157,13 @@ const ProductDetails = ({ product, setModalChild }) => {
               Giá hiện tại:
             </Col>
             <Col span={16} style={{ fontSize: 18, color: "#d0011b" }}>
-              ₫ {formatPrice(product.gia * (1 - product.giamGia / 100))}
+              ₫ {formatPrice(product.gia * (1 - variant.sale / 100))}
             </Col>
           </Row>
-          <CustomRow label="Giảm giá" value={`${product.giamGia}%`} />
-          <CustomRow label="Số lượng tồn" value={product.soLuongTon} />
+          <CustomRow label="Giảm giá" value={`${variant.sale}%`} />
+          <CustomRow label="Số lượng" value={variant.quantity} />
 
-          <div style={{ fontSize: 18, marginTop: 10 }}>Mô tả sản phẩm:</div>
+          <div style={{ fontSize: 18, marginTop: 10 }}>Thông tin: </div>
           <Paragraph
             style={{
               maxHeight: 275,
@@ -163,13 +171,37 @@ const ProductDetails = ({ product, setModalChild }) => {
               whiteSpace: "pre-line",
               marginLeft: 10,
             }}
-          ></Paragraph>
+          >
+            {product.thongTin}
+          </Paragraph>
+
+          <div style={{ fontSize: 18, marginTop: 10 }}>Thông số: </div>
+          <Paragraph
+            style={{
+              maxHeight: 275,
+              overflowY: "auto",
+              whiteSpace: "pre-line",
+              marginLeft: 10,
+            }}
+          >
+            {product.thongSo
+              .split(",")
+              .map((item) => item.trim())
+              .join("\n")}
+          </Paragraph>
         </Col>
       </Row>
       <Row justify="end">
-        <Button type="primary" icon={<EditOutlined />} onClick={() => {
-          console.log("gg");
-          setModalChild(<EditProduct product={product} setModalChild={setModalChild}/>)}}>
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={() => {
+            console.log("gg");
+            setModalChild(
+              <EditProduct product={product} setModalChild={setModalChild} />
+            );
+          }}
+        >
           Chỉnh sửa
         </Button>
       </Row>

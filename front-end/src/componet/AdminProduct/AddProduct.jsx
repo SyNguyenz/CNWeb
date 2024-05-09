@@ -85,6 +85,8 @@ const AddProduct = ({ setModalChild }) => {
       const data = {
         maHangHoa: values.maHangHoa,
         tenHangHoa: values.tenHangHoa,
+        loaiHangHoa: values.loaiHangHoa,
+        hangSanXuat: values.hangSanXuat,
         thongTin: values.thongTin,
         thongSo: values.thongSo,
         gia: values.gia,
@@ -93,6 +95,8 @@ const AddProduct = ({ setModalChild }) => {
       var images = [];
       // Lặp qua mảng variants và thêm dữ liệu của mỗi phần tử vào mảng variants của đối tượng data
       variants.forEach((variant, index) => {
+        console.log(variant.image[0]);
+        console.log(variant.image[0].url);
         if (variant.image[0].url) {
           data.variants.push({
             color: variant.color,
@@ -153,6 +157,21 @@ const AddProduct = ({ setModalChild }) => {
               label="Tên"
               name="tenHangHoa"
               rules={[{ required: true, message: "Hãy nhập tên sản phẩm!" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Loại"
+              name="loaiHangHoa"
+              rules={[{ required: true, message: "Hãy nhập loại hàng hóa!" }]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Nhà sản xuất"
+              name="hangSanXuat"
+              rules={[{ required: true, message: "Hãy nhập tên hãng sản xuất!" }]}
             >
               <Input />
             </Form.Item>

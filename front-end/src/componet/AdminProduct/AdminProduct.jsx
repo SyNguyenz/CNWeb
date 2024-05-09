@@ -127,6 +127,10 @@ const AdminProduct = () => {
     }).format(value);
   };
 
+  const getSoLuong = (record) => {
+    return record.variants.reduce((total, variant) => total + variant.quantity, 0)
+  }
+
 
   const { confirm } = Modal;
   const showDeleteConfirm = (product) => {
@@ -161,6 +165,15 @@ const AdminProduct = () => {
       ...getColumnSearchProps('tenHangHoa'),
     },
     {
+      title: "Loại",
+      dataIndex: "loaiHangHoa",
+      key: "loaiHangHoa",
+      ellipsis: true,
+      sorter: (a, b) => a.loaiHangHoa.localeCompare(b.loaiHangHoa),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('loaiHangHoa'),
+    },
+    {
       title: "Giá",
       dataIndex: "gia",
       key: "gia",
@@ -169,16 +182,10 @@ const AdminProduct = () => {
       sorter: (a, b) => a.gia - b.gia,
       sortDirections: ['descend', 'ascend'],
     },
-    // {
-    //   title: "Giảm giá",
-    //   dataIndex: "giamGia",
-    //   key: "giamGia",
-    //   ellipsis: true,
-    // },
     {
       title: "Số lượng",
-      dataIndex: "soLuongTon",
-      key: "soLuongTon",
+      key: "soLuong",
+      render: (record) => getSoLuong(record),
       ellipsis: true,
     },
     {
