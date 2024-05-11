@@ -10,7 +10,7 @@ const publicRoutes=[
     {path: '/', component: Home},
     {path: '/Order', component: Order},
     {path: '/register', component:RegisterPage},
-    {path: '/register/login', component:LoginPage}
+    {path: '/login', component:LoginPage}
 ];
 
 const privateRoutes=[

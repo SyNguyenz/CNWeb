@@ -30,13 +30,22 @@ namespace backend.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Validate(LoginModel model)
         {
-            var user = _context.Users.SingleOrDefault(p => p.PhoneNumber == model.PhoneNumber && p.Password == model.Password);
+            var user = _context.Users.SingleOrDefault(p => p.PhoneNumber == model.PhoneNumber);
             if (user == null)
             {
                 return Ok(new ApiResponse
                 {
                     Success = false,
-                    Message = "Invalid phonenumber/password",
+                    Message = "Invalid phonenumber",
+                });
+            }
+
+            if(user.Password != model.Password)
+            {
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "Wrong password",
                 });
             }
 

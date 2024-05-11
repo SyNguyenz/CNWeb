@@ -1,11 +1,16 @@
 import React from "react";
 import "./Login.css";
 import { useState } from "react";
+import AllApi from "../../api/api";
 
 export default function LoginPage(){
     const [phonenumber, setPhonenumber]=useState("");
     const [password, setPassword]=useState("");
     const [errors, setErrors]=useState("");
+
+    const validatePhoneNumber = (phoneNumber) => {
+        return /^(0)[3|5|7|8|9][0-9]{8}$/.test(phoneNumber); //kiểm tra phonenumber hợp lệ
+    };
 
     const handleSubmit =async (event) => {
         event.preventDefault();
@@ -15,7 +20,7 @@ export default function LoginPage(){
         //Kiểm tra định dạng các trường dữ liệu nhập vào
         if (!phonenumber) {
             errors.phonenumber = "Hãy nhập số điện thoại";
-        } else if(phonenumber.length!==10) {
+        } else if(!validatePhoneNumber(phonenumber)) {
             errors.phonenumber = "Hãy nhập số điện thoại hợp lệ!";
         }
         if (!password) {
@@ -23,31 +28,25 @@ export default function LoginPage(){
         }
         //Kiểm tra user trong database
 
-        const user = await checkUserExists(phonenumber);
-        if(!user) {
-            errors.phonenumber = "Số điện thoại không tồn tại!";
+        const user = {
+            phoneNumber: phonenumber,
+            password: password
         }
-
-        if(user.password !== password) {
-            errors.password = "Sai mật khẩu!";
-        }
-        setErrors(errors);
-
+        await Login(user);
     };
 
     //Lấy dữ liệu từ database
-    const checkUserExists = async (phonenumber) => {//Sửa hàm này để lấy dữ liệu người dùng từ database
-
-        const sampleUser = {
-            phonenumber: "0796875858",
-            password: "password123"
-        };
-        if (phonenumber === sampleUser.phonenumber) {
-            return sampleUser;
-        } else {
-            return null;
+    const Login = async (user) => {//Sửa hàm này để lấy dữ liệu người dùng từ database
+        const response = await AllApi.login(user);
+        if(response.Success === false){
+            if(response.Message === "Invalid phonenumber"){
+                errors.phonenumber = "Số điện thoại không tồn tại!";
+            }
+            if(response.Message === "Wrong password"){
+                errors.password = "Sai mật khẩu!";
+            }
+            setErrors(errors);
         }
-        //
     };
 
    
