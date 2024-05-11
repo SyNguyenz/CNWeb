@@ -1,7 +1,13 @@
+import React from 'react'
+import Popular from '../../components/Popular/Popular.jsx'
+import './Home.css'
+
 function Home() {
-    return <h1>
-        Home Page
-    </h1>;
+  return (
+    <div className='home'>
+      <Popular/>  
+    </div>
+  )
 }
 
 export default Home;

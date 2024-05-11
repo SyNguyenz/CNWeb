@@ -3,3 +3,58 @@
 * {
     box-sizing: border-box;
 }
+@font-face {
+    font-family: 'Futura';
+    src: url('/fonts/SFUFuturaRegular.TTF') format('truetype');
+    /* Add more src declarations for different font formats if needed */
+  }
+  body {
+      padding: 0;
+      font-family: 'Futura', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #4a4a4a;
+      font-size: 1em;
+      font-weight: 400;
+      line-height: 1.5;
+      height: 100%;
+    }
+  
+    code {
+      font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+    }
+    
+    * {
+      margin: 0;
+    }
+    
+    a {
+      color: #fff;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    
+    form {
+      display: block;
+      margin-top: 0em;
+      unicode-bidi: isolate;
+    }
+    
+    button, input, select, textarea {
+      margin: 0;
+    }
+    
+    ul {
+      list-style: none;
+    }
+    
+    img {
+      height: auto;
+      max-width: 100%;
+    }
+    
+    p {
+      margin: 0;
+      padding: 0;
+    }

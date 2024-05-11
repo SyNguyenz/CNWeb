@@ -1,0 +1,24 @@
+.home {
+    position: relative;
+    border-radius: 8px;
+    min-height: calc(100vh - 600px);
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+    width: auto;
+    padding: 0.5em;
+}
+
+@media (max-width: 1200px) {
+    .home {
+        max-width: 1200px;
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .home {
+        margin-bottom: 80px;
+    }
+}

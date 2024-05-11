@@ -1,0 +1,100 @@
+{
+  "data_product": [
+    {
+      "id": 1,
+      "name": "iphone 13",
+      "images": ["iphone13_pink","iphone12_black", 
+      "iphone13_white","iphone13_white"],
+      "new_price": 13000000,
+      "old_price": 18000000,
+      "category": "Smart Phone",
+      "brand": "Apple",
+      "variants": [
+        {"color": "black", "price": 13000000, "memory": "128GB"},
+        {"color": "pink", "price": 13500000, "memory": "128GB"},
+        {"color": "blue", "price": 13000000, "memory": "128GB"},
+        {"color": "blue", "price": 13000000, "memory": "128GB"},
+        {"color": "black", "price": 18000000, "memory": "256GB"},
+        {"color": "pink", "price": 18500000, "memory": "256GB"},
+        {"color": "blue", "price": 18000000, "memory": "256GB"},
+        {"color": "blue", "price": 18000000, "memory": "256GB"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "iphone 12",
+      "image": "images/iphone12_black",
+      "new_price": 10000000,
+      "old_price": 15000000,
+      "category": "Smart Phone",
+      "brand": "Apple",
+      "variants": [
+        {"color": "black", "price": 10000000, "memory": "64GB"},
+        {"color": "white", "price": 10500000, "memory": "64GB"},
+        {"color": "blue", "price": 10000000, "memory": "64GB"},
+        {"color": "blue", "price": 10000000, "memory": "64GB"},
+        {"color": "black", "price": 15000000, "memory": "128GB"},
+        {"color": "white", "price": 15500000, "memory": "128GB"},
+        {"color": "blue", "price": 15000000, "memory": "128GB"},
+        {"color": "blue", "price": 15000000, "memory": "128GB"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "iphone SE",
+      "image": "images/iphone_se_red",
+      "new_price": 7000000,
+      "old_price": 9000000,
+      "category": "Smart Phone",
+      "brand": "Apple",
+      "variants": [
+        {"color": "red", "price": 7000000, "memory": "64GB"},
+        {"color": "white", "price": 7200000, "memory": "64GB"},
+        {"color": "black", "price": 7000000, "memory": "64GB"},
+        {"color": "black", "price": 7000000, "memory": "64GB"},
+        {"color": "red", "price": 9000000, "memory": "128GB"},
+        {"color": "white", "price": 9200000, "memory": "128GB"},
+        {"color": "black", "price": 9000000, "memory": "128GB"},
+        {"color": "black", "price": 9000000, "memory": "128GB"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Samsung Galaxy S21",
+      "image": "images/samsung_s21",
+      "new_price": 11000000,
+      "old_price": 14000000,
+      "category": "Smart Phone",
+      "brand": "Samsung",
+      "variants": [
+        {"color": "black", "price": 11000000, "memory": "128GB"},
+        {"color": "white", "price": 11500000, "memory": "128GB"},
+        {"color": "blue", "price": 11000000, "memory": "128GB"},
+        {"color": "blue", "price": 11000000, "memory": "128GB"},
+        {"color": "black", "price": 14000000, "memory": "256GB"},
+        {"color": "white", "price": 14500000, "memory": "256GB"},
+        {"color": "blue", "price": 14000000, "memory": "256GB"},
+        {"color": "blue", "price": 14000000, "memory": "256GB"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Samsung Galaxy S20 FE",
+      "image": "images/samsung_s20_fe",
+      "new_price": 9000000,
+      "old_price": 12000000,
+      "category": "Smart Phone",
+      "brand": "Samsung",
+      "variants": [
+        {"color": "blue", "price": 9000000, "memory": "128GB"},
+        {"color": "white", "price": 9200000, "memory": "128GB"},
+        {"color": "green", "price": 9000000, "memory": "128GB"},
+        {"color": "green", "price": 9000000, "memory": "128GB"},
+        {"color": "blue", "price": 12000000, "memory": "256GB"},
+        {"color": "white", "price": 12500000, "memory": "256GB"},
+        {"color": "green", "price": 12000000, "memory": "256GB"},
+        {"color": "green", "price": 12000000, "memory": "256GB"}
+      ]
+    }
+  ]
+}

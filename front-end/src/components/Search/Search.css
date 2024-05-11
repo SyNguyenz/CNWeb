@@ -1,0 +1,36 @@
+
+  .search {
+    position: relative;
+    display: flex;
+
+  }
+  
+  .search form {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search input {
+    outline: none;
+    height: 32px;
+  }
+  
+  .search .input-btn button {
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    outline: none;
+    background: hsla(0, 0%, 100%, .2);
+    ;
+  }
+  
+  .search .input-btn button:hover {
+    background-color: green;
+  }
+  .search-results {
+    max-height: 500px; /* Set the maximum height for the search results container */
+    overflow-y: auto; /* Enable vertical scrolling when content overflows */
+}
+
