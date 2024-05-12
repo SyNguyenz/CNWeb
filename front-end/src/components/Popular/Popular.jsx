@@ -3,7 +3,7 @@ import './Popular.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import data_product from '../Assets/data.js'
+import all_products from '../Assets/all_product.js'
 import Item from '../Item/Item'
 
 function Popular() {
@@ -12,7 +12,7 @@ function Popular() {
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-
+  const data_product = all_products;
 
   useEffect(() => {
     const handleOffset = () => {
@@ -84,7 +84,7 @@ function Popular() {
                   className="swiper-wrapper"
                   style={{ 
                     transform: `translateX(${offset}px)`,
-                    transitionDuration: '350ms'
+                    transitionDuration: '500ms'
                   }}
                 >
                   {data_product.map((item, index) => {
