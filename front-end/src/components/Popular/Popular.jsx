@@ -19,7 +19,7 @@ function Popular() {
       const element = elementRef.current;
       let containerWidth;
       
-      if (window.innerWidth > 1400) {
+      if (window.innerWidth > 1200) {
         setOffset(index * 234.8);
         setMaxIndex((data_product.length - 5));
       } 
@@ -51,7 +51,7 @@ function Popular() {
 
   useEffect(() => {
     if (index < -maxIndex) {
-      if (window.innerWidth > 1400) {
+      if (window.innerWidth > 1200) {
         setIndex((data_product.length > 5) ? (-(data_product.length - 5)) : 0);
       } 
       else if (window.innerWidth > 990) {
@@ -84,7 +84,7 @@ function Popular() {
                   className="swiper-wrapper"
                   style={{ 
                     transform: `translateX(${offset}px)`,
-                    transitionDuration: '300ms'
+                    transitionDuration: '350ms'
                   }}
                 >
                   {data_product.map((item, index) => {

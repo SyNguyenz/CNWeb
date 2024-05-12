@@ -9,7 +9,7 @@ function MenuBar() {
     <>
       <div className='menu-bar'>
         <div className="label-menu-bar">
-          <Link to='/mobile'>
+          <Link to='/phone'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -24,7 +24,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/tablet'>
+          <Link to='/laptop'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -39,7 +39,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/laptop'>
+          <Link to='/tablet'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -54,7 +54,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/personal-computer'>
+          <Link to='/television'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -69,7 +69,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/personal-computer'>
+          <Link to='/headphone'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -84,7 +84,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/personal-computer'>
+          <Link to='/smart-home'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">

@@ -3,11 +3,11 @@
     width: 100%;
     height: 80px;
     background: #2c7826;
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 10000;
+  
 }
-
 .menu {
     width: 80%;
     height: 100%;

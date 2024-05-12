@@ -5,9 +5,10 @@
     box-sizing: border-box;
     display: block;
     height: 100%;
-    margin: 0 auto;
+    margin: auto;
     width: auto;
-    padding: 0.5em;
+    padding: 69px 10px 5px 10px;
+
 }
 
 @media (max-width: 1200px) {

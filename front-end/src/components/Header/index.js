@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBagShopping, faCircleUser, faList, faPhoneVolume, faTruckField } from '@fortawesome/free-solid-svg-icons'
 import HeadlessTippy  from '@tippyjs/react/headless';
 import MenuBar from "../MenuBar/MenuBar";
+import 'tippy.js/dist/tippy.css'; 
 
 
 function Header() {
@@ -25,8 +26,10 @@ const userInfo = null;
           </span>
         </div>
         <HeadlessTippy
+         visible={isMenu}
          interactive
          placement="bottom"
+         onClickOutside={() => setIsMenu(false)} 
          delay={[0,700]}
          render={(attrs) => (
              <div className="menuBar" tabIndex="-1" {...attrs}>    
@@ -34,7 +37,7 @@ const userInfo = null;
              </div>
          )}
         >
-            <div className="menu-list1">
+            <div className="menu-list1" onClick={() => setIsMenu(!isMenu)}>
               <div className='my-icon'>
                 <FontAwesomeIcon icon={faList}/>  </div>
               <div className="box-content">

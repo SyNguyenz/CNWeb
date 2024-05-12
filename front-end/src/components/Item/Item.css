@@ -4,8 +4,8 @@
     flex-flow: column;
     justify-content: space-between;
     position: relative;
-    min-width: 200px;
-    min-height: 200px;
+    height: auto;
+    width: auto;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;

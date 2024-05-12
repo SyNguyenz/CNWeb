@@ -4,6 +4,7 @@ import ProductDisplay from '../../components/ProductDisplay/ProductDisplay';
 
 
 import data_product from '../../components/Assets/data';
+import DescriptionProduct from '../../components/DescriptionProduct/DescriptionProduct';
 
 function Product() {
   const {productId} = useParams();
@@ -12,7 +13,8 @@ function Product() {
   return (
     <div className='product'>
 {product && <ProductDisplay product={product} />}
-      
+<DescriptionProduct product={product} />
+ 
     </div>
   )
 }
