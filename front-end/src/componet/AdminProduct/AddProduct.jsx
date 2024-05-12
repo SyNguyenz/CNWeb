@@ -13,7 +13,7 @@ import {
   Image,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import { addProduct } from "./API";
+import { addProductAPI } from "./API";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -80,8 +80,8 @@ const AddProduct = ({ setModalChild }) => {
 
   const onFinish = async (values) => {
     try {
-        const formData = new FormData();
-      
+      const formData = new FormData();
+
       const data = {
         maHangHoa: values.maHangHoa,
         tenHangHoa: values.tenHangHoa,
@@ -93,17 +93,26 @@ const AddProduct = ({ setModalChild }) => {
         variants: [],
       };
       var images = [];
-      // Lặp qua mảng variants và thêm dữ liệu của mỗi phần tử vào mảng variants của đối tượng data
+
       variants.forEach((variant, index) => {
         console.log(variant.image[0]);
-        console.log(variant.image[0].url);
-        if (variant.image[0].url) {
-          data.variants.push({
-            color: variant.color,
-            quantity: variant.quantity,
-            sale: variant.sale,
-            image: variant.image[0].url,
-          });
+        if (variant.image.length > 0) {
+          if (variant.image[0].url) {
+            data.variants.push({
+              color: variant.color,
+              quantity: variant.quantity,
+              sale: variant.sale,
+              image: variant.image[0].url,
+            });
+          } else {
+            data.variants.push({
+              color: variant.color,
+              quantity: variant.quantity,
+              sale: variant.sale,
+              image: `image-${index}`,
+            });
+            images.push(variant.image[0].originFileObj);
+          }
         } else {
           data.variants.push({
             color: variant.color,
@@ -111,16 +120,16 @@ const AddProduct = ({ setModalChild }) => {
             sale: variant.sale,
             image: null,
           });
-          images.push(variant.image[0].originFileObj);
         }
       });
-      for (var i =0; i< images.length; i++) {
-        formData.append('images', images[i]);
+
+      for (var i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
       }
       var jsonObject = JSON.stringify(data);
-      formData.append('jsonObject', jsonObject);
+      formData.append("jsonObject", jsonObject);
 
-      await addProduct(formData);
+      await addProductAPI(formData);
       message.success("Sản phẩm được cập nhật thành công!");
       setModalChild(null);
     } catch (e) {
@@ -171,7 +180,9 @@ const AddProduct = ({ setModalChild }) => {
             <Form.Item
               label="Nhà sản xuất"
               name="hangSanXuat"
-              rules={[{ required: true, message: "Hãy nhập tên hãng sản xuất!" }]}
+              rules={[
+                { required: true, message: "Hãy nhập tên hãng sản xuất!" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -217,6 +228,7 @@ const AddProduct = ({ setModalChild }) => {
                   <Col span={12}>
                     <Form.Item
                       label="Màu sắc"
+                      required
                       labelCol={{ span: 8 }}
                       wrapperCol={{ span: 16 }}
                       rules={[{ required: true, message: "Hãy nhập màu sắc!" }]}

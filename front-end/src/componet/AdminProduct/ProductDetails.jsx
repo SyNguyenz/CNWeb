@@ -7,7 +7,6 @@ import {
   Radio,
   Rate,
   Row,
-  Space,
   Typography,
 } from "antd";
 import { EditOutlined } from "@ant-design/icons";

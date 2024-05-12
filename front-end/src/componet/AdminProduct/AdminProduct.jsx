@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal, Space, Table, message, Input } from "antd";
 import {
   PlusCircleFilled,
@@ -9,11 +9,26 @@ import {
 import Highlighter from 'react-highlight-words';
 import AddProduct from "./AddProduct";
 import ProductDetails from "./ProductDetails";
-import data from "./demoData";
+import { deleteProductAPI, getProductsAPI } from "./API";
+// import data from "./demoData";
 
 const AdminProduct = () => {
-  const [products, setProducts] = useState(data);
+  const [products, setProducts] = useState([]);
   const [modalChild, setModalChild] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsData = await getProductsAPI();
+        setProducts(productsData);
+      } catch (error) {
+        console.error(error);
+        message.error('Không thể lấy dữ liệu sản phẩm');
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -111,15 +126,22 @@ const AdminProduct = () => {
       ),
   });
 
-  const deleteProduct = (record) => {
-    // Thực hiện xóa sản phẩm
-
-    const updatedProducts = products.filter(
-      (product) => product.key !== record.key
-    ); // Lọc ra các sản phẩm khác với sản phẩm cần xóa
-    setProducts(updatedProducts);
-    message.success(`Đã xóa sản phẩm: ${record.tenHangHoa}`);
+  const deleteProduct = async (record) => {
+    try {
+      await deleteProductAPI(record.product);
+  
+      const updatedProducts = products.filter(
+        (product) => product.maHangHoa !== record.maHangHoa
+      );
+      setProducts(updatedProducts);
+  
+      message.success(`Đã xóa sản phẩm: ${record.tenHangHoa}`);
+    } catch (error) {
+      console.error(error);
+      message.error(`Xóa sản phẩm thất bại: ${record.tenHangHoa}`);
+    }
   };
+  
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
@@ -243,7 +265,6 @@ const AdminProduct = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              console.log(record);
               setModalChild(<ProductDetails product={record} setModalChild={setModalChild} />);
             },
             onMouseEnter: (event) => {

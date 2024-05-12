@@ -13,7 +13,7 @@ import {
   Image,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import { updateProduct } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
+import { updateProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -30,7 +30,9 @@ const EditProduct = ({ product, setModalChild }) => {
   const initialVariants = (product.variants || []).map((variant) => ({
     ...variant,
     key: Date.now() + Math.random(), // tạo khóa key duy nhất
-    image: variant.image ? [{ uid: Date.now() + Math.random(), url: variant.image }] : [],
+    image: variant.image
+      ? [{ uid: Date.now() + Math.random(), url: variant.image }]
+      : [],
   }));
   const [variants, setVariants] = useState(initialVariants);
 
@@ -125,7 +127,7 @@ const EditProduct = ({ product, setModalChild }) => {
       const jsonObject = JSON.stringify(data);
       formData.append("jsonObject", jsonObject);
 
-      await updateProduct(product.id, formData);
+      await updateProductAPI(product.id, formData);
       message.success("Sản phẩm được cập nhật thành công!");
       setModalChild(null);
     } catch (e) {
@@ -157,7 +159,7 @@ const EditProduct = ({ product, setModalChild }) => {
               name="maHangHoa"
               rules={[{ required: true, message: "Hãy nhập mã sản phẩm!" }]}
             >
-              <Input />
+              <Input disabled/>
             </Form.Item>
             <Form.Item
               label="Tên"
@@ -176,7 +178,9 @@ const EditProduct = ({ product, setModalChild }) => {
             <Form.Item
               label="Nhà sản xuất"
               name="hangSanXuat"
-              rules={[{ required: true, message: "Hãy nhập tên hãng sản xuất!" }]}
+              rules={[
+                { required: true, message: "Hãy nhập tên hãng sản xuất!" },
+              ]}
             >
               <Input />
             </Form.Item>
@@ -224,6 +228,7 @@ const EditProduct = ({ product, setModalChild }) => {
                       label="Màu sắc"
                       labelCol={{ span: 8 }}
                       wrapperCol={{ span: 16 }}
+                      required
                       rules={[{ required: true, message: "Hãy nhập màu sắc!" }]}
                     >
                       <Input
@@ -292,54 +297,53 @@ const EditProduct = ({ product, setModalChild }) => {
                     style={{ display: "flex", alignItems: "center" }}
                   >
                     <Button
-                     
-                     type="dashed"
-                     onClick={() => removeVariant(variant.key)}
-                     icon={<MinusCircleOutlined />}
-                   />
-                 </Col>
-               </Row>
-             </div>
-           ))}
+                      type="dashed"
+                      onClick={() => removeVariant(variant.key)}
+                      icon={<MinusCircleOutlined />}
+                    />
+                  </Col>
+                </Row>
+              </div>
+            ))}
 
-           <Button
-             type="dashed"
-             onClick={addVariant}
-             icon={<PlusOutlined />}
-             style={{ width: "100%", marginBottom: 20 }}
-           >
-             Thêm biến thể
-           </Button>
-         </Col>
-       </Row>
-       {previewImage && (
-         <Image
-           wrapperStyle={{ display: "none" }}
-           preview={{
-             visible: previewOpen,
-             onVisibleChange: (visible) => setPreviewOpen(visible),
-           }}
-           src={previewImage}
-         />
-       )}
-       <Form.Item
-         wrapperCol={{
-           offset: 21,
-           span: 3,
-         }}
-       >
-         <Space>
-           <Button type="primary" htmlType="submit">
-             OK
-           </Button>
-           <Button type="default" onClick={() => setModalChild(null)}>
-             Cancel
-           </Button>
-         </Space>
-       </Form.Item>
-     </Form>
-   </div>
- );
+            <Button
+              type="dashed"
+              onClick={addVariant}
+              icon={<PlusOutlined />}
+              style={{ width: "100%", marginBottom: 20 }}
+            >
+              Thêm biến thể
+            </Button>
+          </Col>
+        </Row>
+        {previewImage && (
+          <Image
+            wrapperStyle={{ display: "none" }}
+            preview={{
+              visible: previewOpen,
+              onVisibleChange: (visible) => setPreviewOpen(visible),
+            }}
+            src={previewImage}
+          />
+        )}
+        <Form.Item
+          wrapperCol={{
+            offset: 21,
+            span: 3,
+          }}
+        >
+          <Space>
+            <Button type="primary" htmlType="submit">
+              OK
+            </Button>
+            <Button type="default" onClick={() => setModalChild(null)}>
+              Cancel
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+    </div>
+  );
 };
 
 export default EditProduct;

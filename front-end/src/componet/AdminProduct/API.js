@@ -1,37 +1,48 @@
-// Hàm gọi API để thêm sản phẩm
-export const addProduct = async (formData) => {
+const BASE_URL = 'http://localhost:8080/api/products';
+
+const handleResponse = async (response) => {
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : {};
+  if (!response.ok) {
+    const error = data.message || response.statusText;
+    throw new Error(error);
+  }
+  return data;
+};
+
+const apiCall = async (url, method, body = null) => {
   try {
-    const response = await fetch('http://localhost:8080/api/products/add', {
-      method: 'POST',
-      body: formData,
-    });
-    if (!response.ok) {
-      throw new Error('Thêm sản phẩm thất bại');
+    const options = {
+      method,
+    };
+    if (body) {
+      options.body = body;
     }
-    // console.log(response.json());
-    return response.json();
+    const response = await fetch(url, options);
+    return handleResponse(response);
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-// Hàm gọi API để cập nhật sản phẩm
-export const updateProduct = async (formData) => {
-    try {
-      const response = await fetch('http://localhost:8080/api/products', {
-        method: 'POST',
-        body: formData,
-      });
-      if (!response.ok) {
-        throw new Error('Cập nhật sản phẩm thất bại');
-      }
-      return response.json();
-    } catch (error) {
-      throw new Error(error.message);
-    }
-  };
+export const addProductAPI = async (formData) => {
+  return apiCall(`${BASE_URL}/add`, 'POST', formData);
+};
 
+export const updateProductAPI = async (formData) => {
+  return apiCall(BASE_URL, 'PUT', formData);
+};
 
-  
-  // Thêm các hàm gọi API khác tại đây nếu cần
-  
+export const deleteProductAPI = async (productId) => {
+  return apiCall(`${BASE_URL}/${productId}`, 'DELETE');
+};
+
+export const getProductAPI = async (productId) => {
+  return apiCall(`${BASE_URL}/${productId}`, 'GET');
+};
+
+export const getProductsAPI = async () => {
+  return apiCall(BASE_URL, 'GET');
+};
+
+// Thêm các hàm gọi API khác tại đây nếu cần
