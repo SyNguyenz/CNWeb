@@ -16,6 +16,7 @@ const all_products = [
   {
     "id": 1,
     "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
+    "rating": 4.5,
     "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
     "new_price": 13000000,
     "old_price": 18000000,
@@ -62,6 +63,7 @@ const all_products = [
   {
     "id": 3,
     "name": "MacBook Air M2 13.6(16GB/256GB) - Chính hãng Apple Việt Nam",
+    "rating": 3.5,
     "images": [mac_air_m2_gray, mac_air_m2_silver],
     "new_price": 23000000,
     "old_price": 28000000,

@@ -55,7 +55,7 @@ const userInfo = null;
                 </div>
             </div>
             <div className="box-content">
-                <p className="title">
+                <p className="title-y">
                     Gọi mua hàng
                     <br/>
                     <strong>0396666666</strong>
@@ -69,7 +69,7 @@ const userInfo = null;
                     </div>
                 </div>
                 <div className="box-content">
-                    <p className="title">
+                    <p className="title-y">
                         Tra cứu
                         <br />
                         đơn hàng
@@ -85,7 +85,7 @@ const userInfo = null;
                   </div>
               </div>
               <div className="box-content">
-                  <p className="title">
+                  <p className="title-y">
                       Giỏ&nbsp;
                       <br />
                       hàng
@@ -108,7 +108,7 @@ const userInfo = null;
                             </div>
                         </div>
                         <div className="box-content">
-                            <span className="title">Đăng xuất</span>
+                            <span className="title-y">Đăng xuất</span>
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ const userInfo = null;
                                 </div>
                             </div>
                             <div className="box-content">
-                                <span className="title">Đăng nhập</span>
+                                <span className="title-y">Đăng nhập</span>
                             </div>
                         </div>
                     </div>

@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import ProductDisplay from '../../components/ProductDisplay/ProductDisplay';
 
 
-import data_product from '../../components/Assets/data';
+import all_products from '../../components/Assets/all_product';
 import DescriptionProduct from '../../components/DescriptionProduct/DescriptionProduct';
 
 function Product() {
   const {productId} = useParams();
-  const product = data_product.find((item) => item.id === Number(productId))
+  const product = all_products.find((item) => item.id === Number(productId))
 
   return (
     <div className='product'>
