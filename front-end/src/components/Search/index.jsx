@@ -7,6 +7,7 @@ import HeadlessTippy  from '@tippyjs/react/headless';
 import ItemSearch from '../ItemSearch/ItemSearch'
 import all_products from '../Assets/all_product'
 
+
 function Search(){
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -53,7 +54,7 @@ function Search(){
                             id={item.id}
                             name={item.name} 
                             image={item.images[0]} 
-                            new_price={item.new_price} 
+                            sale={item.sale} 
                             old_price={item.old_price} 
                         />
                       </div>

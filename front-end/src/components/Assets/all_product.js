@@ -18,18 +18,18 @@ const all_products = [
     "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
     "rating": 4.5,
     "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
-    "new_price": 13000000,
     "old_price": 18000000,
+    "sale": 25,
     "category": "Phone",
     "brand": {
       "name": "Apple",
       "image": apple,
     },
     "variants": [
-      {"color": "Đen", "price": 13000000, "memory": "128GB"},
-      {"color": "Trắng", "price": 13000000, "memory": "128GB"},
-      {"color": "Xanh dương", "price": 13000000, "memory": "128GB"},
-      {"color": "Hồng", "price": 13500000, "memory": "128GB"},],
+      {"color": "Đen", "sale": 20},
+      {"color": "Trắng", "sale": 20},
+      {"color": "Xanh dương", "sale": 20},
+      {"color": "Hồng", "sale": 15}],
     "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
     " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
     "Giá sản phẩm đã bao gồm VAT."],
@@ -38,11 +38,11 @@ const all_products = [
 
   {
     "id": 2,
-    "name": "Điện Thoại AI - Samsung Galaxy S24 Plus - 12GB/256GB - Chính Hãng",
+    "name": "Điện Thoại Samsung Galaxy S24 Plus - 12GB/256GB - Chính Hãng",
     "rating": 4.5,
     "images": [s24p_tim, s24p_den, s24p_vang, s24p_xam],
-    "new_price": 10000000,
     "old_price": 15000000,
+    "sale": 20,
     "category": "Phone",
     "brand": {
       "name": "Samsung",
@@ -65,8 +65,8 @@ const all_products = [
     "name": "MacBook Air M2 13.6(16GB/256GB) - Chính hãng Apple Việt Nam",
     "rating": 3.5,
     "images": [mac_air_m2_gray, mac_air_m2_silver],
-    "new_price": 23000000,
     "old_price": 28000000,
+    "sale": 20,
     "category": "Laptop",
     "brand": {
       "name": "Apple",

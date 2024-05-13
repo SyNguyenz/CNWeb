@@ -13,8 +13,6 @@
 .search .input-y {
   outline: none;
   height: 32px;
-  border-radius: 2px;
-  border-color: #fff;
 
 }
 
@@ -32,10 +30,9 @@
 }
 
 .search .input-btn .button-y:hover {
-  background-color: green;
+  background-color: var(--main-color1);
 }
 .search-results {
   max-height: 500px; /* Set the maximum height for the search results container */
   overflow-y: auto; /* Enable vertical scrolling when content overflows */
 }
-
