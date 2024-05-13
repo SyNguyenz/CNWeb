@@ -26,6 +26,7 @@
 
 .popular .swiper-container {
     padding: .5rem !important;
+    overflow-x: hidden;
 }
 
 .popular .swiper-slide {

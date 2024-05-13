@@ -7,6 +7,7 @@ import Footer from './components/Footer'
 // Import Pages
 import Home from './pages/Home';
 import Product from './pages/Product/Product'
+import LoginPage from './pages/Login';
 
 function App() {
   return (
@@ -15,8 +16,9 @@ function App() {
         <Header />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path='/product' element={<Product />}>
-            <Route path=':productId' element={<Product />} />
+          <Route path=':productId' element={<Product />} />
           </Route>
         </Routes>
         <Footer />
