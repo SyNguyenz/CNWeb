@@ -49,10 +49,10 @@ const all_products = [
       "image": samsung,
     },
     "variants": [
-      {"color": "Tím cà thơi", "price": 10000000},
-      {"color": "Đen", "price": 10500000},
-      {"color": "Vàng", "price": 10000000},
-      {"color": "Xám", "price": 10000000},
+      {"color": "Tím cà thơi", "sale": 15},
+      {"color": "Đen", "sale": 20},
+      {"color": "Vàng", "sale": 20},
+      {"color": "Xám", "sale": 20},
       
     ],
     "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
@@ -73,8 +73,8 @@ const all_products = [
       "image": apple,
     },
     "variants": [
-      {"color": "Gray", "price": 23600000},
-      {"color": "Silver", "price": 23000000},
+      {"color": "Gray", "sale": 17},
+      {"color": "Silver", "sale": 20},
     ],
     "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
     " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
