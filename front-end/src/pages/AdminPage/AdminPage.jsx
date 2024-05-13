@@ -32,7 +32,7 @@ const items = [
 //   return key;
 // };
 // const levelKeys = getLevelKeys(items);
-const App = () => {
+const Admin = () => {
   const [keySelected, setKeySelected] = useState('users');
 
   const handleOnClick = ({ item, key, keyPath, domEvent }) => {
@@ -72,4 +72,4 @@ const App = () => {
     </div>
   );
 };
-export default App;
+export default Admin;
