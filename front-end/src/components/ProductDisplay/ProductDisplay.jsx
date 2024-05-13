@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-
 import './ProductDisplay.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import ProductRating from '../ProductRating/ProductRating';
 
 function ProductDisplay(props) {
     const {product} = props;
@@ -20,11 +20,22 @@ function ProductDisplay(props) {
       setSelectedVariantIndex(index); 
       setIndex(index); 
     };
+    
 
   return (
     <div className='productdisplay'>
         <div className="box-product-detail">
             <div className="box-product-detail__left">
+                <div className="box-header">
+                    <div className="box-product-name">
+                        <h1>{product.name}</h1>
+                    </div>
+                    <div className="box-rating">
+                        <ProductRating rating = {product.rating}/>
+                        &nbsp;100 đánh giá
+                    </div>
+            </div>
+              
                 <div className="box-gallery">
                     <div className="gallery-slide swiper-container">
                         <div 
@@ -79,30 +90,6 @@ function ProductDisplay(props) {
                 </div>
             </div>
             <div className="box-product-detail__right">
-                <div className="box-header">
-                    <div className="box-product-name">
-                        <h1>{product.name}</h1>
-                    </div>
-                    <div className="box-rating">
-                        <div className="star-icon">
-                            <FontAwesomeIcon icon={faStar} />
-                        </div>
-                        <div className="star-icon">
-                            <FontAwesomeIcon icon={faStar} />
-                        </div>
-                        <div className="star-icon">
-                            <FontAwesomeIcon icon={faStar} />
-                        </div>
-                        <div className="star-icon">
-                            <FontAwesomeIcon icon={faStar} />
-                        </div>
-                        <div className="star-icon">
-                            <FontAwesomeIcon icon={faStar} />
-                        </div>
-                        &nbsp;100 đánh giá
-                    </div>
-                </div>
-                <hr />
                  <div className="box-price1">
       <p className="item-price-new">{formatPrice(product.variants[selectedVariantIndex].price)}</p>
       <p className="item-price-old">{formatPrice(product.old_price)}</p>
@@ -115,7 +102,7 @@ function ProductDisplay(props) {
             </div>
                 <div className="box-product-variants">
                     <div className="box-title">
-                        <p>Chọn phiên bản để xem giá chi tiết</p>
+                        <p>Chọn màu sắc để xem giá chi tiết</p>
                     </div>
                     <div className="box-content">
                      <ul className="list-variants">
@@ -137,7 +124,18 @@ function ProductDisplay(props) {
                    </ul>
                     </div>
                 </div>
-                
+                <div className="box-order-btn">
+                    <button onClick className="order-btn">
+                        <Link to='/cart'>
+                            <strong>MUA NGAY</strong>
+                            <span>(Thanh toán khi nhận hàng hoặc nhận tại cửa hàng)</span>
+                        </Link>
+                    </button>
+                    <button onClick className="add-to-cart-btn">
+                        <FontAwesomeIcon icon={faCartPlus} />
+                        <span>Thêm vào giỏ</span>
+                    </button>
+                </div>
                 
             </div>
         </div>

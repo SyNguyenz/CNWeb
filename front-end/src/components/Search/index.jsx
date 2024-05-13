@@ -5,14 +5,14 @@ import { faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons'
 import "./Search.css"
 import HeadlessTippy  from '@tippyjs/react/headless';
 import ItemSearch from '../ItemSearch/ItemSearch'
-import data_product from '../Assets/data'
+import all_products from '../Assets/all_product'
 
 function Search(){
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
-
+    const data_product = all_products;
     const handleClear = () => {
         setSearchValue('');
         setSearchResult([]);
@@ -66,8 +66,8 @@ function Search(){
             >
             <div className="search">
              <div>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <input
+              <form className="form-y"onSubmit={(e) => e.preventDefault()}>
+                <input className="input-y"
                   ref={inputRef}
                   value={searchValue}
                   placeholder="Tìm kiếm..."
@@ -78,7 +78,7 @@ function Search(){
               </form>
             </div>
               <div className="input-btn">
-                 <button type="submit" onMouseDown={(e) => e.preventDefault()}>
+                 <button className = "button-y" type="submit" onMouseDown={(e) => e.preventDefault()}>
                          <FontAwesomeIcon icon={faMagnifyingGlass} height={40}/>    
                  </button>
               </div>

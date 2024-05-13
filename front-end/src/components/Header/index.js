@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBagShopping, faCircleUser, faList, faPhoneVolume, faTruckField } from '@fortawesome/free-solid-svg-icons'
 import HeadlessTippy  from '@tippyjs/react/headless';
 import MenuBar from "../MenuBar/MenuBar";
+import 'tippy.js/dist/tippy.css'; 
 
 
 function Header() {
@@ -25,8 +26,10 @@ const userInfo = null;
           </span>
         </div>
         <HeadlessTippy
+         visible={isMenu}
          interactive
          placement="bottom"
+         onClickOutside={() => setIsMenu(false)} 
          delay={[0,700]}
          render={(attrs) => (
              <div className="menuBar" tabIndex="-1" {...attrs}>    
@@ -34,7 +37,7 @@ const userInfo = null;
              </div>
          )}
         >
-            <div className="menu-list1">
+            <div className="menu-list1" onClick={() => setIsMenu(!isMenu)}>
               <div className='my-icon'>
                 <FontAwesomeIcon icon={faList}/>  </div>
               <div className="box-content">
@@ -52,7 +55,7 @@ const userInfo = null;
                 </div>
             </div>
             <div className="box-content">
-                <p className="title">
+                <p className="title-y">
                     Gọi mua hàng
                     <br/>
                     <strong>0396666666</strong>
@@ -66,7 +69,7 @@ const userInfo = null;
                     </div>
                 </div>
                 <div className="box-content">
-                    <p className="title">
+                    <p className="title-y">
                         Tra cứu
                         <br />
                         đơn hàng
@@ -82,7 +85,7 @@ const userInfo = null;
                   </div>
               </div>
               <div className="box-content">
-                  <p className="title">
+                  <p className="title-y">
                       Giỏ&nbsp;
                       <br />
                       hàng
@@ -105,7 +108,7 @@ const userInfo = null;
                             </div>
                         </div>
                         <div className="box-content">
-                            <span className="title">Đăng xuất</span>
+                            <span className="title-y">Đăng xuất</span>
                         </div>
                     </div>
                 </div>
@@ -118,7 +121,7 @@ const userInfo = null;
                                 </div>
                             </div>
                             <div className="box-content">
-                                <span className="title">Đăng nhập</span>
+                                <span className="title-y">Đăng nhập</span>
                             </div>
                         </div>
                     </div>

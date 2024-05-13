@@ -25,12 +25,12 @@
 }   
 
 .popular .swiper-container {
-    padding: .5rem !important;
+    padding: 0.5rem !important;
     overflow-x: hidden;
 }
 
 .popular .swiper-slide {
-    width: 224.8px;
+    min-width: 224.8px;
     margin-right: 10px;
 }
 
@@ -39,9 +39,7 @@
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
     height: auto;
 }
-.product-list-swiper .swiper-container .swiper-wrapper{
-    display: flex;
-}
+
 
 .product-list-swiper .swiper-container .swiper-button-prev, .product-list-swiper .swiper-container .swiper-button-next {
     align-items: center;
@@ -107,27 +105,24 @@
     width: calc(20% - 6px);
 }
 /* Hiển thị 5 sản phẩm trên màn hình có độ phân giải tối đa là 1400px */
-@media (max-width: 1400px) {
+@media (max-width: 1200px) {
     .popular .swiper-slide {
-        width: calc(20% - 6px);
+        width: calc(25% - 7.5px);
     }    
 }
 
-/* Hiển thị 4 sản phẩm trên màn hình có độ phân giải tối đa là 990px */
 @media (max-width: 990px) {
     .popular .swiper-slide {
-        width: calc(25% - 6px);
+        width: calc(33.33333% - 6.66667px);
     }    
 }
 
-/* Hiển thị 3 sản phẩm trên màn hình có độ phân giải tối đa là 717px */
 @media (max-width: 717px) {
     .popular .swiper-slide {
-        width: calc(33.33333% - 5px);
+        width: calc(50% - 5px);
     }
 }
 
-/* Đối với màn hình có độ phân giải tối đa là 540px, điều chỉnh kích thước font cho tiêu đề sản phẩm */
 @media (max-width: 540px) {
     .popular .product-list-title .title {
         font-size: 16px;

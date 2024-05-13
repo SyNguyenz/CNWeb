@@ -3,7 +3,7 @@ import './Popular.css'
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import data_product from '../Assets/data.js'
+import all_products from '../Assets/all_product.js'
 import Item from '../Item/Item'
 
 function Popular() {
@@ -12,14 +12,14 @@ function Popular() {
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-
+  const data_product = all_products;
 
   useEffect(() => {
     const handleOffset = () => {
       const element = elementRef.current;
       let containerWidth;
       
-      if (window.innerWidth > 1400) {
+      if (window.innerWidth > 1200) {
         setOffset(index * 234.8);
         setMaxIndex((data_product.length - 5));
       } 
@@ -51,7 +51,7 @@ function Popular() {
 
   useEffect(() => {
     if (index < -maxIndex) {
-      if (window.innerWidth > 1400) {
+      if (window.innerWidth > 1200) {
         setIndex((data_product.length > 5) ? (-(data_product.length - 5)) : 0);
       } 
       else if (window.innerWidth > 990) {
@@ -84,7 +84,7 @@ function Popular() {
                   className="swiper-wrapper"
                   style={{ 
                     transform: `translateX(${offset}px)`,
-                    transitionDuration: '300ms'
+                    transitionDuration: '500ms'
                   }}
                 >
                   {data_product.map((item, index) => {
