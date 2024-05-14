@@ -10,10 +10,10 @@ import Highlighter from 'react-highlight-words';
 import AddProduct from "./AddProduct";
 import ProductDetails from "./ProductDetails";
 import { deleteProductAPI, getProductsAPI } from "./API";
-// import data from "./demoData";
+import data from "./demoData";
 
 const AdminProduct = () => {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(data);
   const [modalChild, setModalChild] = useState(null);
 
   useEffect(() => {
