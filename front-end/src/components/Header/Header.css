@@ -2,7 +2,7 @@
 .header {
     width: 100%;
     height: 80px;
-    background: #2c7826;
+    background: var(--main-color1);
     top: 0;
     z-index: 10000;
   
@@ -43,7 +43,7 @@
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
-    padding: 5px;
+    padding: 5px 25px 5px 25px;
     &:hover{
       cursor: pointer;
     }
@@ -99,7 +99,7 @@
   position: relative;
   top: 2px;
   color: white;
-  padding: 2px;
+  padding: 0px 5px 0px 0px;
 }
 
 .fa-h-24px {
@@ -108,13 +108,13 @@
 .count {
   align-items: center;
   bottom: 15%;
-  color: green;
+  color: var(--main-color1);
   display: flex;
   font-size: 14px;
   font-weight: 700;
   height: 20px;
   justify-content: center;
-  left: 8%;
+  left: 6%;
   position: absolute;
   width: 20px;
 }
@@ -132,25 +132,25 @@
   background: hsla(0, 0%, 100%, .2);
 }
 
-/* PC */
 
-@media only screen and (min-width: 2000px) {
+@media only screen and (min-width: 1200px) {
     .menu {
         max-width: auto;
         padding: 0 10px;
         width: 100% !important;
     }
-  
+    .search input {
+      width: 300px;
+  }
 }
 /* Tablet */
-@media only screen and (max-width: 1199px) and (min-width: 740px ) {
-    .search input {
+@media only screen and (max-width: 1199px) and (min-width: 850px) {
+  .search input {
         width: 250px;
     }
-
     .about-delivery-tracking {
-        display: none;
-    }
+      display: none;
+  }
     .about-contact{
       display: none;
     }
@@ -158,15 +158,15 @@
       display: none;
     }
     .menu{
-      gap: 20px;
+      gap: 30px;
     }
 }
 
 /* Mobile*/
 
-@media screen and (max-width: 739px) {
+@media screen and (max-width: 849px) {
    .search input {
-        width: 220px;
+        width: 250px;
     }
 
     .about-delivery-tracking {

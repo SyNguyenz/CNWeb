@@ -72,7 +72,7 @@ function Category(props) {
                 id={product.id}
                 name={product.name}
                 image={product.images[0]}
-                new_price={product.new_price}
+                sale={product.sale}
                 old_price={product.old_price}
               />
             )

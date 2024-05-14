@@ -8,7 +8,7 @@ function ItemSearch(props) {
     let priceString = price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     return priceString.replace(/\s/g, '');
   }
-
+  const discountPrice = props.old_price * (1 - props.sale/100);
   return (
     <div className='item1'>
       <div className="item-info">
@@ -20,7 +20,7 @@ function ItemSearch(props) {
             <h3>{props.name}</h3>
           </div>
           <div className="box-price">
-            <p className="item-price-new">{formatPrice(props.new_price)}</p>
+            <p className="item-price-new">{formatPrice(discountPrice)}</p>
             <p className="item-price-old">{formatPrice(props.old_price)}</p>   
           </div>
         </Link>
