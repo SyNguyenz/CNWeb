@@ -22,7 +22,7 @@ const userInfo = null;
         <div className="logo">
           <img src={logo} alt="" />
           <span className="about-name">
-            <Link to="/about"> <b>TECH STORE </b></Link>
+            <Link to="/"> <b>TECH STORE </b></Link>
           </span>
         </div>
         <HeadlessTippy
@@ -78,7 +78,7 @@ const userInfo = null;
             </a>
         <div className="menu-list">
           <div className="shop-cart">
-              <Link to="/cart" className="shop-cart">
+              <Link to="/order" className="shop-cart">
               <div className="box-icon">
                   <div className='my-icon'>
                       <FontAwesomeIcon icon={faBagShopping} className='fa-h-24px' />

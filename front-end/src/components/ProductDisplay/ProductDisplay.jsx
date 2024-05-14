@@ -5,10 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import ProductRating from '../ProductRating/ProductRating';
+import { useCart } from '../CartContext/CartContext';
 
 function ProductDisplay(props) {
     const {product} = props;
     const [index, setIndex] = useState(0);
+    const { addToCart } = useCart();
 
     const formatPrice = (price) => {
         let priceString = price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -19,6 +21,14 @@ function ProductDisplay(props) {
     const handleVariantClick = (index) => {
       setSelectedVariantIndex(index); 
       setIndex(index); 
+    };
+    const handleAddToCart = () => {
+        if (selectedVariantIndex !== null) {
+            const selectedVariant = product.variants[selectedVariantIndex];
+            addToCart({ ...product, selectedVariant });
+        } else {
+            alert("Vui lòng chọn phân loại trước khi thêm vào giỏ hàng!");
+        }
     };
     
 
@@ -126,12 +136,12 @@ function ProductDisplay(props) {
                 </div>
                 <div className="box-order-btn">
                     <button onClick className="order-btn">
-                        <Link to='/cart'>
+                        <Link to='/order'>
                             <strong>MUA NGAY</strong>
                             <span>(Thanh toán khi nhận hàng hoặc nhận tại cửa hàng)</span>
                         </Link>
                     </button>
-                    <button onClick className="add-to-cart-btn">
+                    <button onClick={handleAddToCart} className="add-to-cart-btn">
                         <FontAwesomeIcon icon={faCartPlus} />
                         <span>Thêm vào giỏ</span>
                     </button>
