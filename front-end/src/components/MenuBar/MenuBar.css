@@ -1,9 +1,9 @@
 .menu-bar {
-    width: 100vw;
-    background-color: #f0f0f0;
+    width: 110vw;
+    background-color: #fff;
     display: flex;
     flex-direction: row;
-    margin-top: 10px;
+    margin-top: 11px;
 
   }
   
@@ -15,27 +15,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 50px;
+    padding: 0px 40px;
   }
   
   .category-icon {
-    margin-right: 10px;
-    width: 40px;
-    height: 40px;
+    margin: 10px;
+    width: 20px;
+    height: 20px;
     text-align: center;
 
   }
   .icon {
     height: 24px;
-    color: grey;
+    color: var(--main-color2);
   }
   
   .item-link {
-    color: #333;
+    color: var(--main-color2);
+    font-size: 14px;
+
   }
   
   .right-icon {
-    color: #666;
+    color: var(--color4);
   }
   .right-icon svg {
     width: 16px;

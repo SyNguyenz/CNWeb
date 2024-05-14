@@ -70,7 +70,7 @@
 }
 
 .box-price .item-price-new {
-    color: #d70018;
+    color: var(--color7);
     display: inline-block;
     font-size: 18px;
     font-weight: 700;
@@ -82,7 +82,7 @@
 }
 
 .box-price .item-price-old {
-    color: #707070;
+    color: #444;
     display: inline-block;
     font-size: 14px;
     font-weight: 600;
@@ -137,7 +137,7 @@
 
 .item .item-info a .item-promotions .promotion {
     align-items: flex-start;
-    background: #f3f4f6;
+    background-color: var(--color4);
     border: 1px solid #e5e7eb;
     border-radius: 5px;
     display: flex;

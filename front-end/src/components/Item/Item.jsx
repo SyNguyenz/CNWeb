@@ -10,6 +10,8 @@ function Item(props) {
     let priceString = price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
     return priceString.replace(/\s/g, '');
   }
+  const discountPrice = props.old_price * (1 - props.sale/100);
+
   return (
     <div className='item'>
       <div className="item-info">
@@ -21,14 +23,11 @@ function Item(props) {
             <h3>{props.name}</h3>
           </div>
           <div className="box-price">
-            <p className="item-price-new">{formatPrice(props.new_price)}</p>
+            <p className="item-price-new">{formatPrice(discountPrice)}</p>
             <p className="item-price-old">{formatPrice(props.old_price)}</p>
             <div className="item-price-percent">
-              <p className="item-price-percent-detail">
-                Giảm &nbsp;
-                {
-                  (100 - props.new_price / props.old_price * 100).toFixed(0)
-                }
+              <p className="item-price-percent-detail">Giảm {' '}
+               {props.sale}
                 %
               </p>
             </div>

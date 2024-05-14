@@ -5,13 +5,12 @@
 
 #footer{
     width: 100%;
-    margin: 0;
-    
-    background: #fafafa
+    margin: 0; 
+    background: var(--bg-color);
 }
 
 .footer{
-    width: 80%;
+    width: 90%;
     margin: auto;
     color: white;
 }
@@ -29,23 +28,24 @@
     padding: .5rem 0;
 }
 .footer-top li a{
-    color: #d70018;
+    color: var(--main-color2);
     font-weight: 500;
 }
 
 .footer-top-name h2{
     font-size: 26px;
-    color: #333;
+    color: var(--main-color1);
     padding: 1rem 0;
     text-transform: uppercase;
-    width: 150px;
+    width: 100px;
 }
 .footer-top-about h2, .footer-top-sp h2, .footer-top-delivery h2{
     text-transform: uppercase;
-
-    padding: 1rem 0;
-    color: #333;
+    color: var(--main-color1);
     margin: 0;
+    font-size: 20px;
+
+
 
 }
 .footer-top-about img{
@@ -55,7 +55,7 @@
 .footer-top-sp p{
     margin: 0;
     padding: .5rem 0;
-    color: #d70018;
+    color: var(--main-color2);
     font-weight: 500;
 }
 .footer-bot{

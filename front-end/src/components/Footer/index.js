@@ -12,16 +12,16 @@ function Footer(props) {
                         <h2>about</h2>
                         <ul>
                             <li>
-                                <a>Về Chúng Tôi</a>
+                                <a>- Về Chúng Tôi</a>
                             </li>
                             <li>
-                                <a>Blog</a>
+                                <a>- Blog</a>
                             </li>
                             <li>
-                                <a>Cơ Hội Nghề Nghiệp</a>
+                                <a>- Cơ Hội Nghề Nghiệp</a>
                             </li>
                             <li>
-                                <a>Cửa Hàng</a>
+                                <a>- Cửa Hàng</a>
                             </li>
                         
                         </ul>
@@ -35,17 +35,15 @@ function Footer(props) {
                         <h2>Delivery</h2>
                         <ul>
                             <li>
-                                <a>Shipping methods</a>
+                                <a>- Shipping methods</a>
                             </li>
                             <li>
-                                <a>Payment</a>
+                                <a>- Payment</a>
                             </li>
                             <li>
-                                <a>Cash voucher</a>
+                                <a>- Cash voucher</a>
                             </li>
-                            <li>
-                                <a>Shipping methods</a>
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
