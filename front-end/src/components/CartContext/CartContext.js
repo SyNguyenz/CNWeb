@@ -15,26 +15,15 @@ export const CartProvider = ({ children }) => {
                         : cartItem
                 );
             } else {
-                return [...prevCart, { ...item, quantity: item.quantity || 1 }];
+                const newPrice = item.old_price * (1 - item.selectedVariant.sale / 100);
+                return [...prevCart, { ...item, quantity: item.quantity || 1 ,newPrice}];
             }
         });
     };
 
     const removeFromCart = (item) => {
         setCart((prevCart) => {
-            const existingItem = prevCart.find(cartItem => cartItem.id === item.id);
-            if (existingItem) {
-                if (existingItem.quantity > 1) {
-                    return prevCart.map(cartItem =>
-                        cartItem.id === item.id
-                            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-                            : cartItem
-                    );
-                } else {
-                    return prevCart.filter(cartItem => cartItem.id !== item.id);
-                }
-            }
-            return prevCart;
+            return prevCart.filter(cartItem => cartItem.id !== item.id);
         });
     };
 

@@ -25,6 +25,7 @@ function ProductDisplay(props) {
     const handleAddToCart = () => {
         if (selectedVariantIndex !== null) {
             const selectedVariant = product.variants[selectedVariantIndex];
+            
             addToCart({ ...product, selectedVariant });
         } else {
             alert("Vui lòng chọn phân loại trước khi thêm vào giỏ hàng!");
