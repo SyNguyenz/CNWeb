@@ -15,7 +15,7 @@ function Item(props) {
   return (
     <div className='item'>
       <div className="item-info">
-        <Link to={`/Product/${props.id}`}>
+        <Link to={`/product/${props.id}`}>
           <div className="item-image">
             <img src={props.image} alt={props.name} />
           </div>
@@ -35,7 +35,7 @@ function Item(props) {
           <div className="item-promotions">
             <div className="promotion">
               <p className="coupon-price">
-                Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng
+                 Ưu đãi trả góp 0% lãi suất - 0% phí chuyển đổi
               </p>
             </div>
           </div>

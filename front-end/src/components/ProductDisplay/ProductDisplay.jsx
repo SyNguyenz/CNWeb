@@ -35,7 +35,6 @@ function ProductDisplay(props) {
                         &nbsp;100 đánh giá
                     </div>
             </div>
-              
                 <div className="box-gallery">
                     <div className="gallery-slide swiper-container">
                         <div 
