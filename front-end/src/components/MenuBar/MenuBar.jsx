@@ -2,8 +2,10 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './MenuBar.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight, faMobilePhone, faLaptop, faTablet, faTv, faHeadphones, faHomeLg, faHomeUser, faHouseChimney, faHouseLaptop } from '@fortawesome/free-solid-svg-icons'
-
+import { faChevronRight, faMobilePhone, faLaptop, faTv, faHeadphones, faHouseLaptop } from '@fortawesome/free-solid-svg-icons'
+import fridgeIcon from '../Assets/refrigerator.svg'
+import washerIcon from '../Assets/washer.svg'
+import airConditionerIcon from '../Assets/air-conditioner.svg'
 function MenuBar() {
   return (
     <>
@@ -39,13 +41,43 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/tablet'>
+          <Link to='/fridge'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
-                  <FontAwesomeIcon icon={faTablet} className='icon' />
+                  <img src={fridgeIcon} alt="" />
                 </div>
-                <span className='item-link'>Tablet</span>
+                <span className='item-link'>Tủ lạnh</span>
+              </div>
+              <div className='right-icon'>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="label-menu-bar">
+          <Link to='/washer'>
+            <div className="label-item">
+              <div className="item-content">
+                <div className="category-icon">
+                  <img src={washerIcon} alt="" />
+                </div>
+                <span className='item-link'>Máy giặt</span>
+              </div>
+              <div className='right-icon'>
+                <FontAwesomeIcon icon={faChevronRight} />
+              </div>
+            </div>
+          </Link>
+        </div>
+        <div className="label-menu-bar">
+          <Link to='/air-conditioner'>
+            <div className="label-item">
+              <div className="item-content">
+                <div className="category-icon">
+                  <img src={airConditionerIcon} alt="" />
+                </div>
+                <span className='item-link'>Điều hoà</span>
               </div>
               <div className='right-icon'>
                 <FontAwesomeIcon icon={faChevronRight} />
