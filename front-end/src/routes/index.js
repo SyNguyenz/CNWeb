@@ -7,6 +7,7 @@ import Admin from '../pages/AdminPage/AdminPage';
 import userLayout from '../pages/userLayout/userLayout';
 import adminLayout from '../pages/AdminPage/adminLayout';
 import Category from '../pages/Category/Category'
+import Checkout from '../pages/Checkout/Checkout';
 
 
 // public Routes
@@ -20,6 +21,7 @@ const publicRoutes=[
     {path: '/admin', component: Admin, layout: adminLayout},
     {path: '/phone', component: Category, layout: userLayout, childPath: ':brandName', category: 'Phone'},
     {path: '/laptop', component: Category, layout: userLayout, childPath: ':brandName', category: 'Laptop'},
+    {path: '/checkout', component: Checkout, layout: userLayout},
 ];
 
 const privateRoutes=[

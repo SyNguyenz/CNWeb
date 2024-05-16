@@ -410,6 +410,10 @@
     line-height: 1.5;
     position: relative;
     vertical-align: top;
+    
+}
+.box-order-btn .add-to-cart-btn:hover{
+    background-color: rgb(232, 230, 230);
 }
 
 .box-order-btn .add-to-cart-btn svg {

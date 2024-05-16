@@ -142,10 +142,13 @@ function ProductDisplay(props) {
                             <span>(Thanh toán khi nhận hàng hoặc nhận tại cửa hàng)</span>
                         </Link>
                     </button>
+                    <Link to='/order'>
                     <button onClick={handleAddToCart} className="add-to-cart-btn">
                         <FontAwesomeIcon icon={faCartPlus} />
                         <span>Thêm vào giỏ</span>
                     </button>
+                    </Link>
+                    
                 </div>
                 
             </div>

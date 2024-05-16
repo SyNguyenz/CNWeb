@@ -1,6 +1,7 @@
 .cart-page {
     padding: 20px;
     background-color: #f9f9f9;
+    min-height: 490px;
     
 }
 
@@ -28,6 +29,33 @@ h1{
     text-align: center;
     margin-bottom: 20px;
 }
+
+
+.checkbox-item-cb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    margin-right: 10px;
+    border: 2px solid #203347; /* Khung của checkbox */
+    border-radius: 4px;
+    background-color: #fff;
+}
+
+.checkbox-icon {
+    font-size: 24px;
+    color: #007bff;
+    opacity: 0; /* Ẩn icon mặc định */
+}
+
+.checkbox-item-cb.selected .checkbox-icon {
+    opacity: 1; /* Hiển thị icon khi được chọn */
+    
+}
+
+
 .cart-item img {
     max-width: 200px;
     margin-right: 20px;
@@ -68,10 +96,11 @@ h1{
     cursor: pointer;
     border-radius: 4px;
     width: 32px;
+    color: #2f3232;
 }
 
 .quantity-controls button:hover {
-    background-color: #2f3232;
+    background-color: #ced7d7;
 }
 
 .cart-item-details .quantity-controls {
@@ -127,12 +156,14 @@ p{
     margin-left: 20px;
     background-color: #aa580f;
     margin-top: 10px;
+    font-family: Futura;
     
 }
 .total-price{
     margin-top: 20px;
     background-color: #f0f0f0;
     color: #2f3232;
+    font-family:Futura;
     
 }
 .quantity-all{

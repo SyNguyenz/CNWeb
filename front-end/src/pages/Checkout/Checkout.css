@@ -1,0 +1,33 @@
+.checkout-page {
+    padding: 20px;
+}
+
+.checkout-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.checkout-item {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.checkout-item img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.checkout-item-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.checkout-total {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
