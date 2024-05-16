@@ -24,16 +24,17 @@ const all_products = [
     "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
     "old_price": 18000000,
     "sale": 25,
+    "quantity": 30,
     "category": "Phone",
     "brand": {
       "name": "Apple",
       "image": apple,
     },
     "variants": [
-      {"color": "Đen", "sale": 20},
-      {"color": "Trắng", "sale": 20},
-      {"color": "Xanh dương", "sale": 20},
-      {"color": "Hồng", "sale": 15}],
+      {"color": "Đen", "sale": 20,  "quantity": 30,},
+      {"color": "Trắng", "sale": 20, "quantity": 20,},
+      {"color": "Xanh dương", "sale": 20,"quantity": 20,},
+      {"color": "Hồng", "sale": 15,  "quantity": 5,}],
     "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
     " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
     "Giá sản phẩm đã bao gồm VAT."],
@@ -47,6 +48,7 @@ const all_products = [
     "images": [s24p_tim, s24p_den, s24p_vang, s24p_xam],
     "old_price": 15000000,
     "sale": 20,
+    "quantity": 30,
     "category": "Phone",
     "brand": {
       "name": "Samsung",
@@ -71,6 +73,7 @@ const all_products = [
     "images": [mac_air_m2_gray, mac_air_m2_silver],
     "old_price": 28000000,
     "sale": 20,
+    "quantity": 30,
     "category": "Laptop",
     "brand": {
       "name": "Apple",
@@ -92,6 +95,7 @@ const all_products = [
       "images": [fridge_ss_382,fridge_ss_382_1,fridge_ss_382_2,fridge_ss_382_3],
       "old_price": 28000000,
       "sale": 20,
+      "quantity": 30,
       "category": "Fridge",
       "brand": {
         "name": "Samsung",

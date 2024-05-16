@@ -16,9 +16,9 @@ function Product() {
   });
   return (
     <div className='product'>
-{product && <ProductDisplay product={product} />}
-<DescriptionProduct product={product} />
-<CommentAndRating product={product} />
+          {product && <ProductDisplay product={product} />}
+          <DescriptionProduct product={product} />
+          <CommentAndRating product={product} />
  
     </div>
   )

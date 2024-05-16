@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import './CommentAndRating.css';
 import axios from 'axios'; 
 import ReactStars from 'react-rating-stars-component';
@@ -12,6 +12,7 @@ const CommentAndRating = ({product}) => {
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };
+  
 /* useEffect(() => {
    if (product.id) {
      axios.get(`http://localhost:5000/products/${product.id}/comments`)
@@ -25,6 +26,7 @@ const CommentAndRating = ({product}) => {
     const filteredComments = product_comments.filter(comment => comment.product_id === product.id);
     setComments(filteredComments);
   }
+
 }, [product.id]);
 
   const handleSubmit = (event) => {
@@ -41,12 +43,16 @@ const CommentAndRating = ({product}) => {
     })
     .catch(error => console.error(error));
 };
+
+
   return (
-    <div>
+    <div id="reviews-section">
         <div className="rating-form">
             <div className="name-product">
                 <h3>Nội dung đánh giá sản phẩm { product.name }</h3>
                   <div className = "rating-average">
+                  <p> Stars:  {product.rating}</p>
+
                     <ProductRating rating = {product.rating}/> 
                    <p> / 100 đánh giá </p> 
                   </div>

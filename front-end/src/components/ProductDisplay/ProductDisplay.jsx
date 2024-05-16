@@ -2,13 +2,24 @@ import React, { useContext, useState } from 'react'
 import './ProductDisplay.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faCartArrowDown, faCartPlus, faChevronLeft, faChevronRight, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import ProductRating from '../ProductRating/ProductRating';
 
 function ProductDisplay(props) {
     const {product} = props;
     const [index, setIndex] = useState(0);
+    const [quantity, setQuantity] = useState(1);
+
+
+    const handleIncrease = () => {
+        setQuantity(prevQuantity => Math.min(prevQuantity + 1,product.variants[selectedVariantIndex].quantity ));
+    };
+
+    const handleDecrease = () => {
+        setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1));
+    };
+
 
     const formatPrice = (price) => {
         let priceString = price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
@@ -20,6 +31,7 @@ function ProductDisplay(props) {
       setSelectedVariantIndex(index); 
       setIndex(index); 
     };
+  
     
 
   return (
@@ -31,8 +43,10 @@ function ProductDisplay(props) {
                         <h1>{product.name}</h1>
                     </div>
                     <div className="box-rating">
-                        <ProductRating rating = {product.rating}/>
-                        &nbsp;100 đánh giá
+                        <a href="#reviews-section" className="a-review">
+                        <ProductRating rating={product.rating} />&nbsp;100 đánh giá
+                        </a>
+
                     </div>
             </div>
                 <div className="box-gallery">
@@ -89,19 +103,19 @@ function ProductDisplay(props) {
                 </div>
             </div>
             <div className="box-product-detail__right">
-                 <div className="box-price1">
-      <p className="item-price-new">{formatPrice(product.old_price * (1 - product.variants[selectedVariantIndex].sale/100))}</p>
-      <p className="item-price-old">{formatPrice(product.old_price)}</p>
-      <div className="item-price-percent">
-        <p className="item-rice-percent-detail">
-          Giảm &nbsp;
-          {product.variants[selectedVariantIndex].sale}%
-        </p>
-      </div>
-            </div>
+                <div className="box-price1">
+                   <p className="item-price-new">{formatPrice(product.old_price * (1 - product.variants[selectedVariantIndex].sale/100))}</p>
+                   <p className="item-price-old">{formatPrice(product.old_price)}</p>
+                   <div className="item-price-percent">
+                     <p className="item-rice-percent-detail">
+                       Giảm &nbsp;
+                       {product.variants[selectedVariantIndex].sale}%
+                     </p>
+                   </div>
+                </div>
                 <div className="box-product-variants">
                     <div className="box-title">
-                        <p>Chọn màu sắc để xem giá chi tiết</p>
+                        <p className = "p-20px"> Chọn màu sắc để xem giá chi tiết</p>
                     </div>
                     <div className="box-content">
                      <ul className="list-variants">
@@ -123,6 +137,15 @@ function ProductDisplay(props) {
                    </ul>
                     </div>
                 </div>
+                <div className="add-quantity">
+                    <p className = "p-20px"> Số Lượng: </p>
+                    <div className="button-quantity">
+                        <button className = "button-minus" onClick={handleDecrease}>-</button>
+                        <span className = "span-product">{quantity}</span>
+                        <button className = "button-plus" onClick={handleIncrease}>+</button>
+                    </div>
+                    <p className="p-14px">{product.variants[selectedVariantIndex].quantity} sản phẩm có sẵn</p>
+                </div>
                 <div className="box-order-btn">
                     <button onClick className="order-btn">
                         <Link to='/cart'>
@@ -131,7 +154,7 @@ function ProductDisplay(props) {
                         </Link>
                     </button>
                     <button onClick className="add-to-cart-btn">
-                        <FontAwesomeIcon icon={faCartPlus} />
+                        <FontAwesomeIcon icon={faCartArrowDown} />
                         <span>Thêm vào giỏ</span>
                     </button>
                 </div>

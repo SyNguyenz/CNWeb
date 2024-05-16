@@ -30,6 +30,9 @@ function Item(props) {
                {props.sale}
                 %
               </p>
+              <div className="cover-item">
+                <span>TRẢ GÓP 0%</span>
+              </div>
             </div>
           </div>
           <div className="item-promotions">
@@ -39,6 +42,7 @@ function Item(props) {
               </p>
             </div>
           </div>
+          
         </Link>
       </div>
       <div className="bottom-div">
