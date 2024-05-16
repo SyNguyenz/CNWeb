@@ -97,6 +97,7 @@ function Popular() {
                             image={item.images[0]}
                             old_price={item.old_price} 
                             sale={item.sale} 
+                            rating={item.rating}
                         />
                       </div>
                     )

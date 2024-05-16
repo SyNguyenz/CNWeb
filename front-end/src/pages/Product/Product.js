@@ -5,6 +5,7 @@ import './Product.css'
 
 import all_products from '../../components/Assets/all_product';
 import DescriptionProduct from '../../components/DescriptionProduct/DescriptionProduct';
+import CommentAndRating from '../../components/CommentAndRating/CommentAndRating';
 
 function Product() {
   const {productId} = useParams();
@@ -17,6 +18,7 @@ function Product() {
     <div className='product'>
 {product && <ProductDisplay product={product} />}
 <DescriptionProduct product={product} />
+<CommentAndRating product={product} />
  
     </div>
   )

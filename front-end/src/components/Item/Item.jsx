@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import './Item.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import ProductRating from '../ProductRating/ProductRating.js';
 
 function Item(props) {
   const formatPrice = (price) => {
@@ -42,23 +42,7 @@ function Item(props) {
         </Link>
       </div>
       <div className="bottom-div">
-        <div className="item-rating">
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-        </div>
+          <ProductRating rating = {props.rating}/>
       </div>
     </div>
   )

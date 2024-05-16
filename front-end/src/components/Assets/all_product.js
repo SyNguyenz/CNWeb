@@ -92,13 +92,14 @@ const all_products = [
       "images": [fridge_ss_382,fridge_ss_382_1,fridge_ss_382_2,fridge_ss_382_3],
       "old_price": 28000000,
       "sale": 20,
-      "category": "Laptop",
+      "category": "Fridge",
       "brand": {
         "name": "Samsung",
         "image": samsung,
       },
       "variants": [
-        
+        {"color": "Gray", "sale": 17},
+        {"color": "Silver", "sale": 20},
       ],
       "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
       " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",

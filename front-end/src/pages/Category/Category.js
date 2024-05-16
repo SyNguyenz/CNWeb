@@ -74,6 +74,7 @@ function Category(props) {
                 image={product.images[0]}
                 sale={product.sale}
                 old_price={product.old_price}
+                rating={product.rating}
               />
             )
           })}
