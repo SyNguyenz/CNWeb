@@ -15,7 +15,7 @@ function Product() {
     window.scrollTo(0, 0);
   });
   return (
-    <div className='product'>
+    <div className='product-container'>
           {product && <ProductDisplay product={product} />}
           <DescriptionProduct product={product} />
           <CommentAndRating product={product} />

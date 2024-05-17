@@ -40,14 +40,15 @@ const all_products = [
     "Giá sản phẩm đã bao gồm VAT."],
     "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"]
     },
+ 
 
   {
     "id": 2,
     "name": "Điện Thoại Samsung Galaxy S24 Plus - 12GB/256GB - Chính Hãng",
     "rating": 4.5,
     "images": [s24p_tim, s24p_den, s24p_vang, s24p_xam],
-    "old_price": 15000000,
-    "sale": 20,
+    "old_price": 25000000,
+    "sale": 50,
     "quantity": 30,
     "category": "Phone",
     "brand": {
@@ -110,9 +111,30 @@ const all_products = [
       "Giá sản phẩm đã bao gồm VAT."],
       "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"]
       },
-      
+      {
+        "id": 5,
+        "name": "Điện thoại iPhone 20 (128GB) - Chính hãng VN/A",
+        "rating": 4.5,
+        "images": [ iphone13_white, iphone13_blue, iphone13_pink],
+        "old_price": 100000000,
+        "sale": 20,
+        "quantity": 30,
+        "category": "Phone",
+        "brand": {
+          "name": "Apple",
+          "image": apple,
+        },
+        "variants": [
+          {"color": "Đen", "sale": 20,  "quantity": 30,},
+          {"color": "Trắng", "sale": 20, "quantity": 20,},
+          {"color": "Xanh dương", "sale": 20,"quantity": 20,},
+          {"color": "Hồng", "sale": 15,  "quantity": 5,}],
+        "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
+        " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
+        "Giá sản phẩm đã bao gồm VAT."],
+        "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"]
+        },
     
-  
 
 ];
 

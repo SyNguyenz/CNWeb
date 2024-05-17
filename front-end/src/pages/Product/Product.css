@@ -1,0 +1,19 @@
+.product-container {
+    box-sizing: border-box;
+    display: block;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+    width: 1200px;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+
+
+@media (max-width: 1200px) {
+    .product-container {
+        max-width: 1200px !important;
+        width: 100% !important;
+    }
+}
