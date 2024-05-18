@@ -25,26 +25,28 @@ const userInfo = null;
             <Link to="/"> <b>TECH STORE </b></Link>
           </span>
         </div>
-        <HeadlessTippy
-         visible={isMenu}
-         interactive
-         placement="bottom"
-         onClickOutside={() => setIsMenu(false)} 
-         delay={[0,700]}
-         render={(attrs) => (
-             <div className="menuBar" tabIndex="-1" {...attrs}>    
-             <MenuBar/>         
-             </div>
-         )}
-        >
-            <div className="menu-list1" onClick={() => setIsMenu(!isMenu)}>
-              <div className='my-icon'>
-                <FontAwesomeIcon icon={faList}/>  </div>
-              <div className="box-content">
-                  <p> DANH MỤC </p>
-              </div>
-            </div>
-        </HeadlessTippy>
+        
+            <HeadlessTippy
+            visible={isMenu}
+            interactive
+            placement="bottom-end"
+            onClickOutside={() => setIsMenu(false)} 
+            delay={[0,700]}
+            render={(attrs) => (
+                <div className="menuBar" tabIndex="-1" {...attrs}>    
+                <MenuBar/>         
+                </div>
+            )}
+            >
+                <div className="menu-list1" onClick={() => setIsMenu(!isMenu)}>
+                <div className='my-icon'>
+                    <FontAwesomeIcon icon={faList}/>  </div>
+                <div className="box-content">
+                    <p> DANH MỤC </p>
+                </div>
+                </div>
+            </HeadlessTippy>
+        
         <div className="menu-list">
           <Search/>
         </div>
@@ -62,7 +64,7 @@ const userInfo = null;
                 </p>
             </div>
         </a>
-        <a className="about-delivery-tracking">
+        <Link to="/check" className="about-delivery-tracking">
                 <div className="box-icon">
                     <div className='my-icon'>
                         <FontAwesomeIcon icon={faTruckField} className='fa-h-24px' />
@@ -75,7 +77,7 @@ const userInfo = null;
                         đơn hàng
                     </p>
                 </div>
-            </a>
+            </Link>
         <div className="menu-list">
           <div className="shop-cart">
               <Link to="/order" className="shop-cart">
@@ -93,27 +95,18 @@ const userInfo = null;
                   <span className="count"> 0 </span>
               </div>        
               </Link>
-              {localStorage.getItem('auth-token')
-                ?<div 
-                    className="login-btn"
-                    onClick={() => {
-                        localStorage.removeItem('auth-token');
-                        window.location.replace('/');
-                    }}
-                >
-                    <div className="header-item about-member">
-                        <div className="box-icon">
-                            <div className="my-icon">
-                                <FontAwesomeIcon icon={faCircleUser} className='avatar' />
-                            </div>
-                        </div>
-                        <div className="box-content">
-                            <span className="title-y">Đăng xuất</span>
-                        </div>
-                    </div>
-                </div>
-                :<Link to='/login'>
-                    <div className="login-btn">
+
+          </div>
+        </div>
+              <div>
+                {localStorage.getItem('auth-token')
+                    ?<div 
+                        className="login-btn"
+                        onClick={() => {
+                            localStorage.removeItem('auth-token');
+                            window.location.replace('/');
+                        }}
+                    >
                         <div className="header-item about-member">
                             <div className="box-icon">
                                 <div className="my-icon">
@@ -121,14 +114,26 @@ const userInfo = null;
                                 </div>
                             </div>
                             <div className="box-content">
-                                <span className="title-y">Đăng nhập</span>
+                                <span className="title-y">Đăng xuất</span>
                             </div>
                         </div>
                     </div>
-                </Link>
-                } 
-          </div>
-        </div>
+                    :<Link to='/login'>
+                        <div className="login-btn">
+                            <div className="header-item about-member">
+                                <div className="box-icon">
+                                    <div className="my-icon">
+                                        <FontAwesomeIcon icon={faCircleUser} className='avatar' />
+                                    </div>
+                                </div>
+                                <div className="box-content">
+                                    <span className="title-y">Đăng nhập</span>
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                    } 
+              </div>
       </div>
     </div>
   );

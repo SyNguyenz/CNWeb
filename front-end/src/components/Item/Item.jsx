@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
 import './Item.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import ProductRating from '../ProductRating/ProductRating.js';
 
 function Item(props) {
   const formatPrice = (price) => {
@@ -15,7 +15,7 @@ function Item(props) {
   return (
     <div className='item'>
       <div className="item-info">
-        <Link to={`/Product/${props.id}`}>
+        <Link to={`/product/${props.id}`}>
           <div className="item-image">
             <img src={props.image} alt={props.name} />
           </div>
@@ -30,35 +30,23 @@ function Item(props) {
                {props.sale}
                 %
               </p>
+              <div className="cover-item">
+                <span>TRẢ GÓP 0%</span>
+              </div>
             </div>
           </div>
           <div className="item-promotions">
             <div className="promotion">
               <p className="coupon-price">
-                Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng
+                 Ưu đãi trả góp 0% lãi suất - 0% phí chuyển đổi
               </p>
             </div>
           </div>
+          
         </Link>
       </div>
       <div className="bottom-div">
-        <div className="item-rating">
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-          <div className="icon-star">
-            <FontAwesomeIcon icon={faStar} />
-          </div>
-        </div>
+          <ProductRating rating = {props.rating}/>
       </div>
     </div>
   )

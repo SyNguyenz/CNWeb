@@ -1,15 +1,15 @@
-.popular {
-    margin-bottom: 10px;
+.related-products {
+    margin-bottom: 160px;
     min-height: 250px;
 }
 
-.popular .product-list-title {
+.related-products .product-list-title {
     margin-bottom: 2px;
     display: flex !important;
     flex-wrap: wrap !important;
 }
 
-.popular .product-list-title .title {
+.related-products .product-list-title .title {
     display: block;
     color: #363636;
     font-size: 22px;
@@ -19,18 +19,18 @@
     white-space: nowrap;
 }
 
-.popular .product-list-title .title h2 {
+.related-products .product-list-title .title h2 {
     font-size: 100%;
     color: #444;
+    font-weight: 600;
 }   
 
-.popular .swiper-container {
-    padding: 0.5rem !important;
-    overflow-x: hidden;
+.related-products .swiper-container {
+    padding: .5rem !important;
 }
 
-.popular .swiper-slide {
-    min-width: 240px;
+.related-products .swiper-slide {
+    width: 224.8px;
     margin-right: 10px;
 }
 
@@ -39,7 +39,6 @@
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
     height: auto;
 }
-
 
 .product-list-swiper .swiper-container .swiper-button-prev, .product-list-swiper .swiper-container .swiper-button-next {
     align-items: center;
@@ -101,30 +100,27 @@
     font-size: 24px;
     font-weight: 600;
 }
-.popular .swiper-slide {
-    width: calc(20% - 6px);
-}
-/* Hiển thị 5 sản phẩm trên màn hình có độ phân giải tối đa là 1400px */
+
 @media (max-width: 1200px) {
-    .popular .swiper-slide {
+    .related-products .swiper-slide {
         width: calc(25% - 7.5px);
     }    
 }
 
 @media (max-width: 990px) {
-    .popular .swiper-slide {
+    .related-products .swiper-slide {
         width: calc(33.33333% - 6.66667px);
     }    
 }
 
 @media (max-width: 717px) {
-    .popular .swiper-slide {
+    .related-products .swiper-slide {
         width: calc(50% - 5px);
     }
 }
 
 @media (max-width: 540px) {
-    .popular .product-list-title .title {
+    .related-products .product-list-title .title {
         font-size: 16px;
     }
 }

@@ -1,8 +1,6 @@
-.home {
+.product-container {
     position: relative;
     border-radius: 8px;
-    min-height: calc(100vh - 600px);
-    box-sizing: border-box;
     display: block;
     height: 100%;
     margin: auto;
@@ -10,16 +8,9 @@
     padding: 69px 20px 10px 20px;
 
 }
-
 @media (max-width: 1200px) {
-    .home {
-        max-width: 1200px;
+    .product-container {
+        max-width: 1200px !important;
         width: 100% !important;
-    }
-}
-
-@media (max-width: 800px) {
-    .home {
-        margin-bottom: 80px;
     }
 }

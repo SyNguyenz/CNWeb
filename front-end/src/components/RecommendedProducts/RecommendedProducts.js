@@ -1,18 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './Popular.css'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import Item from '../Item/Item'
+import './RecommendedProducts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import all_products from '../Assets/all_product.js'
-import Item from '../Item/Item'
-
-function Popular() {
+import all_products from '../Assets/all_product';
+function RecommendedProducts({ category, productId }) {
+  const relatedProducts = all_products.filter((item) => item.category === category && item.id !== productId).slice(0, 8);
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(0);
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-  const data_product = all_products;
 
   useEffect(() => {
     const handleOffset = () => {
@@ -21,19 +19,19 @@ function Popular() {
       
       if (window.innerWidth > 1200) {
         setOffset(index * 234.8);
-        setMaxIndex((data_product.length - 5));
+        setMaxIndex((relatedProducts.length - 5));
       } 
       else if (window.innerWidth > 990) {
         setOffset(index * (width / 4 + 2.5));
-        setMaxIndex((data_product.length - 4));
+        setMaxIndex((relatedProducts.length - 4));
       }
       else if (window.innerWidth > 717) {
         setOffset(index * (width / 3 + 3.33333));
-        setMaxIndex((data_product.length - 3));
+        setMaxIndex((relatedProducts.length - 3));
       }
       else {
         setOffset(index * (width / 2 + 5));
-        setMaxIndex((data_product.length - 2));
+        setMaxIndex((relatedProducts.length - 2));
       }
 
       if (element) {
@@ -47,34 +45,33 @@ function Popular() {
     window.addEventListener('resize', handleOffset);
 
     return () => window.removeEventListener('resize', handleOffset);
-  }, [index, width, data_product.length]);
+  }, [index, width, relatedProducts.length]);
 
   useEffect(() => {
     if (index < -maxIndex) {
       if (window.innerWidth > 1200) {
-        setIndex((data_product.length > 5) ? (-(data_product.length - 5)) : 0);
+        setIndex((relatedProducts.length > 5) ? (-(relatedProducts.length - 5)) : 0);
       } 
       else if (window.innerWidth > 990) {
-        setIndex((data_product.length > 4) ? (-(data_product.length - 4)) : 0);
+        setIndex((relatedProducts.length > 4) ? (-(relatedProducts.length - 4)) : 0);
       }
       else if (window.innerWidth > 717) {
-        setIndex((data_product.length > 3) ? (-(data_product.length - 3)) : 0);
+        setIndex((relatedProducts.length > 3) ? (-(relatedProducts.length - 3)) : 0);
       }
       else {
-        setIndex((data_product.length > 2) ? (-(data_product.length - 2)) : 0);
+        setIndex((relatedProducts.length > 2) ? (-(relatedProducts.length - 2)) : 0);
       }
     }
- 
   }, [maxIndex, index])
 
   return (
     <>
-      {(data_product.length > 0) && 
-        <div className='popular'>
+      {(relatedProducts.length > 0) && 
+        <div className='related-products'>
           <div className="product-list-title">
-            <Link to = '/' className='title'>
-                <h2> HOT SALE</h2>
-            </Link>
+            <a className='title'>
+              <h2>SẢN PHẨM TƯƠNG TỰ</h2>
+            </a>
           </div>
           <div className="product-list">
             <div className="product-list-swiper">
@@ -84,20 +81,19 @@ function Popular() {
                   className="swiper-wrapper"
                   style={{ 
                     transform: `translateX(${offset}px)`,
-                    transitionDuration: '500ms'
+                    transitionDuration: '300ms'
                   }}
                 >
-                  {data_product.map((item, index) => {
+                  {relatedProducts.map((product, index) => {
                     return (
                       <div key={index} className="swiper-slide">
                         <Item 
-                            key={index} 
-                            id={item.id}
-                            name={item.name} 
-                            image={item.images[0]}
-                            old_price={item.old_price} 
-                            sale={item.sale} 
-                            rating={item.rating}
+                          id={product.id}
+                          name={product.name}
+                          image={product.images[0]}
+                          sale={product.sale}
+                          old_price={product.old_price}
+                          rating={product.rating}
                         />
                       </div>
                     )
@@ -126,4 +122,4 @@ function Popular() {
   )
 }
 
-export default Popular;
+export default RecommendedProducts

@@ -1,3 +1,4 @@
+
 .box-product-detail{
     padding: 3em 2em 2em 2em;
 }
@@ -34,6 +35,12 @@
     align-items: center;
     font-size: 14px;
     gap: 3px;
+}
+.a-review{
+    color: var(--main-color2);
+    display: flex;
+    margin: 5px;
+    padding: 5px;
 }
 
 .box-rating .star-icon {
@@ -225,12 +232,7 @@
     margin-bottom: 20px;
 }
 
-.box-product-variants .box-title p {
-    color: #444;
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
+
 
 .box-product-variants .list-variants {
     display: flex;
@@ -289,6 +291,8 @@
 .box-product-variants .list-variants .item-variant a span, .box-product-variants .list-variants .item-variant a strong {
     color: #444;
     text-align: left;
+    font-weight: 700;
+
 }
 
 .item-variant.selected{
@@ -356,8 +360,10 @@
     margin-top: .75rem !important;
     margin-bottom: .75rem !important;
     display: flex !important;
-    justify-content: center !important;
+    justify-content: flex-start;
     gap: 10px;
+
+
 }
 
 .box-order-btn button {
@@ -370,13 +376,13 @@
     justify-content: center !important;
     background: linear-gradient(var(--color7), var(--main-color1));
     border: none;
-    border-radius: 10px;
+    border-radius: 13px;
     color: #fff;
     flex-direction: column;
     height: 50px;
     margin-bottom: 10px;
     outline: none;
-    width: calc(100% - 120px);
+    width: auto;
 }
 
 .box-order-btn .order-btn strong {
@@ -394,12 +400,11 @@
 .box-order-btn .add-to-cart-btn {
     background-color: initial;
     border: 2px solid var(--color7);
-    border-radius: 10px;
+    border-radius: 13px;
     flex-direction: column;
     height: 50px;
     width: 50px;
     justify-content: center;
-    padding: calc(.5em - 1px) 1em;
     text-align: center;
     white-space: nowrap;
     align-items: center;
@@ -420,7 +425,7 @@
     height: 30px;
     width: 30px;
     object-fit: contain;
-    color: var(--color1);
+    color: var(--color7);
 }
 
 .box-order-btn .add-to-cart-btn span {
@@ -429,6 +434,53 @@
     font-weight: 600;
     margin: 0;
     padding: 0;
+}
+.add-quantity {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.add-quantity .button-minus {
+    background-color: var(--bg-color);
+    border: 1px solid var(--main-color2);
+    padding: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+}
+.add-quantity .button-plus {
+    background-color: var(--bg-color);
+    border: 1px solid var(--main-color2);
+    padding: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+.button-quantity{
+    padding-left: 10px;
+}
+
+.add-quantity .span-product {
+    margin: 0 15px;
+    font-size: 16px;
+}
+.p-20px{
+    margin-top: 20px;
+    font-size: 18px;
+    color: #444;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+.p-14px{
+    margin-top: 20px;
+    font-size: 14px;
+    color: #444;
+    font-weight: 700;
+    margin-bottom: 20px;
 }
 
  
