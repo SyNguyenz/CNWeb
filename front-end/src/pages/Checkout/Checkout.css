@@ -1,23 +1,92 @@
-.checkout-page {
+/* Checkout.css */
+
+/* Container for the whole checkout page */
+.checkout-container {
     padding: 20px;
 }
 
+.checkout-page {
+    padding: 20px;
+    margin-left: 300px;
+    margin-right: 300px;
+    border: 2px rgb(127, 126, 124);
+    border-radius: 4px;
+    box-shadow:0px 2px 4px rgb(195, 195, 195);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styles for the form elements */
+
+.receiver-inf {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    
+}
+.form-group {
+    display: flex;
+    flex-direction: row;
+    
+}
+.form-group-inf input{
+    width: 440px;
+}
+.form-group-inf-address input {
+    width: 920px;
+}
+
+
+input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: calc(100% - 16px);
+}
+
+/* Styles for the checkout items */
 .checkout-items {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    border-color: #a9a9a9;
+    border-radius: 4px;
+    box-shadow:0px 2px 4px rgb(195, 195, 195);
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .checkout-item {
     display: flex;
     gap: 20px;
+    height: 170px;
     align-items: center;
+    border-color: #0f0f0f;
+    border-radius: 8px;
+    border-width: 2px;
+    background-color: #e3dfdf58;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    
 }
 
 .checkout-item img {
-    width: 100px;
-    height: 100px;
+    margin-left: 10px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
+    border: 1px solid rgb(137, 141, 158);
+    border-radius: 5px;
 }
 
 .checkout-item-details {
@@ -28,6 +97,34 @@
 
 .checkout-total {
     margin-top: 20px;
-    font-size: 1.5rem;
+    font-size: 22px;
     font-weight: bold;
+}
+
+.btn-complete-order, .btn-go-home {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-complete-order {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-go-home {
+    background-color: #007bff;
+    color: #fff;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.btn-go-home:hover {
+    text-decoration: none;
+    color: #fff;
 }

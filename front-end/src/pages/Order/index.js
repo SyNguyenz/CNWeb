@@ -99,7 +99,13 @@ const Order = () => {
                                 </div>
                             </div>
                         ))}
-                        <button className='check-out-button' onClick={handleCheckout}>Thanh toán</button>
+                        <div className='bottom-order'>
+                            
+                            <Link to ='/'>
+                                <button >Chọn thêm sản phẩm</button>
+                            </Link>
+                            <button  onClick={handleCheckout}>Tới trang thanh toán</button>
+                        </div>
                     </div>
                 )}
             </div>

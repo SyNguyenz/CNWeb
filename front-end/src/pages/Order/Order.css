@@ -44,6 +44,9 @@ h1{
     background-color: #fff;
 }
 
+.checkbox-item-cb:hover{
+    background-color: #b8d1cb;
+}
 .checkbox-icon {
     font-size: 24px;
     color: #007bff;
@@ -100,7 +103,7 @@ h1{
 }
 
 .quantity-controls button:hover {
-    background-color: #ced7d7;
+    background-color: #b6b8b8;
 }
 
 .cart-item-details .quantity-controls {
@@ -121,7 +124,7 @@ h1{
     margin-top: 20px;
     display: inline-block;
     padding: 10px 20px;
-    background-color: #28a745;
+    background-color: #038c83;
     color: white;
     border: none;
     border-radius: 4px;
@@ -130,7 +133,7 @@ h1{
 }
 
 .btn-go-home:hover {
-    background-color: #218838;
+    background-color: #06b9ad;
 }
 .icon-container{
     margin-bottom: 20px;
@@ -159,6 +162,9 @@ p{
     font-family: Futura;
     
 }
+.delete-product:hover{
+    background-color: #d26c12;
+}
 .total-price{
     margin-top: 20px;
     background-color: #f0f0f0;
@@ -169,4 +175,21 @@ p{
 .quantity-all{
     display: flex;
     align-items: center;
+}
+.bottom-order{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 250px;
+    margin-right: 250px;
+}
+.bottom-order button{
+    width: 260px;
+    background-color: #038c83;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+.bottom-order button:hover{
+    background-color: #0bbdb8;
+    
 }
