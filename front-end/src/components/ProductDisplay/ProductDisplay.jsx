@@ -166,6 +166,7 @@ function ProductDisplay(props) {
                     </button>
                     <button onClick className="add-to-cart-btn">
                         <FontAwesomeIcon icon={faCartArrowDown} />
+                    </button>
                     <Link to='/order'>
                     <button onClick={handleAddToCart} className="add-to-cart-btn">
                         <FontAwesomeIcon icon={faCartPlus} />
