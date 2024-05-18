@@ -1,5 +1,4 @@
 services:
   - name: backend
-    buildCommand: "sudo usermod -aG docker Synz
-                  docker build --no-process-sandbox -t CNWeb ."
+    buildCommand: "docker build --no-process-sandbox -t CNWeb ."
     startCommand: "docker run -p 7006:80 CNWeb"
