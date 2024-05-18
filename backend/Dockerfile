@@ -7,7 +7,7 @@ RUN dotnet restore "backend/backend.csproj"
 
 COPY . .
 
-RUN chmod -R 777 /src/backend # Change permissions for the destination directory
+RUN chmod -R 777 /src/backend/bin/Release/net8.0/backend # Change permissions for the destination directory
 # Build and publish the project
 FROM build AS publish
 WORKDIR /src/backend
