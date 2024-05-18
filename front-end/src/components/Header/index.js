@@ -64,7 +64,7 @@ const userInfo = null;
                 </p>
             </div>
         </a>
-        <a className="about-delivery-tracking">
+        <Link to="/check" className="about-delivery-tracking">
                 <div className="box-icon">
                     <div className='my-icon'>
                         <FontAwesomeIcon icon={faTruckField} className='fa-h-24px' />
@@ -77,7 +77,7 @@ const userInfo = null;
                         đơn hàng
                     </p>
                 </div>
-            </a>
+            </Link>
         <div className="menu-list">
           <div className="shop-cart">
               <Link to="/cart" className="shop-cart">

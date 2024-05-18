@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import Home from './pages/Home/Home';
 import Product from './pages/Product/Product'
 import Category from './pages/Category/Category'
+import CheckOrder from './pages/CheckOrder/CheckOrder';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path=':brandName' element={<Category category="Laptop" />} />
           </Route>
           <Route path='/' element={<Home />} />
+          <Route path='/check' element={<CheckOrder />} />
           <Route path='/product' element={<Product />}>
             <Route path=':productId' element={<Product />} />
           </Route>
