@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517174648_fixProductFormat")]
+    partial class fixProductFormat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,6 +217,9 @@ namespace backend.Migrations
                     b.Property<double>("Gia")
                         .HasColumnType("float");
 
+                    b.Property<byte>("GiamGia")
+                        .HasColumnType("tinyint");
+
                     b.Property<string>("HangSanXuat")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -221,6 +227,9 @@ namespace backend.Migrations
                     b.Property<string>("LoaiHangHoa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoLuongTon")
+                        .HasColumnType("int");
 
                     b.Property<int>("Star1")
                         .HasColumnType("int");
@@ -241,10 +250,6 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("ThongSo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ThongTin")
                         .IsRequired()
@@ -386,15 +391,13 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("image")
+                    b.Property<string>("details")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("sale")
-                        .HasColumnType("tinyint");
+                    b.Property<string>("image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 

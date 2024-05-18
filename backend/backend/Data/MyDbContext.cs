@@ -1,8 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using backend.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Data
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext<User>
     {
         public MyDbContext(DbContextOptions options) : base(options) { }
 
@@ -12,11 +15,11 @@ namespace backend.Data
         public DbSet<HangHoa> HangHoas { get; set;}
         public DbSet<DonHang> DonHangs { get; set;}
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set;}
-        public DbSet<Admin> Admins { get; set;}
-        public DbSet<User> Users { get; set; }
+        public override DbSet<User> Users { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<DonHang>(e =>
             {
                 e.ToTable("DonHang");
@@ -38,25 +41,20 @@ namespace backend.Data
                 .HasForeignKey(e => e.MaHangHoa)
                 .HasConstraintName("FK_ChiTietDonHang_HangHoa");
             });
-            modelBuilder.Entity<Admin>(e =>
-            {
-                e.ToTable("Admin");
-                e.HasKey(e => e.Id);
-                e.Property(e => e.Id)
-                .ValueGeneratedOnAdd();
-                e.HasIndex(e => e.Account).IsUnique();
-                e.Property(e => e.Password).IsRequired();
-            });
             modelBuilder.Entity<User>(e =>
             {
                 e.ToTable("Users");
-                e.HasKey(e => e.UserId);
-                e.Property(e => e.UserId)
-                .UseIdentityColumn();
+                e.HasKey(e => e.Id);
+                e.Property(e => e.PhoneNumber).IsRequired();
                 e.HasIndex(e => e.PhoneNumber).IsUnique();
                 e.Property(e => e.UserName).IsRequired();
                 e.Property(e => e.Password).IsRequired();
+                e.Property(e => e.DiaChi).IsRequired();
             });
+            modelBuilder.Entity<HangHoa>()
+                .HasMany(h => h.Variants)
+                .WithOne();
+            modelBuilder.Entity<VariantModel>().HasKey(e => e.id);
         }
     }
 }

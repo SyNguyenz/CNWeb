@@ -10,7 +10,7 @@
         public DateTime NgayDat { get; set; }
         public DateTime? NgayGiao { get; set; }
         public int TinhTrangDonHang { get; set; }
-        public int UserId {  get; set; }
+        public string UserId {  get; set; }
         public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public DonHang()
         {

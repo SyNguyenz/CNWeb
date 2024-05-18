@@ -1,0 +1,27 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln.docstates
+*.sln.ide
+*.ncrunchsolution
+*.buildlog
+*.ide
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.opendb
+
+# Các thư mục tạm thời
+bin/
+obj/
+
+# Các tệp hệ thống
+*.swp
+*.db
+*.log
+*.DS_Store
+
+# Các tệp khác
+*.log

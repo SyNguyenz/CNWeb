@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using backend.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Data
@@ -16,15 +17,12 @@ namespace backend.Data
         [Required]
         public string LoaiHangHoa { get; set; }
 
+        public string HangSanXuat { get; set; }
         public string ThongTin { get; set; }
+        public string ThongSo { get; set; }
 
         [Range(0, double.MaxValue)]
         public double Gia { get; set; }
-
-        public byte GiamGia { get; set; }
-
-        [Required]
-        public int SoLuongTon { get; set; }
 
         public int Star5 { get; set; }
 
@@ -39,7 +37,7 @@ namespace backend.Data
                 if (totalStars == 0)
                 {
                     // Tránh chia cho 0
-                    return 0;
+                    return 5;
                 }
                 else
                 {
@@ -50,13 +48,13 @@ namespace backend.Data
             }
         }
 
-        public ICollection<string> img {  get; set; }
+        public ICollection<VariantModel> Variants {  get; set; }
 
         public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public HangHoa()
         {
             ChiTietDonHangs = new List<ChiTietDonHang>();
-            img = new List<string>();
+            Variants = new List<VariantModel>();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using backend.Data;
 
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240517144834_reroll")]
+    partial class reroll
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,13 +217,15 @@ namespace backend.Migrations
                     b.Property<double>("Gia")
                         .HasColumnType("float");
 
-                    b.Property<string>("HangSanXuat")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte>("GiamGia")
+                        .HasColumnType("tinyint");
 
                     b.Property<string>("LoaiHangHoa")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SoLuongTon")
+                        .HasColumnType("int");
 
                     b.Property<int>("Star1")
                         .HasColumnType("int");
@@ -242,11 +247,11 @@ namespace backend.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("ThongSo")
+                    b.Property<string>("ThongTin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ThongTin")
+                    b.Property<string>("img")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -371,38 +376,6 @@ namespace backend.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("backend.Models.VariantModel", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<Guid?>("HangHoaMaHangHoa")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("color")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("image")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
-
-                    b.Property<byte>("sale")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("HangHoaMaHangHoa");
-
-                    b.ToTable("VariantModel");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -486,13 +459,6 @@ namespace backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("backend.Models.VariantModel", b =>
-                {
-                    b.HasOne("backend.Data.HangHoa", null)
-                        .WithMany("Variants")
-                        .HasForeignKey("HangHoaMaHangHoa");
-                });
-
             modelBuilder.Entity("backend.Data.DonHang", b =>
                 {
                     b.Navigation("ChiTietDonHangs");
@@ -501,8 +467,6 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Data.HangHoa", b =>
                 {
                     b.Navigation("ChiTietDonHangs");
-
-                    b.Navigation("Variants");
                 });
 #pragma warning restore 612, 618
         }

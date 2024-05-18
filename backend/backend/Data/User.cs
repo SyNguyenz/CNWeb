@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace backend.Data
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        public int UserId { get; set; }
-        public string UserName { get; set; }
+        public override string UserName { get; set; }
         [Required]
         [StringLength(10, MinimumLength = 9)]
-        public string PhoneNumber { get; set; }
+        public override string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string DiaChi { get; set; }
     }

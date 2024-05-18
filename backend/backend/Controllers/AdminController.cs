@@ -1,91 +1,128 @@
 ﻿using backend.Data;
+using backend.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using System.Numerics;
+using System.Reflection.Metadata.Ecma335;
 
 namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    //[Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
         private readonly MyDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public AdminController(MyDbContext context)
+        public AdminController(MyDbContext context, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager; 
         }
         [HttpGet]
-        public IActionResult Get(int? id)
+        public async Task<IActionResult> Get(string? id)
         {
-            if (id.HasValue)
+            var admin = await _userManager.GetUsersInRoleAsync("Admin");
+            if (!string.IsNullOrEmpty(id))
             {
-                var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
-                if (admin == null)
+                foreach (var a in admin)
                 {
-                    return NotFound();
+                    if (a.Id == id) return Ok(a);
                 }
-                return Ok(admin);
+                return NotFound();
             }
             else
             {
-                return Ok(_context.Admins);
+                return Ok(admin);
             }
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Admin a)
+        public async Task<IActionResult> Post([FromBody] User model)
         {
-            if (string.IsNullOrEmpty(a.Name) || string.IsNullOrEmpty(a.Account) || string.IsNullOrEmpty(a.Password))
+            var existingUser = _context.Users.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber);
+            if (existingUser != null)
             {
-                return BadRequest("Name or Account or Password cannot be null or empty.");
+                return Conflict(); // Trả về mã lỗi 409 nếu người dùng đã tồn tại
             }
 
-            Admin admin = new Admin
+            var user = new User
             {
-                Name = a.Name,
-                Account = a.Account,
-                Password = a.Password
+                PhoneNumber = model.PhoneNumber,
+                Password = model.Password,
+                DiaChi = model.DiaChi,
+                UserName = model.UserName
             };
 
-            _context.Admins.Add(admin);
+            _context.Users.Add(user);
             _context.SaveChanges();
 
-            // Return the created Admin object if needed
-            return Ok(_context.Admins);
+            await AssignAdminRole(user.Id);
+
+            return CreatedAtAction(nameof(Get), new { id = user.Id }, user); // Trả về mã lỗi 201 nếu thành công
         }
 
+        
+
         [HttpPut("{id}")]
-        public IActionResult UpdateAdmin(int id, [FromBody] Admin a)
+        public IActionResult UpdateAdmin(string id, [FromBody] User a)
         {
-            var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
+            var admin = _context.Users.FirstOrDefault(a => a.Id == id);
             if(admin == null)
             {
                 return NotFound();
             }
             else
             {
-                admin.Name = a.Name;
-                admin.Account = a.Account;
+                admin.UserName = a.UserName;
+                admin.PhoneNumber = a.PhoneNumber;
                 admin.Password = a.Password;
+                admin.DiaChi = a.DiaChi;
                 _context.SaveChanges();
                 return Ok(admin);
             }
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteAdmin(int id)
+        public IActionResult DeleteAdmin(string id)
         {
-            var admin = _context.Admins.FirstOrDefault(a => a.Id == id);
+            var admin = _context.Users.FirstOrDefault(a => a.Id == id);
             if (admin == null)
             {
                 return NotFound();
             }
             else
             {
-                _context.Admins.Remove(admin);
+                _context.Users.Remove(admin);
                 _context.SaveChanges(); 
                 return Ok(admin);
             }
         }
 
+        [HttpPost("AssignAdmin")]
+        public async Task<IActionResult> AssignAdminRole(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                var result = await _userManager.AddToRoleAsync(user, "admin");
+
+                return Ok(result);
+            }
+            else
+            {
+                // Xử lý khi không tìm thấy người dùng
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "User Not Found",
+                });
+            }
+        }
     }
 }

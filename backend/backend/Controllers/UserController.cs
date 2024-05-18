@@ -2,6 +2,7 @@
 using backend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,18 +20,22 @@ namespace backend.Controllers
     public class UserController : ControllerBase
     {
         private readonly MyDbContext _context;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly string _appSettings;
 
-        public UserController(MyDbContext context, IConfiguration configuration)
+        public UserController(MyDbContext context, IConfiguration configuration, UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _context = context;
             _appSettings = configuration["AppSettings:SecretKey"];
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpPost("Login")]
         public async Task<IActionResult> Validate(LoginModel model)
         {
-            var user = _context.Users.SingleOrDefault(p => p.PhoneNumber == model.PhoneNumber);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.PhoneNumber);
             if (user == null)
             {
                 return Ok(new ApiResponse
@@ -40,7 +45,8 @@ namespace backend.Controllers
                 });
             }
 
-            if(user.Password != model.Password)
+            var result = await _userManager.CheckPasswordAsync(user, model.Password);
+            if (!result)
             {
                 return Ok(new ApiResponse
                 {
@@ -48,7 +54,6 @@ namespace backend.Controllers
                     Message = "Wrong password",
                 });
             }
-
             //cấp token
             var token = await GenerateToken(user);
 
@@ -59,6 +64,7 @@ namespace backend.Controllers
                 Data = token
             });
         }
+
 
         private async Task<TokenModel> GenerateToken(User User)
         {
@@ -72,7 +78,7 @@ namespace backend.Controllers
                     new Claim("UserName", User.UserName),
                     new Claim("PhoneNumber", User.PhoneNumber),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim("Id", User.UserId.ToString()),
+                    new Claim("Id", User.Id),
 
                     //roles
 
@@ -92,7 +98,7 @@ namespace backend.Controllers
                 Id = Guid.NewGuid(),
                 JwtId = token.Id,
                 Token = refreshToken,
-                UserId = User.UserId,
+                UserId = User.Id,
                 IsUsed = false,
                 IsRevoked = false,
                 IssueAt = DateTime.UtcNow,
@@ -216,7 +222,7 @@ namespace backend.Controllers
                 await _context.SaveChangesAsync();
 
                 //create new token
-                var user = await _context.Users.SingleOrDefaultAsync(x => x.UserId == storedToken.UserId);
+                var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == storedToken.UserId);
                 var token = await GenerateToken(user);
 
                 return Ok(new ApiResponse
@@ -272,30 +278,41 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser([FromBody] User model)
+        public async Task<IActionResult> AddUser([FromBody] UserModel model)
         {
             var existingUser = _context.Users.FirstOrDefault(u => u.PhoneNumber == model.PhoneNumber);
             if (existingUser != null)
             {
-                return Conflict(); // Trả về mã lỗi 409 nếu người dùng đã tồn tại
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "User existed",
+                    Data = existingUser
+                }); //nếu người dùng đã tồn tại
             }
 
             var user = new User
             {
                 PhoneNumber = model.PhoneNumber,
-                Password = model.Password,
                 DiaChi = model.DiaChi,
-                UserName = model.UserName
+                UserName = model.UserName,
+                Password = model.Password,
             };
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            var result = await _userManager.CreateAsync(user, user.Password);
 
-            return CreatedAtAction(nameof(Get), new { id = user.UserId }, user); // Trả về mã lỗi 201 nếu thành công
+            if (result.Succeeded)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] UserModel model)
+        public IActionResult UpdateUser(string id, [FromBody] UserModel model)
         {
             // Kiểm tra xem model có hợp lệ không
             if (!ModelState.IsValid)
@@ -304,7 +321,7 @@ namespace backend.Controllers
             }
 
             // Tìm người dùng trong cơ sở dữ liệu bằng ID
-            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy user với ID đã cung cấp
@@ -324,9 +341,9 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult DeleteUser(string id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
                 return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy người dùng với ID đã cung cấp

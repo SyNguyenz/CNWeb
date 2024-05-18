@@ -1,5 +1,7 @@
-﻿using backend.Data;
+﻿
+using backend.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -36,6 +38,26 @@ builder.Services.AddDbContext<MyDbContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("CNWeb"));
 });
 
+//Add indentity services
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredLength = 1;
+    options.Password.RequiredUniqueChars = 0;
+    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ăâêưôơđáàảãạắằẳẵặấầẩẫậéèẻẽẹếềểễệíìỉĩịóòỏõọốồổỗộớờởỡợúùủũụứừửữựýỳỷỹỵÁÀẢÃẠẮẰẲẴẶẤẦẨẪẬÉÈẺẼẸẾỀỂỄỆÍÌỈĨỊÓÒỎÕỌỐỒỔỖỘỚỜỞỠỢÚÙỦŨỤỨỪỬỮỰÝỲỶỸỴ";
+})
+                .AddEntityFrameworkStores<MyDbContext>()
+                .AddDefaultTokenProviders()
+                .AddSignInManager<SignInManager<User>>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.SignIn.RequireConfirmedEmail = false;
+});
 // Add CORS services
 builder.Services.AddCors(options =>
 {
@@ -46,7 +68,11 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+// Đăng ký RoleManager
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
+// Thêm vai trò "admin" nếu nó chưa tồn tại
+EnsureRoles(builder.Services.BuildServiceProvider()).GetAwaiter().GetResult();
 // Configure CORS
 var app = builder.Build();
 
@@ -68,3 +94,16 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+async Task EnsureRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    // Kiểm tra nếu vai trò "admin" đã tồn tại
+    var adminRoleExists = await roleManager.RoleExistsAsync("admin");
+    if (!adminRoleExists)
+    {
+        // Nếu không tồn tại, tạo mới vai trò "admin"
+        var adminRole = new IdentityRole("admin");
+        await roleManager.CreateAsync(adminRole);
+    }
+}
