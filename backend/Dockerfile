@@ -1,6 +1,7 @@
 # Use the .NET 8.0 SDK
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
+RUN sudo usermod -aG docker Synz
 WORKDIR /src
 
 # Copy only the project file and restore dependencies
@@ -10,7 +11,7 @@ RUN dotnet restore "backend/backend.csproj"
 # Copy the rest of the source code
 COPY . .
 
-WORKDIR "/app/backend"
+WORKDIR "/src/backend"
 RUN dotnet build "backend.csproj" -c Release -o /app/build
 
 FROM build AS publish
