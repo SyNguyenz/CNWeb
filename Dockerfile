@@ -16,8 +16,8 @@ COPY ["backend/backend/Properties/", "backend/"]
 COPY ["backend/backend/appsettings.Development.json", "backend/"]
 COPY ["backend/backend/appsettings.json", "backend/"]
 COPY ["backend/backend/backend.http", "backend/"]
-COPY ["backend/backend/program.cs", "backend/"]
-COPY ["backend/backend/backend.sln", "backend/"]
+COPY ["backend/backend/Program.cs", "backend/"]
+COPY ["backend/backend.sln", "backend/"]
 
 WORKDIR "/src/backend"
 RUN dotnet build "backend.csproj" -c Release -o /app/build
