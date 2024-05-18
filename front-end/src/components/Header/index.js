@@ -42,7 +42,7 @@ const userInfo = null;
                 <div className='my-icon'>
                     <FontAwesomeIcon icon={faList}/>  </div>
                 <div className="box-content">
-                    <p> DANH MỤC </p>
+                    <span className="title-y"> DANH MỤC </span>
                 </div>
                 </div>
             </HeadlessTippy>

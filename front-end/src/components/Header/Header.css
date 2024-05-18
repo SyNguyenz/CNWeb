@@ -38,12 +38,14 @@
     justify-content: space-between;
     
 }
-.menu-list1 {
+
+  .menu-list1 {
     background: hsla(0, 0%, 100%, .2);
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
     padding: 5px 25px 5px 25px;
+
     &:hover{
       cursor: pointer;
     }
@@ -92,8 +94,9 @@
   line-height: 2.0;
 }
 .box-content .title-y {
-  line-height: 1;
-  width: 100px;
+  line-height: 1.0;
+  width: 120px;
+  font-size: 15px;
 }
 .my-icon {
   position: relative;
@@ -124,8 +127,6 @@
   border-radius: 10px;
   cursor: pointer;
   display: flex;
-  height: px;
-  width: 100px;
   padding: 5px 5px;
   position: relative;
   text-decoration: none !important;

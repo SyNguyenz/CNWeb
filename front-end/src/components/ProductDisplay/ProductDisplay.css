@@ -449,6 +449,8 @@
     font-size: 20px;
     width: 40px;
     height: 40px;
+    color: var(--main-color2);
+
 }
 .add-quantity .button-plus {
     background-color: var(--bg-color);
@@ -459,6 +461,7 @@
     width: 40px;
     height: 40px;
     margin-right: 10px;
+    color: var(--main-color2);
 }
 .button-quantity{
     padding-left: 10px;
