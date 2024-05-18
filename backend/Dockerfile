@@ -2,7 +2,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
-COPY ["backend/backend.csproj", "backend/"]
+COPY ["backend/backend/backend.csproj", "backend/"]
 RUN dotnet restore "backend/backend.csproj"
 
 COPY . .
