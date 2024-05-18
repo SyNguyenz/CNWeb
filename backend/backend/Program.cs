@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 });
 builder.Services.AddDbContext<MyDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("CNWeb"));
+    option.UseNpgsql(builder.Configuration.GetConnectionString("CNWeb"));
 });
 
 //Add indentity services
@@ -53,6 +53,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
                 .AddEntityFrameworkStores<MyDbContext>()
                 .AddDefaultTokenProviders()
                 .AddSignInManager<SignInManager<User>>();
+builder.Services.AddControllersWithViews();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -92,6 +93,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapRazorPages();
 
 app.Run();
 async Task EnsureRoles(IServiceProvider serviceProvider)

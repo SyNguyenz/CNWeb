@@ -12,9 +12,9 @@ namespace backend.Data
 
         #region DbSet
         public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<HangHoa> HangHoas { get; set;}
-        public DbSet<DonHang> DonHangs { get; set;}
-        public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set;}
+        public DbSet<HangHoa> HangHoas { get; set; }
+        public DbSet<DonHang> DonHangs { get; set; }
+        public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public override DbSet<User> Users { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace backend.Data
             {
                 e.ToTable("DonHang");
                 e.HasKey(dh => dh.MaDonHang);
-                e.Property(dh => dh.NgayDat).HasDefaultValueSql("getutcdate()");
+                e.Property(dh => dh.NgayDat).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
             modelBuilder.Entity<ChiTietDonHang>(entity =>
             {
@@ -48,7 +48,6 @@ namespace backend.Data
                 e.Property(e => e.PhoneNumber).IsRequired();
                 e.HasIndex(e => e.PhoneNumber).IsUnique();
                 e.Property(e => e.UserName).IsRequired();
-                e.Property(e => e.Password).IsRequired();
                 e.Property(e => e.DiaChi).IsRequired();
             });
             modelBuilder.Entity<HangHoa>()
