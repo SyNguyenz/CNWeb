@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import { publicRoutes } from './routes';
 import { CartProvider } from './components/CartContext/CartContext';
 
@@ -8,7 +7,7 @@ function App() {
     <>
       <BrowserRouter>
         <CartProvider>
-        <Routes>
+          <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component
             const Layout = route.layout

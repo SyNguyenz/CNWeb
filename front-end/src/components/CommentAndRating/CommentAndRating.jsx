@@ -60,7 +60,7 @@ const CommentAndRating = ({product, onOpenPopup}) => {
                   </div>
                 <p>(Vui lòng đăng nhập để đánh giá sản phẩm)</p>
             </div>
-            <form onClick={onOpenPopup}className = "product-rating-box"onSubmit={handleSubmit}>          
+            <form onClick={onOpenPopup}className = "product-rating-box" onSubmit={handleSubmit}>          
               <div className = "comment-part">
                 <textarea title="Nội dung" placeholder="Nội dung. Tối thiểu 15 ký tự *"
                 name="Content" 

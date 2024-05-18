@@ -32,7 +32,7 @@
   border-radius: 13px;
   width: 100%;
   align-items: center;
-
+  flex-direction: row;
 
 
 }
