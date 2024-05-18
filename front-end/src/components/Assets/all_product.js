@@ -39,12 +39,8 @@ const all_products = [
     " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
     "Giá sản phẩm đã bao gồm VAT."],
     "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"],
-    "filters": [
-      {"Kích thước màn hình": 6.2,
-      "RAM": "4GB",
-    }
+  
 
-    ]
   },
 
   {

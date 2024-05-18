@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import ProductDisplay from '../../components/ProductDisplay/ProductDisplay';
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.js';
+import RecommendedProducts from '../../components/RecommendedProducts/RecommendedProducts.js'
 import './Product.css'
 
 import all_products from '../../components/Assets/all_product';
@@ -16,8 +18,10 @@ function Product() {
   });
   return (
     <div className='product-container'>
+          <Breadcrumbs product={product} category={product.category} />
           {product && <ProductDisplay product={product} />}
           <DescriptionProduct product={product} />
+          <RecommendedProducts category={product.category} />
           <CommentAndRating product={product} />
  
     </div>

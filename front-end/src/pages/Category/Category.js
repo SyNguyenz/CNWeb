@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import all_products from '../../components/Assets/all_product';
 import Item from '../../components/Item/Item';
 import './Category.css'
+import Breadcrumbs from '../../components/Breadcrumbs/Breadcrumbs.js';
 import decreaseFilt from '../../components/Assets/arrow-down.svg';
 import increaseFilt from '../../components/Assets/arrow-up.svg'
 import saleFilt from '../../components/Assets/percentage.svg'
@@ -68,6 +69,7 @@ function Category(props) {
 
   return (
     <div className='category-container'>
+      <Breadcrumbs category={props.category} brand={productBrand} />
       <div className="clear"></div>
       <div className="block-filter-brand">
         <div className="filter-brands-title">Chọn theo thương hiệu</div>
