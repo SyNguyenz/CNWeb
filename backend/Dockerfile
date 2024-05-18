@@ -9,7 +9,7 @@ RUN dotnet restore "backend/backend.csproj"
 COPY --chown=777:777 . .
 
 WORKDIR "/src/backend"
-RUN dotnet build "backend.csproj" -c Release -o /app/build
+RUN dotnet build "backend.csproj" -c Release -o /app/build/output
 
 FROM build AS publish
 RUN dotnet publish "backend.csproj" -c Release -o /app/publish
