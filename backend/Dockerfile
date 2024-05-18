@@ -6,7 +6,10 @@ COPY ["backend/backend/backend.csproj", "backend/"]
 RUN dotnet restore "backend/backend.csproj"
 
 COPY . .
+
+# Build and publish the project
 FROM build AS publish
+WORKDIR /src/backend
 RUN dotnet publish "backend.csproj" -c Release -o /app/publish
 
 # Use the runtime image for .NET 8.0
