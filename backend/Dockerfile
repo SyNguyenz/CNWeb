@@ -1,7 +1,6 @@
 # Use the .NET 8.0 SDK
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-RUN sudo usermod -aG docker Synz
 WORKDIR /src
 
 # Copy only the project file and restore dependencies
