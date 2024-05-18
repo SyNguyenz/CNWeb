@@ -4,8 +4,8 @@ import './RecommendedProducts.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import all_products from '../Assets/all_product';
-function RecommendedProducts({ category }) {
-  const relatedProducts = all_products.filter((item) => item.category === category).slice(0, 8);
+function RecommendedProducts({ category, productId }) {
+  const relatedProducts = all_products.filter((item) => item.category === category && item.id !== productId).slice(0, 8);
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(0);
   const elementRef = useRef(null);

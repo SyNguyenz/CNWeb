@@ -21,7 +21,7 @@ function Product() {
           <Breadcrumbs product={product} category={product.category} />
           {product && <ProductDisplay product={product} />}
           <DescriptionProduct product={product} />
-          <RecommendedProducts category={product.category} />
+          <RecommendedProducts category={product.category} productId={product.id} />
           <CommentAndRating product={product} />
  
     </div>
