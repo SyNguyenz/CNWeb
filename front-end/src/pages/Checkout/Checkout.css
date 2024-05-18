@@ -2,6 +2,7 @@
 
 /* Container for the whole checkout page */
 .checkout-container {
+    margin-top: 70px;
     padding: 20px;
 }
 
@@ -33,10 +34,14 @@ h1 {
 }
 .form-group {
     display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     
 }
+.form-group-inf:last-child{
+    margin-left: 40px;
+}
 .form-group-inf input{
+
     width: 440px;
 }
 .form-group-inf-address input {
@@ -101,8 +106,10 @@ input {
     font-weight: bold;
 }
 
-.btn-complete-order, .btn-go-home {
+.btn-complete-order {
     display: inline-block;
+    width: 150px;
+    height: 40px;
     padding: 10px 20px;
     margin-top: 20px;
     font-size: 16px;
@@ -110,21 +117,16 @@ input {
     border-radius: 4px;
     cursor: pointer;
     text-align: center;
+    background-color: rgb(5, 194, 208);
+}
+.btn-complete-order:hover{
+    background-color: rgb(38, 135, 131);
+}
+.btn-complete-order-container {
+    display: flex;
+    justify-content: center;
+}
+.date-form{
+    margin-top: 15px;
 }
 
-.btn-complete-order {
-    background-color: #28a745;
-    color: #fff;
-}
-
-.btn-go-home {
-    background-color: #007bff;
-    color: #fff;
-    margin-left: 10px;
-    text-decoration: none;
-}
-
-.btn-go-home:hover {
-    text-decoration: none;
-    color: #fff;
-}

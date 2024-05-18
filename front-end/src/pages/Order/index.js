@@ -49,6 +49,7 @@ const Order = () => {
 
     return (
         <div className="cart-page">
+            <h1> </h1>
             <h1>Giỏ hàng của bạn</h1>
             <div className='total-product-cart'>
                 {cart.length === 0 ? (

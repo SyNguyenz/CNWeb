@@ -28,6 +28,10 @@ const Checkout = () => {
         }, 0);
     }, [selectedProducts]);
 
+    const calculateTotalQuantity = useMemo(() => {
+        return selectedProducts.reduce((total, item) => total + item.quantity, 0);
+    }, [selectedProducts]);
+
     const calculateEstimatedDeliveryDate = (days) => {
         const deliveryDate = new Date(orderDate);
         deliveryDate.setDate(deliveryDate.getDate() + days);
@@ -46,14 +50,14 @@ const Checkout = () => {
 
     return (
         <div className="checkout-container">
-            <h1>Thông tin thanh toán</h1>
+            <h1>Thông tin đơn hàng</h1>
             <div className="checkout-page">
                 <form onSubmit={handleSubmit}>
                     <h3>Thông tin người nhận hàng:</h3>
                     <div className="receiver-inf">
                         <div className="form-group">
-                            <div className="form-group-inf">
-                                <label htmlFor="recipientName">Tên người nhận hàng:</label>
+                            <div className='form-group-inf'>
+                                <label htmlFor="recipientName">Tên người nhận:</label>
                                 <input
                                     type="text"
                                     id="recipientName"
@@ -63,7 +67,7 @@ const Checkout = () => {
                                 />
                             </div>
                             <div className="form-group-inf">
-                                <label htmlFor="phoneNumber">Số điện thoại:</label>
+                                <label htmlFor="phoneNumber">Số điện thoại người nhận:</label>
                                 <input
                                     type="tel"
                                     id="phoneNumber"
@@ -75,7 +79,7 @@ const Checkout = () => {
                         </div>
                         <div className="form-group">
                             <div className="form-group-inf-address">
-                                <label htmlFor="address">Địa chỉ:</label>
+                                <label htmlFor="address">Địa chỉ nhận hàng:</label>
                                 <input
                                     type="text"
                                     id="address"
@@ -90,39 +94,42 @@ const Checkout = () => {
                     
                     <h3>Sản phẩm của bạn:</h3>
                     <div className="checkout-items">
+                        <h1>  </h1>
                         {selectedProducts.map((item) => (
                             <div key={item.id} className="checkout-item">
                                 <img src={item.images[0]} alt={item.name} />
                                 <div className="checkout-item-details">
                                     <h2>{item.name}</h2>
                                     <p>Màu sắc: {item.selectedVariant?.color || 'N/A'}</p>
+                                    <p>Giá: {formatPrice(item.newPrice)}</p>
                                     <p>Số lượng: {item.quantity}</p>
-                                    <p>Giá: {formatPrice(Number(item.newPrice) * item.quantity)}</p>
+                                    <p>Số tiền: {formatPrice(Number(item.newPrice) * item.quantity)}</p>
                                 </div>
                             </div>
                         ))}
                     </div>
                     
-                    <div className="form-group">
-                            <div className="form-group-inf">
+                    <div className="date-form">
+                            <div className="date-inf">
                                
                                 <p>Ngày đặt hàng:{orderDate.toLocaleDateString('vi-VN')} </p>
                             </div>
-                            <div className="form-group-inf">
+                            <div className="date-inf">
                                 
-                                <p>Ngày nhận hàng dự kiến: {calculateEstimatedDeliveryDate(3)} đến{calculateEstimatedDeliveryDate(7)} </p>
+                                <p>Ngày nhận hàng dự kiến: {calculateEstimatedDeliveryDate(3)} đến {calculateEstimatedDeliveryDate(7)} </p>
                             </div>
                         </div>
 
                         <div className="checkout-total">
-                             <h3>Tổng giá trị đơn hàng: {formatPrice(calculateTotalPrice)}</h3>
+                             <h3>Tổng giá trị đơn hàng: {formatPrice(calculateTotalPrice)} ({calculateTotalQuantity} sản phẩm)</h3>
                         </div>
-                        
-                    <button type="submit" className="btn-complete-order">Thanh toán</button>
+
+                    <div className='btn-complete-order-container'>
+                         <button type="submit" className="btn-complete-order">Thanh toán</button>
+                    </div>
+                  
                 </form>
-                <Link to="/order">
-                    <button className="btn-go-home">Quay lại giỏ hàng</button>
-                </Link>
+                
             </div>
         </div>
     );
