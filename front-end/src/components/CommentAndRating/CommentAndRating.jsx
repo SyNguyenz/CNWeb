@@ -5,7 +5,9 @@ import ReactStars from 'react-rating-stars-component';
 import product_comments from '../Assets/comments.js';
 import no_avt from '../Assets/no-avt.png'
 import ProductRating from '../ProductRating/ProductRating.js';
-const CommentAndRating = ({product}) => {
+import LoginPopup from '../LoginPopup/LoginPopup.js'; 
+
+const CommentAndRating = ({product, onOpenPopup}) => {
   const [comments, setComments] = useState([]);
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState('');
@@ -29,19 +31,20 @@ const CommentAndRating = ({product}) => {
 
 }, [product.id]);
 
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:5000/products/${product.id}/comments`, {
-        user_id: 'USER_ID',  
-        content,
-        rating
-    })
-    .then(response => {
-        setComments([...comments, response.data]);
-        setContent('');
-        setRating(0);
-    })
-    .catch(error => console.error(error));
+  //  axios.post(`http://localhost:5000/products/${product.id}/comments`, {
+  //      user_id: 'USER_ID',  
+  //      content,
+  //      rating
+  //  })
+  //  .then(response => {
+  //      setComments([...comments, response.data]);
+  //      setContent('');
+  //      setRating(0);
+  //  })
+  //  .catch(error => console.error(error));
 };
 
 
@@ -52,13 +55,12 @@ const CommentAndRating = ({product}) => {
                 <h3>Nội dung đánh giá sản phẩm { product.name }</h3>
                   <div className = "rating-average">
                   <p> Stars:  {product.rating}</p>
-
                     <ProductRating rating = {product.rating}/> 
                    <p> / 100 đánh giá </p> 
                   </div>
                 <p>(Vui lòng đăng nhập để đánh giá sản phẩm)</p>
             </div>
-            <form className = "product-rating-box"onSubmit={handleSubmit}>
+            <form onClick={onOpenPopup}className = "product-rating-box"onSubmit={handleSubmit}>          
               <div className = "comment-part">
                 <textarea title="Nội dung" placeholder="Nội dung. Tối thiểu 15 ký tự *"
                 name="Content" 
