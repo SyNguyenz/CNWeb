@@ -1,0 +1,4 @@
+services:
+  - name: backend
+    buildCommand: "docker build -t CNWeb ."
+    startCommand: "docker run -p 7006:80 CNWeb"
