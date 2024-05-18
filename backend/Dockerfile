@@ -6,7 +6,7 @@ COPY ["backend/backend/backend.csproj", "backend/"]
 RUN dotnet restore "backend/backend.csproj"
 
 # Copy the entire project files with specific permissions
-COPY --chown=777:777 . .
+COPY . .
 
 WORKDIR "/src/backend"
 RUN dotnet build "backend.csproj" -c Release -o /app/build
