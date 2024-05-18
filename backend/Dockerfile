@@ -7,7 +7,6 @@ RUN dotnet restore "backend/backend.csproj"
 
 COPY . .
 WORKDIR "/src/backend"
-RUN chmod -R 777 /app/build
 RUN dotnet build "backend.csproj" -c Release -o /app/build
 
 
