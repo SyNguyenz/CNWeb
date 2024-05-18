@@ -2,15 +2,16 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
-COPY ["backend/backend/backend.csproj", "backend/"]
+COPY ["backend/backend.csproj", "backend/"]
 RUN dotnet restore "backend/backend.csproj"
 
-COPY . .
+# Copy the entire project files with specific permissions
+COPY --chown=777:777 . .
 
-RUN chmod -R 777 /src/backend/bin/Release/net8.0/backend # Change permissions for the destination directory
-# Build and publish the project
+WORKDIR "/src/backend"
+RUN dotnet build "backend.csproj" -c Release -o /app/build
+
 FROM build AS publish
-WORKDIR /src/backend
 RUN dotnet publish "backend.csproj" -c Release -o /app/publish
 
 # Use the runtime image for .NET 8.0
