@@ -57,7 +57,6 @@ function ProductDisplay(props) {
                         <a href="#reviews-section" className="a-review">
                         <ProductRating rating={product.rating} />&nbsp;100 đánh giá
                         </a>
-
                     </div>
             </div>
                 <div className="box-gallery">

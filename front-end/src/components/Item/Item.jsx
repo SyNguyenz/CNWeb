@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './Item.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faStar } from '@fortawesome/free-solid-svg-icons'
 import ProductRating from '../ProductRating/ProductRating.js';
 
 function Item(props) {
@@ -38,7 +36,8 @@ function Item(props) {
           <div className="item-promotions">
             <div className="promotion">
               <p className="coupon-price">
-                 Ưu đãi trả góp 0% lãi suất - 0% phí chuyển đổi
+                 Ưu đãi trả góp 0% lãi suất 
+                 - 0% phí chuyển đổi
               </p>
             </div>
           </div>
