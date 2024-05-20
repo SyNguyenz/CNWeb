@@ -8,10 +8,13 @@ class AllApi {
         return axios.post(base_url + 'User', newUser);
     }
     login(user){
-        return axios.post(base_url + 'User/Login', user)
+        return axios.post(base_url + 'User/Login', user);
     }
     getAdmin(){
-        return axios.get(base_url + 'Admin') 
+        return axios.get(base_url + 'Admin') ;
+    }
+    getAllProduct(){
+        return axios.get(base_url + 'Product');
     }
 }
 export default new AllApi()
