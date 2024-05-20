@@ -111,6 +111,7 @@ function Category(props) {
 
   return (
     <div className='category-container'>
+      <Breadcrumbs category={props.category} brand={brandName} />
       <div className="clear"></div>
       <div className="block-filter-brand">
         <div className="filter-brands-title">Chọn theo thương hiệu</div>
@@ -175,8 +176,8 @@ function Category(props) {
         <div className="criteria-sort__title">Chọn theo tiêu chí</div>
         <div className="criteria-sort__list-filter">
           <a
-            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 0 && activeFilter.max === 5000000 ? 'active' : ''}`}
-            onClick={() => filterByPriceRange(0, 5000000)}
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 1 && activeFilter.max === 5000000 ? 'active' : ''}`}
+            onClick={() => filterByPriceRange(1, 5000000)}
           >
             <div className="filter-icon">
               <img src={money} />
@@ -201,15 +202,25 @@ function Category(props) {
             </div>
             10 - 20 triệu
           </a>
-          <a className={`btn-filter button__sort ${activeFilter && activeFilter.min === 20000000 && activeFilter.max === 30000000 ? 'active'
-            : ''}} onClick={() => filterByPriceRange(20000000, 30000000)} > <div className="filter-icon"> <img src={decreaseFilt} /> </div> 20 - 30 triệu </a> <a className={btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 ? 'active' : ''}`}
+          <a
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 20000000 && activeFilter.max === 30000000 ? 'active' : ''}`}
+            onClick={() => filterByPriceRange(20000000, 30000000)}
+          >
+            <div className="filter-icon">
+              <img src={money} />
+            </div>
+            20 - 30 triệu
+          </a>
+          <a
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 && activeFilter.max === 10000000000 ? 'active' : ''}`}
             onClick={() => filterByPriceRange(30000000, 1000000000)}
-            >
+          >
             <div className="filter-icon">
               <img src={money} />
             </div>
             Trên 30 triệu
           </a>
+
         </div>
       </div>
             
