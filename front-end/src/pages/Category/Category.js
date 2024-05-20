@@ -8,6 +8,7 @@ import decreaseFilt from '../../components/Assets/arrow-down.svg';
 import increaseFilt from '../../components/Assets/arrow-up.svg'
 import saleFilt from '../../components/Assets/percentage.svg'
 import money from '../../components/Assets/money.svg'
+import rating from '../../components/Assets/rating.svg'
 
 
 function Category(props) {
@@ -111,6 +112,7 @@ function Category(props) {
 
   return (
     <div className='category-container'>
+      <Breadcrumbs category={props.category} brand={brandName} />
       <div className="clear"></div>
       <div className="block-filter-brand">
         <div className="filter-brands-title">Chọn theo thương hiệu</div>
@@ -165,7 +167,7 @@ function Category(props) {
             onClick={() => handleSortClick('highRating')}
           >
             <div className="filter-icon">
-              <img src={decreaseFilt} />
+              <img src={rating} />
             </div>
             Đánh giá cao
           </a>
@@ -175,8 +177,8 @@ function Category(props) {
         <div className="criteria-sort__title">Chọn theo tiêu chí</div>
         <div className="criteria-sort__list-filter">
           <a
-            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 0 && activeFilter.max === 5000000 ? 'active' : ''}`}
-            onClick={() => filterByPriceRange(0, 5000000)}
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 1 && activeFilter.max === 5000000 ? 'active' : ''}`}
+            onClick={() => filterByPriceRange(1, 5000000)}
           >
             <div className="filter-icon">
               <img src={money} />
@@ -201,15 +203,25 @@ function Category(props) {
             </div>
             10 - 20 triệu
           </a>
-          <a className={`btn-filter button__sort ${activeFilter && activeFilter.min === 20000000 && activeFilter.max === 30000000 ? 'active'
-            : ''}} onClick={() => filterByPriceRange(20000000, 30000000)} > <div className="filter-icon"> <img src={decreaseFilt} /> </div> 20 - 30 triệu </a> <a className={btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 ? 'active' : ''}`}
+          <a
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 20000000 && activeFilter.max === 30000000 ? 'active' : ''}`}
+            onClick={() => filterByPriceRange(20000000, 30000000)}
+          >
+            <div className="filter-icon">
+              <img src={money} />
+            </div>
+            20 - 30 triệu
+          </a>
+          <a
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 && activeFilter.max === 10000000000 ? 'active' : ''}`}
             onClick={() => filterByPriceRange(30000000, 1000000000)}
-            >
+          >
             <div className="filter-icon">
               <img src={money} />
             </div>
             Trên 30 triệu
           </a>
+
         </div>
       </div>
             
@@ -236,7 +248,7 @@ function Category(props) {
                 key={index}
                 id={product.id}
                 name={product.name}
-                image={product.images[0]}
+                image={product.variants[0].image}
                 sale={product.sale}
                 old_price={product.old_price}
                 rating={product.rating}

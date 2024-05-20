@@ -20,26 +20,29 @@ const all_products = [
   {
     "id": 1,
     "name": "Điện thoại iPhone 13 (128GB) - Chính hãng VN/A",
-    "rating": 5,
-    "images": [iphone13_black, iphone13_white, iphone13_blue, iphone13_pink],
-    "old_price": 18000000,
-    "sale": 25,
+    "rating": 4.7,
+    "old_price": 19000000,
+    "sale": 20,
     "quantity": 30,
     "category": "Phone",
     "brand": {
       "name": "Apple",
-      "image": apple,
+      "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/tmp/catalog/product/f/r/frame_59.png",
     },
     "variants": [
-      {"color": "Đen", "sale": 20,  "quantity": 30,},
-      {"color": "Trắng", "sale": 20, "quantity": 20,},
-      {"color": "Xanh dương", "sale": 20,"quantity": 20,},
-      {"color": "Hồng", "sale": 15,  "quantity": 5,}],
-    "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
-    " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
-    "Giá sản phẩm đã bao gồm VAT."],
-    "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"],
-  
+      {"color": "Đen", "sale": 20,  "quantity": 30, "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/2/12_3_8_2_8.jpg" },
+      {"color": "Trắng", "sale": 20, "quantity": 20,"image": "https://cdn2.cellphones.com.vn/x/media/catalog/product/1/5/15_2_7_2_5.jpg"},
+      {"color": "Xanh dương", "sale": 20,"quantity": 20, "image":"https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/1/1/11_3_12_2_1_5.jpg"},
+      {"color": "Hồng", "sale": 15,  "quantity": 5, "image": "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/i/p/iphone-13_2_.png"}],
+    "description": ["Sản phẩm bao gồm: Hộp, Sách hướng dẫn, Cây lấy sim, Cáp sạc.",
+    "- 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
+    "- Giá sản phẩm đã bao gồm VAT."],
+    "specification" : ["- Kích thước màn hình: 6.1 inches",
+      "- Công nghệ màn hình: Super Retina XDR OLED",
+      "- Pin: 3240mAh"
+
+    ],
+
 
   },
 
@@ -66,7 +69,7 @@ const all_products = [
     "description": ["Hộp, Sách hướng dẫn, Cây lấy sim, Cáp Lightning - Type C1",
     " 1 ĐỔI 1 trong 30 ngày nếu có lỗi phần cứng nhà sản xuất. Bảo hành 12 tháng tại trung tâm bảo hành chính hãng Apple.",
     "Giá sản phẩm đã bao gồm VAT."],
-    "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"]
+    "specification" : ["Kích thước màn hình 6.1 inches",],
   },
   {
     "id": 3,
@@ -291,6 +294,8 @@ const all_products = [
                   "Giá sản phẩm đã bao gồm VAT."],
                   "specification" : ["Màn hình OLED 6,7 inch, tốc độ làm mới 60Hz"]
                   },
+    
+    
     
 
 ];

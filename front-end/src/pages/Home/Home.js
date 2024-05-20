@@ -8,7 +8,7 @@ function Home() {
   return (
     <div className='home'>
       <SlidingBanner />
-      <Popular/>  
+      <Popular category = {"Phone"}/>  
     </div>
   )
 }
