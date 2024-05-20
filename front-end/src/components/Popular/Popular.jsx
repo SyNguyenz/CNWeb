@@ -6,13 +6,19 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import all_products from '../Assets/all_product.js'
 import Item from '../Item/Item'
 
-function Popular() {
+function Popular({ category }) {
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(0);
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
   const data_product = all_products;
+  const [title, setTitle] = useState("");
+
+
+  useEffect(() => {
+   
+  }, [category]);
 
   useEffect(() => {
     const handleOffset = () => {
@@ -94,7 +100,7 @@ function Popular() {
                             key={index} 
                             id={item.id}
                             name={item.name} 
-                            image={item.images[0]}
+                            image={item.variants[0].image}
                             old_price={item.old_price} 
                             sale={item.sale} 
                             rating={item.rating}

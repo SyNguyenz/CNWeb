@@ -20,7 +20,12 @@ const publicRoutes=[
     {path: '/order',component:Order, layout: userLayout},
     {path: '/admin', component: Admin, layout: adminLayout},
     {path: '/phone', component: Category, layout: userLayout, childPath: ':brandName', category: 'Phone'},
+    {path: '/washer', component: Category, layout: userLayout, childPath: ':brandName', category: 'May giat'},
     {path: '/laptop', component: Category, layout: userLayout, childPath: ':brandName', category: 'Laptop'},
+    {path: '/television', component: Category, layout: userLayout, childPath: ':brandName', category: 'TV'},
+    {path: '/air-conditioner', component: Category, layout: userLayout, childPath: ':brandName', category: 'Dieu hoa'},
+    {path: '/fridge', component: Category, layout: userLayout, childPath: ':brandName', category: 'Tu lanh'},
+
     {path: '/checkout', component: Checkout, layout: userLayout},
 ];
 

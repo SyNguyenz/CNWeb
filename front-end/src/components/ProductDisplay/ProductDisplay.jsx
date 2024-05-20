@@ -68,10 +68,10 @@ function ProductDisplay(props) {
                                 transitionDuration: '300ms'
                             }}
                         >
-                            {product.images.map((image, index) => {
+                            {product.variants.map((v, index) => {
                                 return (
                                     <div key={index} className="swiper-slide gallery-img">
-                                        <img src={image} alt="" />
+                                        <img src={v.image} alt="" />
                                     </div>
                                 )
                             })}
@@ -88,7 +88,7 @@ function ProductDisplay(props) {
                         <div 
                             className="swiper-button-next"
                             onClick={() => setIndex(prev => prev + 1)}
-                            style={ (index === product.images.length - 1) ? {display: 'none'} : {} }
+                            style={ (index === product.variants.length - 1) ? {display: 'none'} : {} }
                         >
                             <div className="icon">
                                 <FontAwesomeIcon icon={faChevronRight} />
@@ -97,14 +97,14 @@ function ProductDisplay(props) {
                     </div>
                     <div className="thumbnail-slide swiper-container">
                         <div className="swiper-wrapper">
-                            {product.images.map((image, i) => {
+                            {product.variants.map((v, i) => {
                                 return (
                                     <div 
                                         key={i} 
                                         className={`swiper-slide thumb-img ${index === i ? 'swiper-slide-thumb-active' : ''}`}
                                         onClick={() => setIndex(i)}
                                     >
-                                        <img src={image} width={'58'} height={'58'} alt="" />
+                                        <img src={v.image} width={'58'} height={'58'} alt="" />
                                     </div>
                                 )
                             })}
@@ -136,7 +136,7 @@ function ProductDisplay(props) {
                              className="change-color-btn"
                              onClick={() => handleVariantClick(index)}
                            >
-                             <img src={product.images[index]} alt={`${product.name} ${variant.memory} | Chính hãng VN/A`} />
+                             <img src={variant.image} alt={`${product.name}`} />
                              <div>
                                <strong className="item-variant-name">{variant.color}</strong>
                                <span>{formatPrice(product.old_price * (1 - variant.sale/100))}</span>
