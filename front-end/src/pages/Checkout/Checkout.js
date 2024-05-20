@@ -1,5 +1,4 @@
 import React, { useContext, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 import CartContext from '../../components/CartContext/CartContext';
 import './Checkout.css';
 
@@ -10,8 +9,6 @@ const Checkout = () => {
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const orderDate = new Date(); 
-
- 
 
     const selectedProducts = useMemo(() => {
         const selectedSet = new Set(selectedItems);
@@ -40,14 +37,28 @@ const Checkout = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Thực hiện hành động khi người dùng nhấn nút "Hoàn tất đơn hàng"
-        // Gửi dữ liệu tới server 
-        console.log('Recipient Name:', recipientName);
-        console.log('Address:', address);
-        console.log('Phone Number:', phoneNumber);
-        console.log('Order Date:', orderDate.toLocaleDateString('vi-VN'));
+
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/create_payment_url';
+
+        const amountInput = document.createElement('input');
+        amountInput.type = 'hidden';
+        amountInput.name = 'amount';
+        amountInput.value = calculateTotalPrice;
+        form.appendChild(amountInput);
+
+        const languageInput = document.createElement('input');
+        languageInput.type = 'hidden';
+        languageInput.name = 'language';
+        languageInput.value = 'vn';
+        form.appendChild(languageInput);
+
+        document.body.appendChild(form);
+        form.submit();
     };
 
+    
     return (
         <div className="checkout-container">
             <h1>Thông tin đơn hàng</h1>
@@ -89,7 +100,6 @@ const Checkout = () => {
                                 />
                             </div>
                         </div>
-                     
                     </div>
                     
                     <h3>Sản phẩm của bạn:</h3>
@@ -112,7 +122,7 @@ const Checkout = () => {
                     <div className="date-form">
                             <div className="date-inf">
                                
-                                <p>Ngày đặt hàng:{orderDate.toLocaleDateString('vi-VN')} </p>
+                                <p>Ngày đặt hàng: {orderDate.toLocaleDateString('vi-VN')} </p>
                             </div>
                             <div className="date-inf">
                                 

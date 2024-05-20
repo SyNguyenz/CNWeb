@@ -192,6 +192,11 @@
     overflow: hidden;
 }
 
+.coupon-price {
+    font-size: 14px !important;
+   
+}
+
 .item .bottom-div {
     display: flex;
     align-items: center;

@@ -33,17 +33,26 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e5e7eb;
+    border: 1.5px solid #e5e7eb;
     border-radius: 4px;
-    height: 34px;
+    height: 36px;
+    margin: 0 10px 10px 0;
+    padding: 2px 4px;
+}
+.block-filter-brand .list-brand .list-brand-item.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--color7);
+    border-radius: 4px;
+    height: 36px;
     margin: 0 10px 10px 0;
     padding: 2px 4px;
 }
 
 .block-filter-brand .list-brand .list-brand-item img {
-    height: 20px;
-    max-width: none;
-    min-width: 98px;
+    height: 28px;
+
 }
 
 .block-filter-indexSort .filter-indexSort-title {
@@ -57,11 +66,6 @@
     font-weight: 600;
 }
 
-.filter-sort-btn {
-    padding: 10px 20px;
-    border-radius: 40px;
-    border: 1px solid #888;
-}
 
 .block-products-filter {
     padding-top: 10px;
@@ -108,10 +112,16 @@
     margin-top: 10px;
 
 }
+.criteria-sort__list-filter {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
 .filter-sort__list-filter .btn-filter {
     align-items: center;
-    background: var(--bg-color);
-    border: 1px solid var(--main-color2);
+    background: white;
+    border: 1.5px solid var(--main-color2);
     border-radius: 10px;
     color: #444;
     cursor: pointer;
@@ -122,13 +132,33 @@
     padding: 7px 20px;
     white-space: nowrap;
 }
+
 .filter-sort__list-filter .btn-filter.active {
-    background: var(--bg-color);
-    border: 1px solid var(--color7);
+    background: white;
+    border: 1.5px solid var(--color7);
     color: var(--color7);
 
 }
+.criteria-sort__list-filter .btn-filter.active {
+    background: white;
+    border: 1.5px solid var(--color7);
+    color: var(--color7);
 
+}
+.criteria-sort__list-filter .btn-filter {
+    align-items: center;
+    background: white;
+    border: 1.5px solid var(--main-color2);
+    border-radius: 10px;
+    color: #444;
+    cursor: pointer;
+    display: flex;
+    font-size: 12px;
+    height: 36px;
+    margin: 0 10px 10px 0;
+    padding: 7px 30px;
+    white-space: nowrap;
+}
 .filter-icon{
     align-items: center;
     display: flex;
