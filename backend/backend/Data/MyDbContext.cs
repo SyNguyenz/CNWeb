@@ -53,7 +53,11 @@ namespace backend.Data
             modelBuilder.Entity<HangHoa>()
                 .HasMany(h => h.Variants)
                 .WithOne();
-            modelBuilder.Entity<VariantModel>().HasKey(e => e.id);
+            modelBuilder.Entity<VariantModel>(e =>
+            {
+                e.HasKey(e => e.id);
+                e.Property(e => e.image).HasColumnType("text");
+            });
         }
     }
 }

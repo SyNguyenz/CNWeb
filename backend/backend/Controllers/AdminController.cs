@@ -11,7 +11,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     public class AdminController : ControllerBase
     {
         private readonly MyDbContext _context;
@@ -27,7 +27,7 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(string? id)
         {
-            var admin = await _userManager.GetUsersInRoleAsync("Admin");
+            var admin = await _userManager.GetUsersInRoleAsync("admin");
             if (!string.IsNullOrEmpty(id))
             {
                 foreach (var a in admin)

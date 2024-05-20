@@ -56,12 +56,13 @@ namespace backend.Controllers
             }
             //cấp token
             var token = await GenerateToken(user);
-
+            await _signInManager.PasswordSignInAsync(user, model.Password, true, lockoutOnFailure: false);
             return Ok(new ApiResponse
             {
                 Success = true,
                 Message = "Authenticate success",
-                Data = token
+                Data = token,
+                roles = await _userManager.GetRolesAsync(user),
             });
         }
 
@@ -70,7 +71,7 @@ namespace backend.Controllers
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var secretKeyBytes = Encoding.UTF8.GetBytes(_appSettings);
-
+            var userRole = await _userManager.GetRolesAsync(User);
             var tokenDescription = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
@@ -79,11 +80,11 @@ namespace backend.Controllers
                     new Claim("PhoneNumber", User.PhoneNumber),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim("Id", User.Id),
-
+                    new Claim(ClaimTypes.Role, userRole[0])
                     //roles
 
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(2),
+                Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secretKeyBytes), SecurityAlgorithms.HmacSha256Signature)
             };
 

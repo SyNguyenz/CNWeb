@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -11,9 +12,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240520025818_fiximagetype")]
+    partial class fiximagetype
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,7 +254,7 @@ namespace backend.Migrations
 
                     b.HasKey("MaHangHoa");
 
-                    b.ToTable("HangHoa", (string)null);
+                    b.ToTable("HangHoa");
                 });
 
             modelBuilder.Entity("backend.Data.RefreshToken", b =>
@@ -288,7 +291,7 @@ namespace backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshToken", (string)null);
+                    b.ToTable("RefreshToken");
                 });
 
             modelBuilder.Entity("backend.Data.User", b =>
@@ -398,7 +401,7 @@ namespace backend.Migrations
 
                     b.HasIndex("HangHoaMaHangHoa");
 
-                    b.ToTable("VariantModel", (string)null);
+                    b.ToTable("VariantModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,9 +1,9 @@
-﻿
-using backend.Data;
+﻿using backend.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +13,35 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "CNWeb", Version = "v1" });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"JWT Authorization header using the Bearer scheme.\n 
+                      Enter your token in the text input below.
+                      \n Example: '12345abcdef'",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+      {
+        {
+          new OpenApiSecurityScheme
+          {
+            Reference = new OpenApiReference
+              {
+                Type = ReferenceType.SecurityScheme,
+                Id = "Bearer"
+              },
+            },
+            new List<string>()
+          }
+        });
+});
 
 var secretKey = builder.Configuration["AppSettings:SecretKey"];
 var secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
@@ -33,9 +61,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ClockSkew = TimeSpan.Zero
     };
 });
+
 builder.Services.AddDbContext<MyDbContext>(option =>
 {
     option.UseNpgsql(builder.Configuration.GetConnectionString("CNWeb"));
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.SameSite = SameSiteMode.None; // Cấu hình SameSite=None
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 //Add indentity services
@@ -59,6 +96,13 @@ builder.Services.Configure<IdentityOptions>(options =>
 {
     options.SignIn.RequireConfirmedEmail = false;
 });
+
+// Đăng ký RoleManager
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
+// Thêm vai trò "admin" nếu nó chưa tồn tại
+EnsureRoles(builder.Services.BuildServiceProvider()).GetAwaiter().GetResult();
+
 // Add CORS services
 builder.Services.AddCors(options =>
 {
@@ -69,11 +113,6 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
-// Đăng ký RoleManager
-builder.Services.AddScoped<RoleManager<IdentityRole>>();
-
-// Thêm vai trò "admin" nếu nó chưa tồn tại
-EnsureRoles(builder.Services.BuildServiceProvider()).GetAwaiter().GetResult();
 // Configure CORS
 var app = builder.Build();
 
