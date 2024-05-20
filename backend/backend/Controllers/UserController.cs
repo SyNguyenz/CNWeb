@@ -56,7 +56,9 @@ namespace backend.Controllers
             }
             //cấp token
             var token = await GenerateToken(user);
-            await _signInManager.PasswordSignInAsync(user, model.Password, true, lockoutOnFailure: false);
+
+            await _signInManager.SignInAsync(user, true);
+
             return Ok(new ApiResponse
             {
                 Success = true,
@@ -336,6 +338,7 @@ namespace backend.Controllers
             // Cập nhật các trường thông tin khác tùy theo nhu cầu
 
             // Lưu thay đổi vào cơ sở dữ liệu
+            _context.Update(user);
             _context.SaveChanges();
 
             return Ok(user); // Trả về thông tin người dùng sau khi được cập nhật

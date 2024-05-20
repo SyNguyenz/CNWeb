@@ -3,6 +3,7 @@ using backend.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -20,12 +21,12 @@ namespace backend.Controllers
         {
             if(id == null)
             {
-                var products = _context.HangHoas.ToList();
+                var products = _context.HangHoas.Include(h => h.Variants).ToList();
                 return Ok(products);
             }
             else
             {
-                var product = _context.HangHoas.FirstOrDefault(p => p.MaHangHoa == id);
+                var product = _context.HangHoas.Include(h => h.Variants).FirstOrDefault(p => p.MaHangHoa == id);
                 if (product == null)
                 {
                     return NotFound();
@@ -34,38 +35,76 @@ namespace backend.Controllers
             }
         }
         [HttpPost]
-        public IActionResult AddProduct([FromBody] HangHoa model)
+        public IActionResult AddProduct([FromBody] ProductModel productModel)
         {
             if (ModelState.IsValid)
             {
                 var product = new HangHoa
                 {
-                    ChiTietDonHangs = model.ChiTietDonHangs,
-                    Gia = model.Gia,
-                    HangSanXuat = model.HangSanXuat,
-                    LoaiHangHoa = model.LoaiHangHoa,
-                    TenHangHoa = model.TenHangHoa,
-                    ThongSo = model.ThongSo,
-                    ThongTin = model.ThongTin,
-                    Variants = model.Variants,
-                    Star1 = model.Star1,
-                    Star2 = model.Star2,
-                    Star3 = model.Star3,
-                    Star4 = model.Star4,
-                    Star5 = model.Star5,
+                    Gia = productModel.Gia,
+                    HangSanXuat = productModel.HangSanXuat,
+                    LoaiHangHoa = productModel.LoaiHangHoa,
+                    TenHangHoa = productModel.TenHangHoa,
+                    ThongSo = productModel.ThongSo,
+                    ThongTin = productModel.ThongTin,
+                    Star1 = productModel.Star1,
+                    Star2 = productModel.Star2,
+                    Star3 = productModel.Star3,
+                    Star4 = productModel.Star4,
+                    Star5 = productModel.Star5,
                 };
                 _context.HangHoas.Add(product);
                 _context.SaveChanges();
 
-                return Ok(product);
+                return Ok(new {product});
             }
             else
             {
                 return BadRequest();
             }
         }
-        [HttpPut("{id}")]
-        public IActionResult fixProduct(Guid id, [FromBody] HangHoa model)
+        [HttpPost("AddVariants{id}")]
+        public IActionResult AddVariants(Guid id, [FromBody] VariantModel model)
+        {
+            var product = _context.HangHoas.Include(h => h.Variants).FirstOrDefault(p => p.MaHangHoa == id);
+            if (product == null)
+            {
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "Product not exist",
+                });
+            }
+            else
+            {
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        var variant = new VariantModel
+                        {
+                            image = model.image,
+                            color = model.color,
+                            quantity = model.quantity,
+                            sale = model.sale,
+                        };
+
+                        product.Variants.Add(variant);
+                        _context.SaveChanges();
+                        transaction.Commit();
+
+                        return Ok (product);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        return StatusCode(500, ex);
+                    }
+                }
+            }
+        }
+        [HttpPut("UpdateProduct{id}")]
+        public IActionResult UpdateProduct(Guid id, [FromBody] ProductModel model)
         {
             var product = _context.HangHoas.FirstOrDefault(p => p.MaHangHoa == id);
             if(product == null)
@@ -78,19 +117,19 @@ namespace backend.Controllers
             }
             else
             {
-                product.ChiTietDonHangs = model.ChiTietDonHangs;
                 product.Gia = model.Gia;
                 product.HangSanXuat = model.HangSanXuat;
                 product.LoaiHangHoa = model.LoaiHangHoa;
                 product.TenHangHoa = model.TenHangHoa;
                 product.ThongSo = model.ThongSo;
                 product.ThongTin = model.ThongTin;
-                product.Variants = model.Variants;
                 product.Star1 = model.Star1;
                 product.Star2 = model.Star2;
                 product.Star3 = model.Star3;
                 product.Star4 = model.Star4;
                 product.Star5 = model.Star5;
+
+                _context.Update(product);
                 _context.SaveChanges();
                 return Ok(new ApiResponse
                 {
@@ -100,19 +139,54 @@ namespace backend.Controllers
                 });
             }
         }
+        [HttpPut("UpdateVariants{id}")]
+        public IActionResult UpdateProductVariants(int id, [FromBody] VariantModel model)
+        {
+            var variant = _context.Variants.FirstOrDefault(p => p.id == id);
+            if (variant == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                variant.image = model.image;
+                variant.quantity = model.quantity;
+                variant.sale = model.sale;
+                variant.color = model.color;
+            }
+            _context.Update(variant);
+            _context.SaveChanges();
+            return Ok(variant);
+        }
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(Guid id)
         {
-            var product = _context.HangHoas.FirstOrDefault(p => p.MaHangHoa == id);
+            var product = _context.HangHoas.Include(h => h.Variants).FirstOrDefault(p => p.MaHangHoa == id);
             if (product == null)
             {
                 return NotFound();
             }
             else
             {
+                _context.Variants.RemoveRange(product.Variants);
                 _context.HangHoas.Remove(product);
                 _context.SaveChanges();
 
+                return Ok();
+            }
+        }
+        [HttpDelete("DeleteVariant{id}")]
+        public IActionResult DeleteVariant(int id)
+        {
+            var variant = _context.Variants.FirstOrDefault(v => v.id == id);
+            if(variant == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                _context.Remove(variant);
+                _context.SaveChanges();
                 return Ok();
             }
         }

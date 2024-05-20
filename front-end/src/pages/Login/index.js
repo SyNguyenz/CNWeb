@@ -47,7 +47,6 @@ export default function LoginPage(){
             }
             setErrors(errors);
         }
-        await AllApi.GetAdmin();
     };
 
    

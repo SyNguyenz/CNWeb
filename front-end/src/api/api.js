@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const base_url = "https://cnweb.onrender.com/api/";
+//const base_url = "https://cnweb.onrender.com/api/";
+const base_url = "https://localhost:7006/api/";
+axios.defaults.withCredentials = true;
 class AllApi {
     register(newUser){
         return axios.post(base_url + 'User', newUser);

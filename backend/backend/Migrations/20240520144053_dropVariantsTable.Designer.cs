@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -12,9 +13,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240520144053_dropVariantsTable")]
+    partial class dropVariantsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -214,9 +217,9 @@ namespace backend.Migrations
                     b.Property<double>("Gia")
                         .HasColumnType("double precision");
 
-                    b.Property<List<string>>("HangSanXuat")
+                    b.Property<string>("HangSanXuat")
                         .IsRequired()
-                        .HasColumnType("text[]");
+                        .HasColumnType("text");
 
                     b.Property<string>("LoaiHangHoa")
                         .IsRequired()

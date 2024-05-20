@@ -1,5 +1,4 @@
-﻿using backend.Models;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +12,7 @@ namespace backend.Data
         #region DbSet
         public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<HangHoa> HangHoas { get; set; }
+        public DbSet<VariantModel> Variants { get; set; }
         public DbSet<DonHang> DonHangs { get; set; }
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public override DbSet<User> Users { get; set; }
@@ -50,9 +50,11 @@ namespace backend.Data
                 e.Property(e => e.UserName).IsRequired();
                 e.Property(e => e.DiaChi).IsRequired();
             });
-            modelBuilder.Entity<HangHoa>()
-                .HasMany(h => h.Variants)
-                .WithOne();
+            modelBuilder.Entity<HangHoa>(e =>
+            {
+                e.ToTable("HangHoa");
+                e.HasKey(e => e.MaHangHoa);
+            });
             modelBuilder.Entity<VariantModel>(e =>
             {
                 e.HasKey(e => e.id);

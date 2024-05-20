@@ -83,6 +83,7 @@ namespace backend.Controllers
                 admin.PhoneNumber = a.PhoneNumber;
                 admin.Password = a.Password;
                 admin.DiaChi = a.DiaChi;
+                _context.Update(admin);
                 _context.SaveChanges();
                 return Ok(admin);
             }

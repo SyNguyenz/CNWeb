@@ -1,5 +1,4 @@
-﻿using backend.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Data
@@ -17,9 +16,9 @@ namespace backend.Data
         [Required]
         public string LoaiHangHoa { get; set; }
 
-        public string HangSanXuat { get; set; }
-        public string ThongTin { get; set; }
-        public string ThongSo { get; set; }
+        public List<string> HangSanXuat { get; set; }
+        public List<string> ThongTin { get; set; }
+        public List<string> ThongSo { get; set; }
 
         [Range(0, double.MaxValue)]
         public double Gia { get; set; }

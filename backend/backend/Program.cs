@@ -72,13 +72,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.None; // Cấu hình SameSite=None
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 });
 
 //Add indentity services
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedAccount = true;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
@@ -108,9 +107,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.AllowAnyOrigin()
+        builder.WithOrigins("http://localhost:3000")
                .AllowAnyMethod()
-               .AllowAnyHeader();
+               .AllowAnyHeader()
+               .AllowCredentials();
     });
 });
 // Configure CORS
