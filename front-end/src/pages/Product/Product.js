@@ -19,12 +19,9 @@ function Product() {
   const popupRef = useRef(null);
   const isFirstRender = useRef(true);
 
-  useEffect(() => {
-    if (isFirstRender.current) {
-      window.scrollTo(0, 0);
-      isFirstRender.current = false;
-    }
-  }, []);
+  useEffect(() => { 
+      window.scrollTo(0, 0);  
+  }, [productId]);
 
 
   const handleLogin = () => {

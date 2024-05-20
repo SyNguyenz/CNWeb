@@ -52,7 +52,7 @@ const CommentAndRating = ({product, onOpenPopup}) => {
     <div id="reviews-section">
         <div className="rating-form">
             <div className="name-product">
-                <h3>Nội dung đánh giá sản phẩm { product.name }</h3>
+                <h3>Đánh giá và nhận xét về sản phẩm { product.name }</h3>
                   <div className = "rating-average">
                   <p> Stars:  {product.rating}</p>
                     <ProductRating rating = {product.rating}/> 
@@ -78,7 +78,7 @@ const CommentAndRating = ({product, onOpenPopup}) => {
                   />
                 </label>
               </div>
-              <button className ="button-yin" type="submit">Submit</button>
+              <button className ="button-yin" type="submit">GỬI ĐÁNH GIÁ</button>
             </form>
             <div className="rating-content">
         <div>

@@ -6,42 +6,43 @@ function Footer(props) {
             <div className="footer">
                 <div className="footer-top">
                     <div className="footer-top-name">
-                        <h2>yinn</h2>
+                        <h2>Tech Store</h2>
                     </div>
                     <div className="footer-top-about">
                         <h2>about</h2>
                         <ul>
+                        
                             <li>
-                                <a>- Về Chúng Tôi</a>
+                                - Về Chúng Tôi
                             </li>
                             <li>
-                                <a>- Blog</a>
+                                - Blog
                             </li>
                             <li>
-                                <a>- Cơ Hội Nghề Nghiệp</a>
+                                - Cơ Hội Nghề Nghiệp
                             </li>
                             <li>
-                                <a>- Cửa Hàng</a>
+                                - Cửa Hàng
                             </li>
                         
                         </ul>
                     </div>
                     <div className="footer-top-sp">
                         <h2>Always-on Support</h2>
-                        <p>Support 028.71.087.088 (07:00-21:00)</p>
-                        <p>Delivery 1800 6936 (07:00-21:00)</p>
+                        <p>- Support 039 6666 666 (07:00-21:00)</p>
+                        <p>- Delivery 039 6666 666 (07:00-21:00)</p>
                     </div>
                     <div className="footer-top-delivery">
                         <h2>Delivery</h2>
                         <ul>
                             <li>
-                                <a>- Shipping methods</a>
+                                - Shipping methods
                             </li>
                             <li>
-                                <a>- Payment</a>
+                                - Payment
                             </li>
                             <li>
-                                <a>- Cash voucher</a>
+                                - Cash voucher
                             </li>
                             
                         </ul>

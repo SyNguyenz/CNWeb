@@ -20,14 +20,18 @@
     padding: 1rem 0;
     border-bottom: 1px solid white;
 }
+.footer-top-sp p{
+    font-size: 16px;
+}
 .footer-top-name, .footer-top-about, .footer-top-sp, .footer-top-delivery{
     width: calc(25%);
     text-align: left;
 }
 .footer-top li{
     padding: .5rem 0;
+
 }
-.footer-top li a{
+.footer-top li {
     color: var(--main-color2);
     font-weight: 500;
 }
@@ -35,7 +39,6 @@
 .footer-top-name h2{
     font-size: 26px;
     color: var(--main-color1);
-    padding: 1rem 0;
     text-transform: uppercase;
     width: 100px;
 }
@@ -43,11 +46,9 @@
     text-transform: uppercase;
     color: var(--main-color1);
     margin: 0;
-    font-size: 20px;
-
-
-
+    font-size: 24px;
 }
+
 .footer-top-about img{
     width: 200px;
     margin: 1rem 0;
@@ -59,12 +60,38 @@
     font-weight: 500;
 }
 .footer-bot{
-    padding: 1rem 0;
     color: #333;
 }
 .footer-bot p{
     margin: 0;
 }
+.footer-top-about, .footer-top-delivery {
+    padding: 0;
+    margin: 0;
+}
+
+.footer-top-about h2, .footer-top-delivery h2{
+    margin: 0;
+    padding: 0;
+}
+
+.footer-top-about ul, .footer-top-delivery ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-top-about li, .footer-top-delivery li{
+    margin: 0;
+    padding: 0;
+}
+
+.footer-top-about li, .footer-top-delivery li{
+    text-decoration: none;
+    display: block;
+    padding: 15px 0; 
+}
+
 
 @media screen and (max-width: 800px) {
     .footer{

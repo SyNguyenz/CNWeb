@@ -22,14 +22,28 @@
     text-align: center;
     width: 400px;
   }
+  .popup-content p{
+    font-size: 26px;
+    padding: 10px;
+    color: var(--main-color2);
+  }
+  .popup-content img{
+    width: 140px;
+    height: auto;
+  }
+  .popup-box{
+    display: flex;
+  }
   
   .button-popup {
-    background-color: var(--color3);
+    background-color: var(--main-color2);
     color: #fff;
     border: none;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
+    font-size: 18px;
+    margin: 50px;
   }
   
   .button-popup:hover {

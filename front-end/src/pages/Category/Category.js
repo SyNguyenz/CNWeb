@@ -8,6 +8,7 @@ import decreaseFilt from '../../components/Assets/arrow-down.svg';
 import increaseFilt from '../../components/Assets/arrow-up.svg'
 import saleFilt from '../../components/Assets/percentage.svg'
 import money from '../../components/Assets/money.svg'
+import rating from '../../components/Assets/rating.svg'
 
 
 function Category(props) {
@@ -166,7 +167,7 @@ function Category(props) {
             onClick={() => handleSortClick('highRating')}
           >
             <div className="filter-icon">
-              <img src={decreaseFilt} />
+              <img src={rating} />
             </div>
             Đánh giá cao
           </a>
