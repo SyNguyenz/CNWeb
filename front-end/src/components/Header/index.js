@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from '../Assets/logo.jpg';
@@ -8,21 +8,14 @@ import { faBagShopping, faCircleUser, faList, faPhoneVolume, faTruckField } from
 import HeadlessTippy from '@tippyjs/react/headless';
 import MenuBar from "../MenuBar/MenuBar";
 import 'tippy.js/dist/tippy.css';
+import { AuthContext } from "../AuthContext/AuthContext";
 
 function Header() {
     const [isMenu, setIsMenu] = useState(false);
-    const [userInfo, setUserInfo] = useState(null);
-
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('auth-token'));
-        if (user) {
-            setUserInfo(user);
-        }
-    }, []);
+    const { isLoggedIn, user, logout } = useContext(AuthContext);
 
     const handleLogout = () => {
-        localStorage.removeItem('auth-token');
-        setUserInfo(null);
+        logout();
         window.location.replace('/');
     };
 
@@ -30,34 +23,34 @@ function Header() {
         <div className="header">
             <div className="menu">
                 <div className="logo">
-                    <img src={logo} alt="" />
+                    <img src={logo} alt="Logo" />
                     <span className="about-name">
                         <Link to="/"> <b>TECH STORE</b></Link>
                     </span>
                 </div>
-
+                
                 <HeadlessTippy
                     visible={isMenu}
                     interactive
                     placement="bottom-end"
-                    onClickOutside={() => setIsMenu(false)}
+                    onClickOutside={() => setIsMenu(false)} 
                     delay={[0, 700]}
                     render={(attrs) => (
-                        <div className="menuBar" tabIndex="-1" {...attrs}>
-                            <MenuBar />
+                        <div className="menuBar" tabIndex="-1" {...attrs}>    
+                            <MenuBar />         
                         </div>
                     )}
                 >
                     <div className="menu-list1" onClick={() => setIsMenu(!isMenu)}>
                         <div className='my-icon'>
-                            <FontAwesomeIcon icon={faList} />
+                            <FontAwesomeIcon icon={faList} />  
                         </div>
                         <div className="box-content">
                             <span className="title-y">DANH MỤC</span>
                         </div>
                     </div>
                 </HeadlessTippy>
-
+                
                 <div className="menu-list">
                     <Search />
                 </div>
@@ -103,13 +96,13 @@ function Header() {
                                     <br />
                                     hàng
                                 </p>
-                                <span className="count"> 0 </span>
-                            </div>
+                                <span className="count">0</span>
+                            </div>        
                         </Link>
                     </div>
                 </div>
                 <div>
-                    {userInfo ? (
+                    {isLoggedIn ? (
                         <div className="login-btn" onClick={handleLogout}>
                             <div className="header-item about-member">
                                 <div className="box-icon">
@@ -118,7 +111,7 @@ function Header() {
                                     </div>
                                 </div>
                                 <div className="box-content">
-                                    <span className="title-y">Xin chào, {userInfo.userName}</span>
+                                    <span className="title-y">{user.userName}</span>
                                     <span className="title-y">Đăng xuất</span>
                                 </div>
                             </div>

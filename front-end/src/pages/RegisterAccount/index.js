@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import addressData from './address-data.json';
 import { Link } from "react-router-dom";
 import "./RegisterAccount.css";
 import AllApi from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../components/AuthContext/AuthContext";
 
 export default function RegisterPage() {
     const [phonenumber, setPhonenumber] = useState("");
@@ -18,6 +19,7 @@ export default function RegisterPage() {
     const districtsRef = useRef(null);
     const wardsRef = useRef(null);
     const navigate = useNavigate();
+    const { login } = useContext(AuthContext);
 
     useEffect(() => {
         renderCity(addressData);
@@ -92,8 +94,10 @@ export default function RegisterPage() {
             };
             const savedUser = await addUser(newUser);
             if (savedUser) {
-                setSuccessMessage("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
-                localStorage.setItem('auth-token', JSON.stringify(savedUser));
+                // Đăng nhập người dùng và lưu vào AuthContext
+                login(savedUser);
+
+                // Chuyển hướng về trang chủ
                 navigate('/');
                 window.location.reload();
             } else {

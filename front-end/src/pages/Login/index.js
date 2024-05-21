@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./Login.css";
 import AllApi from "../../api/api";
+import { AuthContext } from "../../components/AuthContext/AuthContext";
 
 export default function LoginPage() {
     const [phonenumber, setPhonenumber] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { login } = useContext(AuthContext);
 
     const validatePhoneNumber = (phoneNumber) => {
         return /^(0)[3|5|7|8|9][0-9]{8}$/.test(phoneNumber);
@@ -40,14 +41,8 @@ export default function LoginPage() {
         try {
             const response = await AllApi.login(user);
             if (response.Success) {
-                // Lưu thông tin người dùng vào localStorage
-                localStorage.setItem("user", JSON.stringify(response.user));
-
-                // Đánh dấu đã đăng nhập
-                setIsLoggedIn(true);
-
-                // Chuyển hướng đến trang chủ hoặc trang khác
-                window.location.href = "/home"; // Thay đổi đường dẫn cho phù hợp
+                login(response.user);
+                window.location.href = "/"; // Chuyển hướng đến trang chủ
             } else {
                 const newErrors = { ...errors };
                 if (response.Message === "Invalid phonenumber") {
@@ -64,37 +59,32 @@ export default function LoginPage() {
         }
     };
 
-
-    return(
+    return (
         <div className="container">
             <div className="login-form">
-                <div class="title">Chào mừng quay lại với <span class="app-name">YINN</span></div>
-                <div class="subtitle">Đăng nhập vào tài khoản của bạn</div>
+                <div className="title">Chào mừng quay lại với <span className="app-name">YINN</span></div>
+                <div className="subtitle">Đăng nhập vào tài khoản của bạn</div>
                 <form onSubmit={handleSubmit}>
-                    <div class="input-container">
+                    <div className="input-container">
                         <div>
-                            <label for="phonenumber">Số điện thoại</label>
-                            <input type="text" id="phonenumber" onChange={(e) =>setPhonenumber(e.target.value)}/>
+                            <label htmlFor="phonenumber">Số điện thoại</label>
+                            <input type="text" id="phonenumber" onChange={(e) => setPhonenumber(e.target.value)} />
                         </div>
-                        {errors.phonenumber&&<div className="error">{errors.phonenumber}</div>}
-
-                            
+                        {errors.phonenumber && <div className="error">{errors.phonenumber}</div>}
                     </div>
-                    <div class="input-container">
+                    <div className="input-container">
                         <div>
-                            <label for="password">Mật khẩu</label>
-                            <input type="password" id="password" onChange={(e) => setPassword(e.target.value)}/>
+                            <label htmlFor="password">Mật khẩu</label>
+                            <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         {errors.password && <div className="error">{errors.password}</div>}
-                        
                     </div>
-
-                    <div class="forgot-password">
+                    <div className="forgot-password">
                         <a href="#">Quên mật khẩu?</a>
                     </div>
                     <button type="submit">Đăng nhập</button>
                 </form>
-                <div class="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
+                <div className="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
             </div>
         </div>
     );
