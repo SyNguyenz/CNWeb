@@ -25,6 +25,7 @@ builder.Services.AddDbContext<MyDbContext>(option =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.Cookie.HttpOnly = true;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
     options.Cookie.SameSite = SameSiteMode.None; // Cấu hình SameSite=None
 });
