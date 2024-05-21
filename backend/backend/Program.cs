@@ -63,7 +63,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("https://cnweb.onrender.com")
+        builder.WithOrigins("http://localhost:3000")
+        .WithOrigins("https://cn-web-plum.vercel.app")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();
