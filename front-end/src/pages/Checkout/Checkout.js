@@ -8,7 +8,7 @@ const Checkout = () => {
     const [recipientName, setRecipientName] = useState('');
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const orderDate = new Date(); 
+    const orderDate = new Date();
 
     const selectedProducts = useMemo(() => {
         const selectedSet = new Set(selectedItems);
@@ -40,12 +40,12 @@ const Checkout = () => {
 
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '/create_payment_url';
+        form.action = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
 
         const amountInput = document.createElement('input');
         amountInput.type = 'hidden';
         amountInput.name = 'amount';
-        amountInput.value = calculateTotalPrice;
+        amountInput.value = calculateTotalPrice; // Corrected line: `calculateTotalPrice()`
         form.appendChild(amountInput);
 
         const languageInput = document.createElement('input');
@@ -58,7 +58,6 @@ const Checkout = () => {
         form.submit();
     };
 
-    
     return (
         <div className="checkout-container">
             <h1>Thông tin đơn hàng</h1>
@@ -101,10 +100,9 @@ const Checkout = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <h3>Sản phẩm của bạn:</h3>
                     <div className="checkout-items">
-                        <h1>  </h1>
                         {selectedProducts.map((item) => (
                             <div key={item.id} className="checkout-item">
                                 <img src={item.selectedVariant.images} alt={item.name} />
@@ -118,28 +116,24 @@ const Checkout = () => {
                             </div>
                         ))}
                     </div>
-                    
-                    <div className="date-form">
-                            <div className="date-inf">
-                               
-                                <p>Ngày đặt hàng: {orderDate.toLocaleDateString('vi-VN')} </p>
-                            </div>
-                            <div className="date-inf">
-                                
-                                <p>Ngày nhận hàng dự kiến: {calculateEstimatedDeliveryDate(3)} đến {calculateEstimatedDeliveryDate(7)} </p>
-                            </div>
-                        </div>
 
-                        <div className="checkout-total">
-                             <h3>Tổng giá trị đơn hàng: {formatPrice(calculateTotalPrice)} ({calculateTotalQuantity} sản phẩm)</h3>
+                    <div className="date-form">
+                        <div className="date-inf">
+                            <p>Ngày đặt hàng: {orderDate.toLocaleDateString('vi-VN')}</p>
                         </div>
+                        <div className="date-inf">
+                            <p>Ngày nhận hàng dự kiến: {calculateEstimatedDeliveryDate(3)} đến {calculateEstimatedDeliveryDate(7)}</p>
+                        </div>
+                    </div>
+
+                    <div className="checkout-total">
+                        <h3>Tổng giá trị đơn hàng: {formatPrice(calculateTotalPrice)} ({calculateTotalQuantity} sản phẩm)</h3>
+                    </div>
 
                     <div className='btn-complete-order-container'>
-                         <button type="submit" className="btn-complete-order">Thanh toán</button>
+                        <button type="submit" className="btn-complete-order">Thanh toán</button>
                     </div>
-                  
                 </form>
-                
             </div>
         </div>
     );
