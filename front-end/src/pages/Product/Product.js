@@ -13,7 +13,7 @@ import LoginPopup from '../../components/LoginPopup/LoginPopup.js';
 
 function Product() {
   const {productId} = useParams();
-  const product = all_products.find((item) => item.id === Number(productId))
+  const product = all_products.find((item) => item.id === productId)
  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupRef = useRef(null);
@@ -54,7 +54,6 @@ function Product() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isPopupOpen]);
-
 
   return (
     <div className='product-container'>

@@ -107,7 +107,7 @@ const Checkout = () => {
                         <h1>  </h1>
                         {selectedProducts.map((item) => (
                             <div key={item.id} className="checkout-item">
-                                <img src={item.images[0]} alt={item.name} />
+                                <img src={item.selectedVariant.images} alt={item.name} />
                                 <div className="checkout-item-details">
                                     <h2>{item.name}</h2>
                                     <p>Màu sắc: {item.selectedVariant?.color || 'N/A'}</p>

@@ -1,4 +1,6 @@
-﻿namespace backend.Data
+﻿using backend.Controllers;
+
+namespace backend.Data
 {
     public class VariantModel
     {
@@ -7,5 +9,8 @@
         public string color { get; set; }
         public int quantity { get; set; }
         public byte sale { get; set; }
+
+        public Guid ProductId { get; set; }
+        public HangHoa HangHoa { get; set; }
     }
 }

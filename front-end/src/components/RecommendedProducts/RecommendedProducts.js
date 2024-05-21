@@ -90,7 +90,7 @@ function RecommendedProducts({ category, productId }) {
                         <Item 
                           id={product.id}
                           name={product.name}
-                          image={product.images[0]}
+                          image={product.variants[0].image}
                           sale={product.sale}
                           old_price={product.old_price}
                           rating={product.rating}

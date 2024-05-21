@@ -59,6 +59,10 @@ namespace backend.Data
             {
                 e.HasKey(e => e.id);
                 e.Property(e => e.image).HasColumnType("text");
+                e.HasOne(e => e.HangHoa)
+                .WithMany(e => e.Variants)
+                .HasForeignKey(v => v.ProductId)
+                .HasConstraintName("FK_Variant_HangHoa");
             });
         }
     }

@@ -306,7 +306,7 @@ for (let i = 0; i < response.data.length; i++) {
     const item = response.data[i];
     const totalRatings = item.star5 + item.star4 + item.star3 + item.star2 + item.star1;
     let rating = 5
-    if(totalRatings != 0) {
+    if(totalRatings !== 0) {
       rating = (5*item.star5 + 4*item.star4 + 3*item.star3 + 2*item.star2 + item.star1)/totalRatings;
     }
     
@@ -317,11 +317,13 @@ for (let i = 0; i < response.data.length; i++) {
         old_price: item.gia,
         category: item.loaiHangHoa,
         sale: item.variants[0].sale,
+        totalRatings:totalRatings,
         brand: {
             name: item.hangSanXuat[0],
             image: item.hangSanXuat[1],
         },
         variants: item.variants.map(variant => ({
+            id: variant.id,
             color: variant.color,
             sale: variant.sale,
             quantity: variant.quantity,

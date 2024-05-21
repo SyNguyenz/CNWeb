@@ -6,7 +6,7 @@
         public Guid MaDonHang { get; set; }
         public int SoLuong { get; set; }
         public double Total { get; set; }
-        public byte GiamGia { get; set; }
+        public double GiamGia { get; set; }
 
         //relationship
         public DonHang DonHang { get; set; }

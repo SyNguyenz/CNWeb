@@ -43,7 +43,7 @@ function ProductDisplay(props) {
             alert("Vui lòng chọn phân loại trước khi thêm vào giỏ hàng!");
         }
     };
-    
+    const totalRatings = product.totalRatings;
 
   return (
     <div className='productdisplay'>
@@ -55,7 +55,7 @@ function ProductDisplay(props) {
                     </div>
                     <div className="box-rating">
                         <a href="#reviews-section" className="a-review">
-                        <ProductRating rating={product.rating} />&nbsp;100 đánh giá
+                        <ProductRating rating={product.rating} />&nbsp;{totalRatings} đánh giá
                         </a>
                     </div>
             </div>
@@ -157,7 +157,7 @@ function ProductDisplay(props) {
                     <p className="p-14px">{product.variants[selectedVariantIndex].quantity} sản phẩm có sẵn</p>
                 </div>
                 <div className="box-order-btn">
-                    <button onClick className="order-btn">
+                    <button onClick={handleAddToCart} className="order-btn">
                         <Link to='/order'>
                             <strong>MUA NGAY</strong>
                             <span>(Thanh toán khi nhận hàng hoặc nhận tại cửa hàng)</span>

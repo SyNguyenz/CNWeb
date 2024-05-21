@@ -64,7 +64,7 @@ namespace backend.Controllers
             }
         }
         [HttpPost("AddVariants{id}")]
-        public IActionResult AddVariants(Guid id, [FromBody] VariantModel model)
+        public IActionResult AddVariants(Guid id, [FromBody] VariantInputModel model)
         {
             var product = _context.HangHoas.Include(h => h.Variants).FirstOrDefault(p => p.MaHangHoa == id);
             if (product == null)
@@ -90,6 +90,8 @@ namespace backend.Controllers
                         };
 
                         product.Variants.Add(variant);
+                        variant.ProductId = product.MaHangHoa;
+                        variant.HangHoa = product;
                         _context.SaveChanges();
                         transaction.Commit();
 
@@ -140,7 +142,7 @@ namespace backend.Controllers
             }
         }
         [HttpPut("UpdateVariants{id}")]
-        public IActionResult UpdateProductVariants(int id, [FromBody] VariantModel model)
+        public IActionResult UpdateProductVariants(int id, [FromBody] VariantInputModel model)
         {
             var variant = _context.Variants.FirstOrDefault(p => p.id == id);
             if (variant == null)

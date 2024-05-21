@@ -1,6 +1,7 @@
 ﻿using backend.Data;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Controllers
 {
@@ -9,12 +10,10 @@ namespace backend.Controllers
     public class OrderController : ControllerBase
     {
         private readonly MyDbContext _context;
-        private readonly string _appSettings;
 
-        public OrderController(MyDbContext context, IConfiguration configuration)
+        public OrderController(MyDbContext context)
         {
             _context = context;
-            _appSettings = configuration["AppSettings:SecretKey"];
         }
 
         [HttpGet]
@@ -36,28 +35,63 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult AddOrder([FromBody] DonHang model)
+        [HttpGet("UserId{id}")]
+        public IActionResult GetUserOrder(string id)
         {
-            var existingOrder = _context.DonHangs.FirstOrDefault(u => u.MaDonHang == model.MaDonHang);
-            if (existingOrder != null)
+            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            if (user == null)
             {
-                return Conflict(); // Trả về mã lỗi 409 nếu người dùng đã tồn tại
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "User not found",
+                });
             }
+            else
+            {
+                var orders = _context.DonHangs.Where(o => o.UserId == id).ToList();
+                return Ok(orders);
+            }
+        }
 
+        [HttpPost]
+        public IActionResult AddOrder(int id, int number, [FromBody] DonHang model)
+        {
             var order = new DonHang
             {
-                NgayDat = model.NgayDat,
                 NgayGiao = model.NgayGiao,
                 UserId = model.UserId,
-                TinhTrangDonHang = model.TinhTrangDonHang,
-                ChiTietDonHangs = model.ChiTietDonHangs,
+                TinhTrangDonHang = 0,
             };
 
             _context.DonHangs.Add(order);
             _context.SaveChanges();
 
-            return CreatedAtAction(nameof(Get), new { id = order.UserId }, order); // Trả về mã lỗi 201 nếu thành công
+            var variant = _context.Variants.FirstOrDefault(p => p.id == id);
+            if (variant == null)
+            {
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "Variant not found"
+                });
+            }
+            var orderDetails = new ChiTietDonHang
+            {
+                MaDonHang = order.MaDonHang,
+                MaHangHoa = variant.ProductId,
+                SoLuong = number,
+                Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
+                GiamGia = number * (variant.sale / 100),
+                DonHang = order,
+                HangHoa = variant.HangHoa
+            };
+            order.ChiTietDonHangs.Add(orderDetails);
+            variant.HangHoa.ChiTietDonHangs.Add(orderDetails);
+            variant.quantity -= number;
+            _context.SaveChanges();
+
+            return Ok(new {order});
         }
 
         [HttpPut("{id}")]
@@ -77,11 +111,11 @@ namespace backend.Controllers
             }
 
             //Update
-            order.TinhTrangDonHang = model.TinhTrangDonHang;
-            order.NgayDat = model.NgayDat;
-            order.NgayGiao = model.NgayGiao;
-            order.UserId = model.UserId;
-            order.ChiTietDonHangs = model.ChiTietDonHangs;
+            order.TinhTrangDonHang++;
+            if (order.TinhTrangDonHang == 3)
+            {
+                order.NgayGiao = DateTime.Now;
+            }
 
             _context.SaveChanges();
 
@@ -97,7 +131,7 @@ namespace backend.Controllers
             {
                 return NotFound();
             }
-
+            _context.ChiTietDonHangs.RemoveRange(order.ChiTietDonHangs);
             _context.DonHangs.Remove(order);
             _context.SaveChanges();
 

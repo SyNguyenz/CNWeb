@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -12,9 +13,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521044651_addFKtoVariantTable")]
+    partial class addFKtoVariantTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,8 +166,8 @@ namespace backend.Migrations
                     b.Property<Guid>("MaHangHoa")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("GiamGia")
-                        .HasColumnType("double precision");
+                    b.Property<byte>("GiamGia")
+                        .HasColumnType("smallint");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("integer");

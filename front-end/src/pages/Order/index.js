@@ -23,7 +23,9 @@ const Order = () => {
     };
    
     const handleQuantityChange = (productId, change) => {
+        
         const item = cart.find(item => item.id === productId);
+        console.log(item);
         if (item) {
             if (item.quantity + change <= 0) {
                 handleRemoveFromCart(productId);
@@ -46,7 +48,6 @@ const Order = () => {
         const newPriceNumeric = Number(item.newPrice);
         return newPriceNumeric * item.quantity;
     };
-
     return (
         <div className="cart-page">
             <h1> </h1>
@@ -76,7 +77,7 @@ const Order = () => {
                                     />
                                 </div>
 
-                                <img src={item.images[0]} alt={item.name} />
+                                <img src={item.selectedVariant.image} alt={item.name} />
                                 <div className="cart-item-details">
                                     <h2>{item.name}</h2>
                                     <p>Màu sắc: {item.selectedVariant.color || 'N/A'}</p>
