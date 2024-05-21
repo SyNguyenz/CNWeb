@@ -12,5 +12,10 @@ namespace backend.Data
 
         public Guid ProductId { get; set; }
         public HangHoa HangHoa { get; set; }
+        public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public VariantModel()
+        {
+            ChiTietDonHangs = new List<ChiTietDonHang>();
+        }
     }
 }

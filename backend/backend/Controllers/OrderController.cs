@@ -79,30 +79,25 @@ namespace backend.Controllers
             var orderDetails = new ChiTietDonHang
             {
                 MaDonHang = order.MaDonHang,
-                MaHangHoa = variant.ProductId,
+                VariantId = variant.id,
+                MaHangHoa = variant.HangHoa.MaHangHoa,
                 SoLuong = number,
                 Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
                 GiamGia = number * (variant.sale / 100),
                 DonHang = order,
-                HangHoa = variant.HangHoa
+                Variant = variant
             };
             order.ChiTietDonHangs.Add(orderDetails);
-            variant.HangHoa.ChiTietDonHangs.Add(orderDetails);
+            variant.ChiTietDonHangs.Add(orderDetails);
             variant.quantity -= number;
             _context.SaveChanges();
 
             return Ok(new {order});
         }
 
-        [HttpPut("{id}")]
-        public IActionResult UpdateOrder(Guid id, [FromBody] DonHang model)
+        [HttpPut("UpdateOrderState{id}")]
+        public IActionResult UpdateOrderState(Guid id)
         {
-            // Kiểm tra xem model có hợp lệ không
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             // Tìm trong cơ sở dữ liệu bằng ID
             var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == id);
             if (order == null)
@@ -120,19 +115,35 @@ namespace backend.Controllers
             _context.SaveChanges();
 
             return Ok(order);
-            
         }
-
-        [HttpDelete("{id}")]
-        public IActionResult DeleteOrder(Guid id)
+        [HttpPut("UpdateOrder")]
+        public IActionResult UpdateOrder(Guid productId, Guid orderId, int number)
         {
-            var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == id);
+            var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.MaDonHang == productId && o.MaDonHang == orderId);
             if (order == null)
             {
                 return NotFound();
             }
-            _context.ChiTietDonHangs.RemoveRange(order.ChiTietDonHangs);
-            _context.DonHangs.Remove(order);
+            var variant = order.Variant;
+
+            order.SoLuong = number;
+            order.Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number;
+            order.GiamGia = number * (variant.sale / 100);
+            _context.Update(order);
+            _context.SaveChanges();
+            return Ok(order);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteOrder(Guid OrderId, Guid productId)
+        {
+            var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.MaDonHang == OrderId && o.MaHangHoa == productId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.Variant.quantity += order.SoLuong;
+            _context.ChiTietDonHangs.Remove(order);
             _context.SaveChanges();
 
             return NoContent();

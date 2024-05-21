@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Data;
@@ -12,9 +13,11 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240521075720_fixPkCTDH")]
+    partial class fixPkCTDH
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,11 +163,14 @@ namespace backend.Migrations
                     b.Property<Guid>("MaDonHang")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("MaHangHoa")
-                        .HasColumnType("uuid");
+                    b.Property<int>("VariantId")
+                        .HasColumnType("integer");
 
                     b.Property<double>("GiamGia")
                         .HasColumnType("double precision");
+
+                    b.Property<Guid>("MaHangHoa")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("integer");
@@ -172,10 +178,7 @@ namespace backend.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("VariantId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("MaDonHang", "MaHangHoa");
+                    b.HasKey("MaDonHang", "VariantId");
 
                     b.HasIndex("VariantId");
 

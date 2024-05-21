@@ -49,10 +49,8 @@ namespace backend.Data
 
         public ICollection<VariantModel> Variants {  get; set; }
 
-        public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public HangHoa()
         {
-            ChiTietDonHangs = new List<ChiTietDonHang>();
             Variants = new List<VariantModel>();
         }
     }

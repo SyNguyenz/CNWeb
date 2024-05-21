@@ -36,10 +36,11 @@ namespace backend.Data
                 .HasForeignKey(e => e.MaDonHang)
                 .HasConstraintName("FK_ChiTietDonHang_DonHang");
 
-                entity.HasOne(e => e.HangHoa)
+                entity.HasOne(e => e.Variant)
                 .WithMany(e => e.ChiTietDonHangs)
-                .HasForeignKey(e => e.MaHangHoa)
-                .HasConstraintName("FK_ChiTietDonHang_HangHoa");
+                .HasForeignKey(e => e.VariantId)
+                .HasConstraintName("FK_ChiTietDonHang_Variant");
+
             });
             modelBuilder.Entity<User>(e =>
             {
