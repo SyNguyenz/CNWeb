@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import addressData from './address-data.json';
+import { Link } from "react-router-dom";
 import "./RegisterAccount.css";
 import AllApi from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
     const [phonenumber, setPhonenumber] = useState("");
@@ -10,10 +12,12 @@ export default function RegisterPage() {
     const [rePassword, setRePassword] = useState("");
     const [diaChi, setDiaChi] = useState("");
     const [errors, setErrors] = useState({});
+    const [successMessage, setSuccessMessage] = useState("");
 
     const citisRef = useRef(null);
     const districtsRef = useRef(null);
     const wardsRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         renderCity(addressData);
@@ -88,7 +92,10 @@ export default function RegisterPage() {
             };
             const savedUser = await addUser(newUser);
             if (savedUser) {
-                console.log('Người dùng đã được thêm vào cơ sở dữ liệu:', savedUser);
+                setSuccessMessage("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
+                localStorage.setItem('auth-token', JSON.stringify(savedUser));
+                navigate('/');
+                window.location.reload();
             } else {
                 console.log('Đã xảy ra lỗi khi thêm người dùng.');
             }
@@ -119,20 +126,20 @@ export default function RegisterPage() {
     return (
         <div className="container">
             <div className="login-form">
-                <div className="title">Chào mừng bạn đến với <span className="app-name">YINN</span></div>
+                <div className="title">Chào mừng bạn đến với <span className="app-name">TECH STORE</span></div>
                 <div className="subtitle">Tạo tài khoản của bạn</div>
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">
                         <div>
                             <label htmlFor="phonenumber">Số điện thoại:</label>
-                            <input type="text" id="phonenumber" onChange={(e) => setPhonenumber(e.target.value)} />
+                            <input type="text" id="phonenumber" value={phonenumber} onChange={(e) => setPhonenumber(e.target.value)} />
                         </div>
                         {errors.phonenumber && <div className="error">{errors.phonenumber}</div>}
                     </div>
                     <div className="input-container">
                         <div>
                             <label htmlFor="username">Tạo tên người dùng:</label>
-                            <input type="text" id="username" onChange={(e) => setUsername(e.target.value)} />
+                            <input type="text" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
                         </div>
                         {errors.username && <div className="error">{errors.username}</div>}
                     </div>
@@ -154,20 +161,21 @@ export default function RegisterPage() {
                     <div className="input-container">
                         <div>
                             <label htmlFor="password">Mật khẩu:</label>
-                            <input type="password" id="password" onChange={(e) => setPassword(e.target.value)} />
+                            <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                         </div>
                         {errors.password && <div className="error">{errors.password}</div>}
                     </div>
                     <div className="input-container">
                         <div>
                             <label htmlFor="re-password">Xác nhận mật khẩu:</label>
-                            <input type="password" id="re-password" onChange={(e) => setRePassword(e.target.value)} />
+                            <input type="password" id="re-password" value={rePassword} onChange={(e) => setRePassword(e.target.value)} />
                         </div>
                         {errors.rePassword && <div className="error">{errors.rePassword}</div>}
                     </div>
                     <button type="submit">Tạo tài khoản</button>
                 </form>
-                <div className="signup-link">Bạn đã có tài khoản? <a href="/login">Đăng nhập ngay!</a></div>
+                {successMessage && <div className="success-message">{successMessage}</div>}
+                <div className="signup-link">Bạn đã có tài khoản? <Link to="/login">Đăng nhập ngay!</Link></div>
             </div>
         </div>
     );
