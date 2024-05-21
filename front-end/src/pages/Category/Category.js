@@ -31,7 +31,7 @@ function Category(props) {
     setPriceRangeFilter(''); 
     setRatingFilter(''); 
     setFilteredProducts([]);
-  }, [category]);
+  }, [category, brandName]);
   
   function getBrandImage(brandName) {
     const product = all_products.find(product => product.brand.name.toLowerCase() === brandName.toLowerCase());
