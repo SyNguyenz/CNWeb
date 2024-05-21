@@ -13,5 +13,10 @@
         //relationship
         public DonHang DonHang { get; set; }
         public VariantModel Variant { get; set; }
+        public ChiTietDonHang()
+        {
+            DonHang = new DonHang();
+            Variant = new VariantModel();
+        }
     }
 }

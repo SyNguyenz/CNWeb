@@ -52,6 +52,11 @@ namespace backend.Data
         public HangHoa()
         {
             Variants = new List<VariantModel>();
+            TenHangHoa = string.Empty;
+            LoaiHangHoa = string.Empty;
+            HangSanXuat = new List<string>();
+            ThongTin = new List<string>();
+            ThongSo = new List<string>();
         }
     }
 }

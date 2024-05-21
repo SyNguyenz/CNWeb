@@ -1,7 +1,9 @@
 ﻿using backend.Data;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace backend.Controllers
 {
@@ -10,10 +12,12 @@ namespace backend.Controllers
     public class OrderController : ControllerBase
     {
         private readonly MyDbContext _context;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public OrderController(MyDbContext context)
+        public OrderController(MyDbContext context, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -55,42 +59,55 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddOrder(int id, int number, [FromBody] DonHang model)
+        public async Task<IActionResult> AddOrder([FromQuery] List<int> ids,[FromQuery] List<int> numbers, string UserId)
         {
+            if(ids.Count != numbers.Count)
+            {
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = "each product needs exactly a number",
+                });
+            }
             var order = new DonHang
             {
-                NgayGiao = model.NgayGiao,
-                UserId = model.UserId,
+                UserId = UserId,
                 TinhTrangDonHang = 0,
             };
 
             _context.DonHangs.Add(order);
             _context.SaveChanges();
-
-            var variant = _context.Variants.FirstOrDefault(p => p.id == id);
-            if (variant == null)
+            for(int i = 0; i < ids.Count; i++)
             {
-                return Ok(new ApiResponse
+                var id = ids[i];
+                var number = numbers[i];
+                var variant = _context.Variants.FirstOrDefault(p => p.id == id);
+                if (variant == null)
                 {
-                    Success = false,
-                    Message = "Variant not found"
-                });
+                    return Ok(new ApiResponse
+                    {
+                        Success = false,
+                        Message = "Variant not found"
+                    });
+                }
+                var orderDetails = new ChiTietDonHang
+                {
+                    MaDonHang = order.MaDonHang,
+                    VariantId = variant.id,
+                    MaHangHoa = variant.HangHoa.MaHangHoa,
+                    SoLuong = number,
+                    Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
+                    GiamGia = number * (variant.sale / 100),
+                    DonHang = order,
+                    Variant = variant
+                };
+                order.ChiTietDonHangs.Add(orderDetails);
+                variant.ChiTietDonHangs.Add(orderDetails);
+                variant.quantity -= number;
+                _context.SaveChanges();
             }
-            var orderDetails = new ChiTietDonHang
-            {
-                MaDonHang = order.MaDonHang,
-                VariantId = variant.id,
-                MaHangHoa = variant.HangHoa.MaHangHoa,
-                SoLuong = number,
-                Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
-                GiamGia = number * (variant.sale / 100),
-                DonHang = order,
-                Variant = variant
-            };
-            order.ChiTietDonHangs.Add(orderDetails);
-            variant.ChiTietDonHangs.Add(orderDetails);
-            variant.quantity -= number;
-            _context.SaveChanges();
+
+            await _hubContext.Clients.All.SendAsync("NewOrderCreated", "New order created");
 
             return Ok(new {order});
         }

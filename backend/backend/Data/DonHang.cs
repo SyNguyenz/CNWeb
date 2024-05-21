@@ -14,7 +14,8 @@
         public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
         public DonHang()
         {
-            ChiTietDonHangs = new List<ChiTietDonHang>();
+            ChiTietDonHangs = [];
+            UserId = string.Empty;
         }
     }
 }

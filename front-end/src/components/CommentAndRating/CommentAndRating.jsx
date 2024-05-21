@@ -56,7 +56,7 @@ const CommentAndRating = ({product, onOpenPopup}) => {
                   <div className = "rating-average">
                   <p> Stars:  {product.rating}</p>
                     <ProductRating rating = {product.rating}/> 
-                   <p> / 100 đánh giá </p> 
+                   <p> / {product.totalRatings} đánh giá </p> 
                   </div>
                 <p>(Vui lòng đăng nhập để đánh giá sản phẩm)</p>
             </div>
