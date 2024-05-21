@@ -16,6 +16,9 @@ namespace backend.Data
         public VariantModel()
         {
             ChiTietDonHangs = new List<ChiTietDonHang>();
+            image = string.Empty;
+            color = string.Empty;
+            HangHoa = new HangHoa();
         }
     }
 }

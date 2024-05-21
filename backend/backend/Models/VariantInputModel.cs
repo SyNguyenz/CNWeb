@@ -6,5 +6,10 @@
         public string color { get; set; }
         public int quantity { get; set; }
         public byte sale { get; set; }
+        public VariantInputModel()
+        {
+            image = string.Empty;
+            color = string.Empty;
+        }
     }
 }

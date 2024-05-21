@@ -1,17 +1,8 @@
 ﻿using backend.Data;
 using backend.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace backend.Controllers
 {
@@ -70,7 +61,7 @@ namespace backend.Controllers
             if (!string.IsNullOrEmpty(phone))
             {
                 // Kiểm tra độ dài của phone và xác định rằng nó phải có 10 ký tự và tất cả là số
-                if (phone.Length == 10 && phone.All(char.IsDigit) && phone.StartsWith("0"))
+                if (phone.Length == 10 && phone.All(char.IsDigit) && phone.StartsWith('0'))
                 {
                     var user = _context.Users.FirstOrDefault(u => u.PhoneNumber == phone);
                     if (user == null)

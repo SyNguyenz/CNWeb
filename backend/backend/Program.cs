@@ -1,10 +1,6 @@
 ﻿using backend.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +10,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
 });
+builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -55,9 +52,6 @@ builder.Services.Configure<IdentityOptions>(options =>
 // Đăng ký RoleManager
 builder.Services.AddScoped<RoleManager<IdentityRole>>();
 
-// Thêm vai trò "admin" nếu nó chưa tồn tại
-EnsureRoles(builder.Services.BuildServiceProvider()).GetAwaiter().GetResult();
-
 // Add CORS services
 builder.Services.AddCors(options =>
 {
@@ -75,12 +69,21 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
+// Thêm vai trò "admin" nếu nó chưa tồn tại
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    EnsureRoles(services).GetAwaiter().GetResult();
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseRouting();
 
 app.UseHttpsRedirection();
 
@@ -89,6 +92,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();
 async Task EnsureRoles(IServiceProvider serviceProvider)
