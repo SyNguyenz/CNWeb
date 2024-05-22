@@ -1,0 +1,27 @@
+/* UserProfile.css */
+.user-profile-container {
+    padding: 20px;
+}
+
+.user-info, .user-orders {
+    margin-bottom: 20px;
+}
+
+.user-info p, .order-item p {
+    margin: 5px 0;
+}
+
+.order-item {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.order-products ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.order-products li {
+    margin: 5px 0;
+}
