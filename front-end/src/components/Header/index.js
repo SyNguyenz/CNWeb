@@ -111,7 +111,9 @@ function Header() {
                                     </div>
                                 </div>
                                 <div className="box-content">
-                                        <span className="title-y">{user}</span>
+                                    <span className="title-y">
+                                        <Link to='/user_profile'>{user}</Link>
+                                        </span>
                                     <span className="title-y">Đăng xuất</span>
                                 </div>
                             </div>

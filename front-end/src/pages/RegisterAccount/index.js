@@ -96,10 +96,13 @@ export default function RegisterPage() {
             if (savedUser) {
                 // Đăng nhập người dùng và lưu vào AuthContext
                 login(savedUser);
-
-                // Chuyển hướng về trang chủ
-                navigate('/');
-                window.location.reload();
+    
+                // Chuyển hướng về trang chủ và hiển thị thông báo thành công
+                setSuccessMessage("Đăng ký thành công! Đang chuyển hướng...");
+                setTimeout(() => {
+                    navigate('/');
+                    window.location.reload();
+                }, 2000);
             } else {
                 console.log('Đã xảy ra lỗi khi thêm người dùng.');
             }

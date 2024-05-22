@@ -8,6 +8,7 @@ import userLayout from '../pages/userLayout/userLayout';
 import adminLayout from '../pages/AdminPage/adminLayout';
 import Category from '../pages/Category/Category'
 import Checkout from '../pages/Checkout/Checkout';
+import UserProfile from '../pages/UserProfile/UserProfile';
 
 
 // public Routes
@@ -25,7 +26,7 @@ const publicRoutes=[
     {path: '/television', component: Category, layout: userLayout, childPath: ':brandName', category: 'TV'},
     {path: '/air-conditioner', component: Category, layout: userLayout, childPath: ':brandName', category: 'Dieu hoa'},
     {path: '/fridge', component: Category, layout: userLayout, childPath: ':brandName', category: 'Tu lanh'},
-
+    {path: '/user_profile',component: UserProfile, layout: userLayout},
     {path: '/checkout', component: Checkout, layout: userLayout},
 ];
 
