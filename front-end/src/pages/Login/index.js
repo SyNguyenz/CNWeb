@@ -40,15 +40,16 @@ export default function LoginPage() {
 
         try {
             const response = await AllApi.login(user);
-            if (response.Success) {
-                login(response.user);
+            if (response.data.success) {
+                console.log(response);
+                login(response.data.message);
                 window.location.href = "/"; // Chuyển hướng đến trang chủ
             } else {
                 const newErrors = { ...errors };
-                if (response.Message === "Invalid phonenumber") {
-                    newErrors.phonenumber = "Số điện thoại không tồn tại!";
+                if (response.data.message === "Invalid phonenumber") {
+                    newErrors.data.phonenumber = "Số điện thoại không tồn tại!";
                 }
-                if (response.Message === "Wrong password") {
+                if (response.data.message === "Wrong password") {
                     newErrors.password = "Sai mật khẩu!";
                 }
                 setErrors(newErrors);

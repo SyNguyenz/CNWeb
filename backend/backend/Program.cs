@@ -57,8 +57,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", builder =>
     {
-        builder.WithOrigins("http://localhost:3000")
+        builder
+        .WithOrigins("http://localhost:3000")
         .WithOrigins("https://cn-web-plum.vercel.app")
+        .WithOrigins("http://sandbox.vnpayment.vn")
                .AllowAnyMethod()
                .AllowAnyHeader()
                .AllowCredentials();

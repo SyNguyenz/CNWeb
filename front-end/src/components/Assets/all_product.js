@@ -334,5 +334,6 @@ for (let i = 0; i < response.data.length; i++) {
     };
 
     all_products.push(product);
+
 }
 export default all_products;

@@ -45,11 +45,16 @@ namespace backend.Controllers
             }
 
             await _signInManager.SignInAsync(user, true);
-
+            Console.Write(new ApiResponse
+            {
+                Success = true,
+                Message = user.UserName,
+                Data = await _userManager.GetRolesAsync(user),
+            });
             return Ok(new ApiResponse
             {
                 Success = true,
-                Message = "Authenticate success",
+                Message = user.UserName,
                 Data = await _userManager.GetRolesAsync(user),
             });
         }
@@ -101,7 +106,6 @@ namespace backend.Controllers
                 PhoneNumber = model.PhoneNumber,
                 DiaChi = model.DiaChi,
                 UserName = model.UserName,
-                Password = model.Password,
             };
 
             var result = await _userManager.CreateAsync(user, user.Password);

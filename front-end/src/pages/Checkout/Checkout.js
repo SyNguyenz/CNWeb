@@ -1,6 +1,7 @@
 import React, { useContext, useState, useMemo } from 'react';
 import CartContext from '../../components/CartContext/CartContext';
 import './Checkout.css';
+import AllApi from '../../api/api'
 
 const Checkout = () => {
     const { cart, selectedItems } = useContext(CartContext);
@@ -35,27 +36,11 @@ const Checkout = () => {
         return deliveryDate.toLocaleDateString('vi-VN');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
-
-        const amountInput = document.createElement('input');
-        amountInput.type = 'hidden';
-        amountInput.name = 'amount';
-        amountInput.value = calculateTotalPrice; // Corrected line: `calculateTotalPrice()`
-        form.appendChild(amountInput);
-
-        const languageInput = document.createElement('input');
-        languageInput.type = 'hidden';
-        languageInput.name = 'language';
-        languageInput.value = 'vn';
-        form.appendChild(languageInput);
-
-        document.body.appendChild(form);
-        form.submit();
+        const response = await AllApi.checkout(calculateTotalPrice,recipientName+" mua hang", "random14312412"); // Corrected line: `calculateTotalPrice()`
+        window.location.href(response.data);
     };
 
     return (
