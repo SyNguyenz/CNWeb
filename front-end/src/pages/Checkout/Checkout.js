@@ -39,8 +39,8 @@ const Checkout = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await AllApi.checkout(calculateTotalPrice,recipientName+" mua hang", "random14312412"); // Corrected line: `calculateTotalPrice()`
-        window.location.href(response.data);
+        const response = await AllApi.checkout(calculateTotalPrice,recipientName+" mua hang", "13245678"); // Corrected line: `calculateTotalPrice()`
+        window.location.href = response.data;
     };
 
     return (
@@ -90,7 +90,7 @@ const Checkout = () => {
                     <div className="checkout-items">
                         {selectedProducts.map((item) => (
                             <div key={item.id} className="checkout-item">
-                                <img src={item.selectedVariant.images} alt={item.name} />
+                                <img src={item.selectedVariant.image} alt={item.name} />
                                 <div className="checkout-item-details">
                                     <h2>{item.name}</h2>
                                     <p>Màu sắc: {item.selectedVariant?.color || 'N/A'}</p>

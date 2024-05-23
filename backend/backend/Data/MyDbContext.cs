@@ -28,7 +28,7 @@ namespace backend.Data
             modelBuilder.Entity<ChiTietDonHang>(entity =>
             {
                 entity.ToTable("ChiTietDonHang");
-                entity.HasKey(e => new { e.MaDonHang, e.MaHangHoa });
+                entity.HasKey(e => new { e.MaDonHang, e.VariantId });
 
                 entity.HasOne(e => e.DonHang)
                 .WithMany(e => e.ChiTietDonHangs)

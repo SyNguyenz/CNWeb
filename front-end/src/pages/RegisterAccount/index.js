@@ -95,7 +95,12 @@ export default function RegisterPage() {
             const savedUser = await addUser(newUser);
             if (savedUser) {
                 // Đăng nhập người dùng và lưu vào AuthContext
-                login(savedUser);
+                const user = {
+                    phoneNumber: newUser.phonenumber,
+                    password: newUser.password,
+                }
+                await AllApi.login(user)
+                login(savedUser.userName);
     
                 // Chuyển hướng về trang chủ và hiển thị thông báo thành công
                 setSuccessMessage("Đăng ký thành công! Đang chuyển hướng...");
@@ -112,20 +117,22 @@ export default function RegisterPage() {
     const addUser = async (newUser) => {
         try {
             const response = await AllApi.register(newUser);
-            if (response.status === 201) {
-                return response.data;
+            if (response.data.success) {
+                return response.data.data;
             } else {
-                return null;
-            }
-        } catch (error) {
-            if (error.response && error.response.status === 409) {
+                if(response.message === "User existed")
                 setErrors((prevErrors) => ({
                     ...prevErrors,
-                    phonenumber: "Số điện thoại đã được sử dụng!"
+                    phonenumber: "Số điện thoại đã được sử dụng!",
                 }));
-            } else {
-                console.error('Error occurred while checking user:', error);
+                if(response.message === "Failed : DuplicateUserName")
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        username: "Tên người dùng đã được sử dụng!",
+                    }));
             }
+        } catch (error) {
+            console.error('Error occurred while checking user:', error);
             return null;
         }
     };

@@ -108,15 +108,23 @@ namespace backend.Controllers
                 UserName = model.UserName,
             };
 
-            var result = await _userManager.CreateAsync(user, user.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
-                return Ok(user);
+                return Ok(new ApiResponse
+                {
+                    Success = true,
+                    Data = user
+                });
             }
             else
             {
-                return Ok(result);
+                return Ok(new ApiResponse
+                {
+                    Success = false,
+                    Message = result.ToString()
+                });
             }
         }
 

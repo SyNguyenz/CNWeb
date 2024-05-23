@@ -8,7 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly MyDbContext _context;
@@ -94,7 +94,6 @@ namespace backend.Controllers
                 {
                     MaDonHang = order.MaDonHang,
                     VariantId = variant.id,
-                    MaHangHoa = variant.HangHoa.MaHangHoa,
                     SoLuong = number,
                     Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
                     GiamGia = number * (variant.sale / 100),
@@ -124,7 +123,7 @@ namespace backend.Controllers
 
             //Update
             order.TinhTrangDonHang++;
-            if (order.TinhTrangDonHang == 3)
+            if (order.TinhTrangDonHang == 2)
             {
                 order.NgayGiao = DateTime.Now;
             }
@@ -134,9 +133,9 @@ namespace backend.Controllers
             return Ok(order);
         }
         [HttpPut("UpdateOrder")]
-        public IActionResult UpdateOrder(Guid productId, Guid orderId, int number)
+        public IActionResult UpdateOrder(int variantId, Guid orderId, int number)
         {
-            var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.MaDonHang == productId && o.MaDonHang == orderId);
+            var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.VariantId == variantId && o.MaDonHang == orderId);
             if (order == null)
             {
                 return NotFound();
@@ -152,18 +151,41 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteOrder(Guid OrderId, Guid productId)
+        public IActionResult DeleteOrder(Guid OrderId)
         {
-            var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.MaDonHang == OrderId && o.MaHangHoa == productId);
-            if (order == null)
+            using (var transaction = _context.Database.BeginTransaction())
             {
-                return NotFound();
-            }
-            order.Variant.quantity += order.SoLuong;
-            _context.ChiTietDonHangs.Remove(order);
-            _context.SaveChanges();
+                try
+                {
+                    var order = _context.DonHangs
+                .Include(o => o.ChiTietDonHangs)
+                .ThenInclude(od => od.Variant)
+                .FirstOrDefault(o => o.MaDonHang == OrderId);
+                    if (order == null)
+                    {
+                        return NotFound();
+                    }
+                    foreach (var details in order.ChiTietDonHangs)
+                    {
+                        details.Variant.quantity += details.SoLuong;
+                        _context.ChiTietDonHangs.Remove(details);
+                    }
 
-            return NoContent();
+                    _context.DonHangs.Remove(order);
+                    _context.SaveChanges();
+
+                    transaction.Commit();
+
+                    return Ok();
+                }
+                catch (Exception)
+                {
+                    // Rollback the transaction in case of an error
+                    transaction.Rollback();
+                    return StatusCode(500, "An error occurred while deleting the order.");
+                }
+            }
+             
         }
     }
 }

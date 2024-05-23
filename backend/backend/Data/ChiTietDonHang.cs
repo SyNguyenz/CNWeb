@@ -3,7 +3,6 @@
     public class ChiTietDonHang
     {
         public int VariantId { get; set; }
-        public Guid MaHangHoa { get; set; }
         public Guid MaDonHang { get; set; }
         public int SoLuong { get; set; }
         public double Total { get; set; }
