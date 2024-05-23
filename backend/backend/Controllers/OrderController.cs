@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -13,19 +14,23 @@ namespace backend.Controllers
     {
         private readonly MyDbContext _context;
         private readonly IHubContext<NotificationHub> _hubContext;
-
-        public OrderController(MyDbContext context, IHubContext<NotificationHub> hubContext)
+        private readonly UserManager<User> _userManager;
+        public OrderController(MyDbContext context, IHubContext<NotificationHub> hubContext, UserManager<User> userManager)
         {
             _context = context;
             _hubContext = hubContext;
+            _userManager = userManager;
         }
 
         [HttpGet]
-        public IActionResult Get(Guid? id)
+        public IActionResult Get(int? id)
         {
             if (id.HasValue)
             {
-                var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == id);
+                var order = _context.DonHangs
+                    .Include(o => o.ChiTietDonHangs)
+                    .ThenInclude(od => od.Variant)
+                    .FirstOrDefault(o => o.MaDonHang == id);
                 if (order == null)
                 {
                     return NotFound();
@@ -34,7 +39,10 @@ namespace backend.Controllers
             }
             else
             {
-                var order = _context.DonHangs.ToList();
+                var order = _context.DonHangs
+                    .Include(o => o.ChiTietDonHangs)
+                    .ThenInclude(od => od.Variant)
+                    .ToList();
                 return Ok(order);
             }
         }
@@ -59,20 +67,37 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder([FromQuery] List<int> ids,[FromQuery] List<int> numbers, string UserId)
+        public async Task<IActionResult> AddOrder([FromBody] OrderRequestModel model)
         {
-            if(ids.Count != numbers.Count)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                return Ok(new ApiResponse
+                return BadRequest("not signed in");
+            }
+            var UserId = user.Id;
+            var ids = model.ids;
+            var numbers = model.numbers;
+            if (ids.Count != numbers.Count)
+            {
+                return BadRequest(new ApiResponse
                 {
                     Success = false,
                     Message = "each product needs exactly a number",
+                });
+            }
+            if (ids.Count == 0 || numbers.Count == 0)
+            {
+                return BadRequest(new ApiResponse
+                {
+                    Success = false,
+                    Message = "no products",
                 });
             }
             var order = new DonHang
             {
                 UserId = UserId,
                 TinhTrangDonHang = 0,
+                DaThanhToan = false
             };
 
             _context.DonHangs.Add(order);
@@ -108,11 +133,11 @@ namespace backend.Controllers
 
             await _hubContext.Clients.All.SendAsync("NewOrderCreated", "New order created");
 
-            return Ok(new {order});
+            return Ok(order);
         }
 
         [HttpPut("UpdateOrderState{id}")]
-        public IActionResult UpdateOrderState(Guid id)
+        public IActionResult UpdateOrderState(int id)
         {
             // Tìm trong cơ sở dữ liệu bằng ID
             var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == id);
@@ -133,7 +158,7 @@ namespace backend.Controllers
             return Ok(order);
         }
         [HttpPut("UpdateOrder")]
-        public IActionResult UpdateOrder(int variantId, Guid orderId, int number)
+        public IActionResult UpdateOrder(int variantId, int orderId, int number)
         {
             var order = _context.ChiTietDonHangs.FirstOrDefault(o => o.VariantId == variantId && o.MaDonHang == orderId);
             if (order == null)
@@ -151,7 +176,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteOrder(Guid OrderId)
+        public IActionResult DeleteOrder(int OrderId)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {

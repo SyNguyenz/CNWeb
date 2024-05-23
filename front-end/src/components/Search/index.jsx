@@ -14,6 +14,7 @@ function Search(){
     const [showResult, setShowResult] = useState(true);
     const inputRef = useRef();
     const data_product = all_products;
+
     const handleClear = () => {
         setSearchValue('');
         setSearchResult([]);
@@ -25,17 +26,21 @@ function Search(){
     };
 
     const handleChange = (e) => {
-        const searchValue = e.target.value;
-        if (!searchValue.startsWith(' ')) {
-            setSearchValue(searchValue);
-        }
-      setSearchResult(
-        data_product.filter(product =>
-          product.name.toLowerCase().includes(searchValue.toLowerCase())
-        )
-      );
-        
-    };
+      const inputValue = e.target.value;
+      if (!inputValue.startsWith(' ')) {
+          setSearchValue(inputValue);
+          if (inputValue) {
+              const filteredResults = data_product.filter(product =>
+                  product.name.toLowerCase().includes(inputValue.toLowerCase())
+              );
+              setSearchResult(filteredResults);
+              setShowResult(true);
+          } else {
+              setSearchResult([]);
+              setShowResult(false);
+          }
+      }
+  };
 
     return (
       <div>
@@ -53,7 +58,7 @@ function Search(){
                             key={index} 
                             id={item.id}
                             name={item.name} 
-                            image={item.images[0]} 
+                            image={item.variants[0].image} 
                             sale={item.sale} 
                             old_price={item.old_price} 
                         />
