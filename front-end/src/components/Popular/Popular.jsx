@@ -12,14 +12,48 @@ function Popular({ category }) {
   const elementRef = useRef(null);
   const [width, setWidth] = useState(0);
   const [maxIndex, setMaxIndex] = useState(0);
-  const data_product = all_products;
   const [title, setTitle] = useState("");
-
+  const [data_product, setdataProducts] = useState([]);
 
   useEffect(() => {
-   
+    const data_product = all_products.filter(product => product.category === category);
+    setdataProducts(data_product);
+  
+    switch (category) {
+      case 'Phone':
+        setTitle('ĐIỆN THOẠI');
+        break;
+      
+      case 'Laptop':
+        setTitle('LAPTOP');
+        break;
+  
+      case 'Tu lanh':
+        setTitle('TỦ LẠNH');
+        break;
+      case 'Dieu hoa':
+          setTitle('ĐIỀU HOÀ');
+          break;
+      case 'May giat':
+          setTitle('MÁY GIẶT');
+          break;
+      case 'TV':
+        setTitle('TV');
+        break;
+      case 'Am thanh':
+          setTitle('ÂM THANH');
+          break;
+      case 'SmartHome':
+        setTitle('SMART HOME');
+        break;
+        
+      default:
+        setTitle('');
+        break;
+    }
   }, [category]);
-
+  
+ 
   useEffect(() => {
     const handleOffset = () => {
       const element = elementRef.current;
@@ -72,14 +106,19 @@ function Popular({ category }) {
     }
  
   }, [maxIndex, index])
-
+  function getBrandImage(brandName) {
+    const product = all_products.find(product => product.brand.name.toLowerCase() === brandName.toLowerCase());
+      if (product) {
+      return product.brand.image;
+    } 
+  }
   return (
     <>
       {(data_product.length > 0) && 
         <div className='popular'>
           <div className="product-list-title">
-            <Link to = '/' className='title'>
-                <h2> HOT SALE</h2>
+            <Link to={`/${category.toLowerCase()}`} className='title'>
+                <h2>{title}</h2>
             </Link>
           </div>
           <div className="product-list">

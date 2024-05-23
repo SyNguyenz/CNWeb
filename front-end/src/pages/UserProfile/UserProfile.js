@@ -1,76 +1,50 @@
-// UserProfile.js
 import React, { useContext, useEffect, useState } from 'react';
 import AllApi from "../../api/api";
 import { AuthContext } from "../../components/AuthContext/AuthContext";
 import './UserProfile.css';
 
 const UserProfile = () => {
-    const { user } = useContext(AuthContext);
-    const [orders, setOrders] = useState([]);
+    const { user, isLoggedIn } = useContext(AuthContext); // Lấy thông tin user từ context
     const [userInfo, setUserInfo] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchUserInfo = async () => {
-            try {
-                const response = await AllApi.getUserInfo();
-                setUserInfo(response.data);
-            } catch (error) {
-                console.error("Failed to fetch user info:", error);
-            }
-        };
-
-        const fetchOrders = async () => {
-            try {
-                const response = await AllApi.getUserOrders();
-                setOrders(response.data);
-            } catch (error) {
-                console.error("Failed to fetch orders:", error);
-            }
-        };
-
-        if (user) {
-            fetchUserInfo();
-            fetchOrders();
+        if (isLoggedIn && user) {
+            AllApi.getUserInfo(user.id) 
+                .then(response => {
+                    setUserInfo(response.data);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    setError(err);
+                    setLoading(false);
+                });
         }
-    }, [user]);
+    }, [isLoggedIn, user]);
 
-    if (!user || !userInfo) {
+    if (loading) {
         return <div>Loading...</div>;
     }
 
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
     return (
-        <div className="user-profile-container">
-            <h1>Thông tin người dùng</h1>
-            <div className="user-info">
-                <p><strong>Tên người dùng:</strong> {userInfo.userName}</p>
-                <p><strong>Mật khẩu:</strong> ******</p> {/* Không hiển thị mật khẩu thực tế */}
-                <p><strong>Số điện thoại:</strong> {userInfo.phoneNumber}</p>
-                <p><strong>Địa chỉ:</strong> {userInfo.address}</p>
-            </div>
-            <div className="user-orders">
-                <h2>Thông tin đơn hàng</h2>
-                {orders.length > 0 ? (
-                    orders.map((order, index) => (
-                        <div key={index} className="order-item">
-                            <p><strong>Mã đơn hàng:</strong> {order.id}</p>
-                            <p><strong>Ngày đặt hàng:</strong> {new Date(order.date).toLocaleDateString('vi-VN')}</p>
-                            <p><strong>Tổng số tiền:</strong> {order.total}</p>
-                            <div className="order-products">
-                                <p><strong>Sản phẩm:</strong></p>
-                                <ul>
-                                    {order.items.map((item, idx) => (
-                                        <li key={idx}>{item.name} - Số lượng: {item.quantity}</li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p>Bạn chưa có đơn hàng nào.</p>
-                )}
-            </div>
+        <div>
+            <h1>User Profile</h1>
+            {userInfo ? (
+                <div>
+                    <p><strong>Name:</strong> {userInfo.name}</p>
+                    <p><strong>Email:</strong> {userInfo.email}</p>
+                    {/* Hiển thị thêm thông tin người dùng*/}
+                </div>
+            ) : (
+                <div>No user information available.</div>
+            )}
         </div>
     );
-};
+}
 
 export default UserProfile;

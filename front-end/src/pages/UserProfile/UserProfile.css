@@ -1,27 +1,63 @@
-/* UserProfile.css */
 .user-profile-container {
+    max-width: 800px;
+    margin-top: 50px;
     padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.user-info, .user-orders {
+.user-profile-container h1 {
+    font-size: 2em;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-.user-info p, .order-item p {
-    margin: 5px 0;
+.user-info {
+    margin-bottom: 30px;
+}
+
+.user-info p {
+    font-size: 1.2em;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.user-info p strong {
+    margin-right: 10px;
+}
+
+.user-orders {
+    margin-top: 30px;
+}
+
+.user-orders h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .order-item {
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+.order-item p {
+    font-size: 1.1em;
+    margin: 5px 0;
 }
 
 .order-products ul {
     list-style-type: none;
-    padding: 0;
+    padding-left: 0;
 }
 
-.order-products li {
+.order-products ul li {
+    background-color: #f1f1f1;
     margin: 5px 0;
+    padding: 10px;
+    border-radius: 3px;
 }
