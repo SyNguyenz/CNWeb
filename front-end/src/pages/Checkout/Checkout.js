@@ -38,8 +38,17 @@ const Checkout = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const response = await AllApi.checkout(calculateTotalPrice,recipientName+" mua hang", "13245678"); // Corrected line: `calculateTotalPrice()`
+        var ids = [];
+        var numbers = [];
+        
+        selectedProducts.forEach((item) => {
+            ids.push(item.selectedVariant.id);
+            numbers.push(item.quantity);
+        });
+        
+        console.log(calculateTotalPrice);
+        const orderInfo = await AllApi.addOrder(ids, numbers);
+        const response = await AllApi.checkout(calculateTotalPrice, recipientName + " mua hang", orderInfo.data.maDonHang);
         window.location.href = response.data;
     };
 

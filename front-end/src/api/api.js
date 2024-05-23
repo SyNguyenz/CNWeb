@@ -22,5 +22,11 @@ class AllApi {
     getUserInfo(){
         return axios.get(base_url + 'User/CurrentUser');
     }
+    addOrder(ids, numbers){
+        return axios.post(base_url + 'Order',{
+            ids: ids,
+            numbers: numbers
+        });
+    }
 }
 export default new AllApi()

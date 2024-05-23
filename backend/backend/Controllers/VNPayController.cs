@@ -6,16 +6,17 @@ namespace backend.Controllers
 {
     public class VNPayController : Controller
     {
+        private readonly MyDbContext _context;
+        public VNPayController(MyDbContext context)
+        {
+            _context = context;
+        }
         public string url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         public string returnUrl = "https://localhost:7006/api/VNpayAPI/paymentConfirm";
         //public string returnUrl = "https://cnweb.onrender.com/api/VNpayAPI/paymentConfirm";
         public string front_end = "http://localhost:3000";
         public string tmnCode = "ZNKSLMUQ";
         public string hashSecret = "ZTZMJ6B33YLMZPP0PNUXIN6FE7NCF2RT";
-        public ActionResult Index()
-        {
-            return View();
-        }
         [HttpGet("/api/VNPayAPI/{amount}&{infor}&{orderinfor}")]
         public ActionResult Payment(string amount, string infor, string orderinfor)
         {
@@ -26,7 +27,7 @@ namespace backend.Controllers
             pay.AddRequestData("vnp_Version", "2.1.0"); //Phiên bản api mà merchant kết nối. Phiên bản hiện tại là 2.1.0
             pay.AddRequestData("vnp_Command", "pay"); //Mã API sử dụng, mã cho giao dịch thanh toán là 'pay'
             pay.AddRequestData("vnp_TmnCode", tmnCode); //Mã website của merchant trên hệ thống của VNPAY (khi đăng ký tài khoản sẽ có trong mail VNPAY gửi về)
-            pay.AddRequestData("vnp_Amount", (int.Parse(amount) * 100).ToString()); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
+            pay.AddRequestData("vnp_Amount", amount); //số tiền cần thanh toán, công thức: số tiền * 100 - ví dụ 10.000 (mười nghìn đồng) --> 1000000
             pay.AddRequestData("vnp_BankCode", ""); //Mã Ngân hàng thanh toán (tham khảo: https://sandbox.vnpayment.vn/apis/danh-sach-ngan-hang/), có thể để trống, người dùng có thể chọn trên cổng thanh toán VNPAY
             pay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss")); //ngày thanh toán theo định dạng yyyyMMddHHmmss
             pay.AddRequestData("vnp_CurrCode", "VND"); //Đơn vị tiền tệ sử dụng thanh toán. Hiện tại chỉ hỗ trợ VND
@@ -63,6 +64,13 @@ namespace backend.Controllers
                     if (vnp_ResponseCode == "00")
                     {
                         //Thanh toán thành công
+                        var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == orderId);
+                        if (order != null)
+                        {
+                            order.DaThanhToan = true;
+                            _context.DonHangs.Update(order);
+                            _context.SaveChanges();
+                        }
                         return Redirect(front_end);
                     }
                     else
