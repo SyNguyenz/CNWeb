@@ -100,6 +100,9 @@ line-height: 1.0;
 width: 120px;
 font-size: 15px;
 }
+.about-member .box-content .title-y {
+  padding: 10px;
+  }
 .my-icon {
 position: relative;
 top: 2px;

@@ -3,7 +3,7 @@
     position: relative;
     height: 100px;
     width: 330px;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
     padding: 10px;
 
@@ -14,11 +14,12 @@
 .item1 .item-info a {
     color: #444;
     display: flex;
+    margin: 15px;
 }
 
 .item1 .item-info a .item-image {
     text-align: center;
-    padding: 10px;
+    padding: 5px;
 }
 
 .item1 .item-info a .item-image img {
@@ -27,16 +28,16 @@
 }
 
 .item1 .item-info a .item-name {
-    margin-bottom: 1px;
+    margin-bottom: 0px;
 }
 
-.item1 .item-info a .item-name h3 {
+.item1 .item-info .item-name h3 {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     font-size: 12px;
     font-weight: 600;
-    height: 65px;
+    height: 100px;
     overflow: hidden;
     position: relative;
     z-index: 10;
@@ -46,17 +47,16 @@
     display: flex;
     align-items: flex-end;
     flex-wrap: wrap;
-    gap: 5px;
     margin-bottom: 10px;
+    height: 40px;
 }
 
 .item1 .item-info a .box-price {
     display: flex;
-    align-items: flex-end;
     color: #444;
     font-family: sans-serif;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 .item1.box-price .item-price-new {
@@ -82,6 +82,7 @@
 }
 .item1 .item-info a .box-price .item-price-new {
     font-size: 14px;
+    text-align: center;
 }
 
 @media only screen and (max-width: 1199px) {

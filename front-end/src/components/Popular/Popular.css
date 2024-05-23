@@ -21,7 +21,8 @@
 
 .popular .product-list-title .title h2 {
     font-size: 100%;
-    color: #444;
+    color: var(--main-color2);
+
 }   
 
 .popular .swiper-container {

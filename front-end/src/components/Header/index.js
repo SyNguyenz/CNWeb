@@ -68,20 +68,7 @@ function Header() {
                         </p>
                     </div>
                 </a>
-                <Link to="/check" className="about-delivery-tracking">
-                    <div className="box-icon">
-                        <div className='my-icon'>
-                            <FontAwesomeIcon icon={faTruckField} className='fa-h-24px' />
-                        </div>
-                    </div>
-                    <div className="box-content">
-                        <p className="title-y">
-                            Tra cứu
-                            <br />
-                            đơn hàng
-                        </p>
-                    </div>
-                </Link>
+              
                 <div className="menu-list">
                     <div className="shop-cart">
                         <Link to="/order" className="shop-cart">
@@ -102,24 +89,28 @@ function Header() {
                     </div>
                 </div>
                 
-                <div className="box-user">
-                    <div className="box-icon">
-                            <div className="my-icon">
-                                <FontAwesomeIcon icon={faCircleUser} className='avatar' />
+                <div>
+                    {isLoggedIn ? (
+                    <div className="box-user">
+                            <div className="box-icon">
+                                <div className="my-icon">
+                                    <FontAwesomeIcon icon={faCircleUser} className='avatar' />
+                                </div>
                             </div>
-                        </div>
                     
-                        <span className="title-y">
-                            <Link to='/user_profile'>{user}</Link>
-                        </span>
-                </div>
+                            <span className="title-y">
+                                <Link to='/user_profile'>{user}</Link>
+                            </span>
+                    </div> 
+                    ): <div></div>}
+                </div> 
 
 
                 <div>
                     {isLoggedIn ? (
                         <div className="login-btn" onClick={handleLogout}>
                             <div className="header-item about-member">
-                               
+        
                                 <div className="box-content">
                                     <span className="title-y">Đăng xuất</span>
                                 </div>
