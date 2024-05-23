@@ -11,7 +11,7 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (isLoggedIn && user) {
-            AllApi.getUserInfo(user.id) 
+            AllApi.getUserInfo() 
                 .then(response => {
                     setUserInfo(response.data);
                     setLoading(false);
@@ -36,8 +36,9 @@ const UserProfile = () => {
             <h1>User Profile</h1>
             {userInfo ? (
                 <div>
-                    <p><strong>Name:</strong> {userInfo.name}</p>
-                    <p><strong>Email:</strong> {userInfo.email}</p>
+                    <p><strong>Name:</strong> {userInfo.userName}</p>
+                    <p><strong>Số điện thoại:</strong> {userInfo.phoneNumber}</p>
+                    <p><strong>Địa chỉ:</strong> {userInfo.diaChi}</p>
                     {/* Hiển thị thêm thông tin người dùng*/}
                 </div>
             ) : (

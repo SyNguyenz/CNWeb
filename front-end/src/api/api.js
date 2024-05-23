@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const base_url = "https://cnweb.onrender.com/api/";
-//const base_url = "https://localhost:7006/api/";
+//const base_url = "https://cnweb.onrender.com/api/";
+const base_url = "https://localhost:7006/api/";
 axios.defaults.withCredentials = true;
 class AllApi {
     register(newUser){
@@ -19,6 +19,8 @@ class AllApi {
     checkout(amount, info, orderInfo){
         return axios.get(base_url + 'VNpayAPI/' + amount + '&' + info + '&' + orderInfo);
     }
-
+    getUserInfo(){
+        return axios.get(base_url + 'User/CurrentUser');
+    }
 }
 export default new AllApi()

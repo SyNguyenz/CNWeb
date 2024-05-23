@@ -3,6 +3,7 @@ using backend.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.X509Certificates;
 
 namespace backend.Controllers
 {
@@ -87,6 +88,18 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("CurrentUser")]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+            return Ok(user);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> AddUser([FromBody] UserModel model)
         {
@@ -129,7 +142,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateUser(string id, [FromBody] UserModel model)
+        public async Task<IActionResult> UpdateUser(string id,string currentPassword, [FromBody] UserModel model)
         {
             // Kiểm tra xem model có hợp lệ không
             if (!ModelState.IsValid)
@@ -144,13 +157,17 @@ namespace backend.Controllers
                 return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy user với ID đã cung cấp
             }
 
+            var result = await _userManager.ChangePasswordAsync(user, currentPassword, model.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
             // Cập nhật thông tin người dùng với thông tin mới từ model
             user.UserName = model.UserName;
             user.PhoneNumber = model.PhoneNumber;
-            user.Password = model.Password;
             user.DiaChi = model.DiaChi;
-            // Cập nhật các trường thông tin khác tùy theo nhu cầu
-
+            
             // Lưu thay đổi vào cơ sở dữ liệu
             _context.Update(user);
             _context.SaveChanges();

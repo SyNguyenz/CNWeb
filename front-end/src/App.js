@@ -5,14 +5,6 @@ import { AuthProvider } from './components/AuthContext/AuthContext';
 import useSignalR from './components/useSignalR/useSignalR';
 
 function App() {
-  const handleReceiveMessage = (message) => {
-              console.log("Received message:", message);
-            };
-        
-            const handleNewOrderCreated = (order) => {
-                console.log("New order created:", order);
-            };
-            useSignalR(handleReceiveMessage, handleNewOrderCreated);
   return (
     <>
     <AuthProvider>
