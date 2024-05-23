@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 
 export const AuthContext = createContext();
 
@@ -7,15 +7,14 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        try{
+        try {
             const storedUser = JSON.parse(localStorage.getItem('user'));
             if (storedUser) {
                 setUser(storedUser);
                 setIsLoggedIn(true);
             }
-        }
-        catch{
-            
+        } catch (error) {
+            console.error('Failed to parse user from localStorage', error);
         }
     }, []);
 
@@ -31,8 +30,15 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('user');
     };
 
+    const value = useMemo(() => ({
+        isLoggedIn,
+        user,
+        login,
+        logout
+    }), [isLoggedIn, user]);
+
     return (
-        <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
