@@ -101,19 +101,26 @@ function Header() {
                         </Link>
                     </div>
                 </div>
+                
+                <div className="box-user">
+                    <div className="box-icon">
+                            <div className="my-icon">
+                                <FontAwesomeIcon icon={faCircleUser} className='avatar' />
+                            </div>
+                        </div>
+                    
+                        <span className="title-y">
+                            <Link to='/user_profile'>{user}</Link>
+                        </span>
+                </div>
+
+
                 <div>
                     {isLoggedIn ? (
                         <div className="login-btn" onClick={handleLogout}>
                             <div className="header-item about-member">
-                                <div className="box-icon">
-                                    <div className="my-icon">
-                                        <FontAwesomeIcon icon={faCircleUser} className='avatar' />
-                                    </div>
-                                </div>
+                               
                                 <div className="box-content">
-                                    <span className="title-y">
-                                        <Link to='/user_profile'>{user}</Link>
-                                        </span>
                                     <span className="title-y">Đăng xuất</span>
                                 </div>
                             </div>
@@ -122,11 +129,8 @@ function Header() {
                         <Link to='/login'>
                             <div className="login-btn">
                                 <div className="header-item about-member">
-                                    <div className="box-icon">
-                                        <div className="my-icon">
-                                            <FontAwesomeIcon icon={faCircleUser} className='avatar' />
-                                        </div>
-                                    </div>
+                                    
+                                
                                     <div className="box-content">
                                         <span className="title-y">Đăng nhập</span>
                                     </div>

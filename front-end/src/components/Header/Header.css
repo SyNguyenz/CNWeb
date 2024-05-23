@@ -1,195 +1,200 @@
 
 .header {
-    width: 100%;
-    height: 80px;
-    background: var(--main-color1);
-    top: 0;
-    z-index: 10000;
-    position: fixed;
+  width: 100%;
+  height: 80px;
+  background: var(--main-color1);
+  top: 0;
+  z-index: 10000;
+  position: fixed;
 
-  
+
 }
 .menu {
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    gap: 50px;
-    justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  justify-content: space-around;
 }
 
 
 .logo {
-  align-items: center;
-  display: flex;
-  flex-grow: 0;
-  flex-shrink: 0;
-  line-height: 1.5;
-  position: relative;
+align-items: center;
+display: flex;
+flex-grow: 0;
+flex-shrink: 0;
+line-height: 1.5;
+position: relative;
 }
 
 .logo img {
-  height: 46px;
-  padding: 5px;
+height: 46px;
+padding: 5px;
 }
-  
+
 
 .menu-list {
-    display: flex;
-    justify-content: space-between;
-    
+  display: flex;
+  justify-content: space-between;
+  
 }
 
-  .menu-list1 {
-    background: hsla(0, 0%, 100%, .2);
-    display: flex;
-    justify-content: space-between;
-    border-radius: 10px;
-    padding: 5px 25px 5px 25px;
+.menu-list1 {
+  background: hsla(0, 0%, 100%, .2);
+  display: flex;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 5px 25px 5px 25px;
 
-    &:hover{
-      cursor: pointer;
-    }
+  &:hover{
+    cursor: pointer;
+  }
 
 }
 
 
 
 .about-contact {
-  align-items: center;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  height: 50px;
-  width: 100px;
-  padding: 5px 5px;
-  position: relative;
-  text-decoration: none !important;
+align-items: center;
+border-radius: 10px;
+cursor: pointer;
+display: flex;
+height: 50px;
+width: 100px;
+padding: 5px 5px;
+position: relative;
+text-decoration: none !important;
 }
 .about-delivery-tracking {
-  align-items: center;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  height: 50px;
-  width: 100px;
-  padding: 5px 5px;
-  position: relative;
-  text-decoration: none !important;
+align-items: center;
+border-radius: 10px;
+cursor: pointer;
+display: flex;
+height: 50px;
+width: 100px;
+padding: 5px 5px;
+position: relative;
+text-decoration: none !important;
 }
 .shop-cart {
-  align-items: center;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  height: 50px;
-  width: 100px;
-  padding: 5px 5px;
-  position: relative;
-  text-decoration: none !important;
+align-items: center;
+border-radius: 10px;
+cursor: pointer;
+display: flex;
+height: 50px;
+width: 100px;
+padding: 5px 5px;
+position: relative;
+text-decoration: none !important;
 }
 
 .box-content {
-  color: #fff;
-  font-size: 14px;
-  line-height: 2.0;
+color: #fff;
+font-size: 14px;
+line-height: 2.0;
 }
 .box-content .title-y {
-  line-height: 1.0;
-  width: 120px;
-  font-size: 15px;
+line-height: 1.0;
+width: 120px;
+font-size: 15px;
 }
 .my-icon {
-  position: relative;
-  top: 2px;
-  color: white;
-  padding: 0px 5px 0px 0px;
+position: relative;
+top: 2px;
+color: white;
+padding: 0px 5px 0px 0px;
 }
 
 .fa-h-24px {
-  height: 24px;
+height: 24px;
 }
 .count {
-  align-items: center;
-  bottom: 15%;
-  color: var(--main-color1);
-  display: flex;
-  font-size: 14px;
-  font-weight: 700;
-  height: 20px;
-  justify-content: center;
-  left: 6%;
-  position: absolute;
-  width: 20px;
+align-items: center;
+bottom: 15%;
+color: var(--main-color1);
+display: flex;
+font-size: 14px;
+font-weight: 700;
+height: 20px;
+justify-content: center;
+left: 6%;
+position: absolute;
+width: 20px;
 }
 
 .header-item.about-member {
-  align-items: center;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex;
-  padding: 5px 5px;
-  position: relative;
-  text-decoration: none !important;
-  background: hsla(0, 0%, 100%, .2);
+align-items: center;
+border-radius: 10px;
+cursor: pointer;
+display: flex;
+padding: 5px 5px;
+position: relative;
+text-decoration: none !important;
+background: hsla(0, 0%, 100%, .2);
+}
+.box-user{
+display: flex;
+align-items: center;
+justify-content: space-between;
 }
 
 
 @media only screen and (min-width: 1300px) {
-    .menu {
-        max-width: auto;
-        padding: 0 10px;
-        width: 100% !important;
-    }
-    .search input {
-      width: 300px;
+  .menu {
+      max-width: auto;
+      padding: 0 10px;
+      width: 100% !important;
   }
+  .search input {
+    width: 300px;
+}
 }
 /* Tablet */
 @media only screen and (max-width: 1299px) and (min-width: 850px) {
-  .search input {
-        width: 250px;
-    }
-    .about-delivery-tracking {
-      display: none;
+.search input {
+      width: 250px;
   }
-    .about-contact{
-      display: none;
-    }
-    .about-name{
-      display: none;
-    }
-    .menu{
-      gap: 30px;
-    }
+  .about-delivery-tracking {
+    display: none;
+}
+  .about-contact{
+    display: none;
+  }
+  .about-name{
+    display: none;
+  }
+  .menu{
+    gap: 30px;
+  }
 }
 
 /* Mobile*/
 
 @media screen and (max-width: 849px) {
-   .search input {
-        width: 250px;
-    }
+ .search input {
+      width: 250px;
+  }
 
-    .about-delivery-tracking {
-        display: none;
-    }
-    .about-contact{
+  .about-delivery-tracking {
       display: none;
-    }
-    .about-name{
-      display: none;
-    }
-    .menu-list1{
-      display: none;
-    }
-    
-    .header-item.about-member{
-      display: none;
-    }
+  }
+  .about-contact{
+    display: none;
+  }
+  .about-name{
+    display: none;
+  }
+  .menu-list1{
+    display: none;
+  }
+  
+  .header-item.about-member{
+    display: none;
+  }
 }
 
 .title-y{
-  line-height: 15px !important;
+line-height: 15px !important;
 }
