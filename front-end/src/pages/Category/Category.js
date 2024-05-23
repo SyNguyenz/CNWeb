@@ -11,6 +11,7 @@ import money from '../../components/Assets/money.svg'
 import rating from '../../components/Assets/rating.svg'
 
 
+
 function Category(props) {
   const [maxIndex, setMaxIndex] = useState(20);
   const { brandName } = useParams();
@@ -32,6 +33,10 @@ function Category(props) {
     setRatingFilter(''); 
     setFilteredProducts([]);
   }, [category, brandName]);
+  
+  useEffect(() => { 
+    window.scrollTo(0, 0);  
+  }, [category]);
   
   function getBrandImage(brandName) {
     const product = all_products.find(product => product.brand.name.toLowerCase() === brandName.toLowerCase());

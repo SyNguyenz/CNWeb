@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import './CheckOrder.css'
 function CheckOrder() {
         const [orderID, setOrderID] = useState('');
         const [orderInfo, setOrderInfo] = useState(null);
-      
+
+        useEffect(() => { 
+          window.scrollTo(0, 0);  
+        },[]);
+    
         const handleSubmit = (event) => {
           event.preventDefault();
           if (validFormCheckOrder()) {
@@ -35,7 +39,7 @@ function CheckOrder() {
     <div className="container-check">
       <div className="check-order-index">
         <div className="check-order-form">
-          <h1>KIỂM TRA ĐƠN HÀNG CỦA BẠN ^ ^</h1>
+          <h1>KIỂM TRA ĐƠN HÀNG CỦA BẠN ^-^</h1>
           <form onSubmit={handleSubmit} className='form-check'>
             <div className="">
               <input
