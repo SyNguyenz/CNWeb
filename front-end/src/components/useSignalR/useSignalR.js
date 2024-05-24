@@ -1,27 +1,32 @@
 import { useEffect } from 'react';
 import * as signalR from '@microsoft/signalr';
+import {AllApi, base_url} from '../../api/api';
 
-const useSignalR = (onReceiveMessage, onNewOrderCreated) => {
+const useSignalR = (onReceiveMessage) => {
+    const group = '';
     useEffect(() => {
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:7006/notificationHub")
+            .withUrl(base_url + "notificationHub")
             .withAutomaticReconnect()
             .build();
 
         connection.on("ReceiveMessage", onReceiveMessage);
 
-        connection.on("NewOrderCreated", onNewOrderCreated);
 
         connection.start()
-            .then(() => console.log("Connected to SignalR hub"))
+            .then(async () => {
+                const response = await AllApi.getUserInfo();
+                connection.invoke("SendConnectionIdToServer", response.data.id, connection.connectionId);
+                connection.invoke("AddToGroup", group);
+            })
             .catch((err) => console.error("Error connecting to SignalR hub", err));
 
         return () => {
             connection.stop()
-                .then(() => console.log("Disconnected from SignalR hub"))
+                .then(() => connection.invoke("RemoveFromGroup", group))
                 .catch((err) => console.error("Error disconnecting from SignalR hub", err));
         };
-    }, [onReceiveMessage, onNewOrderCreated]);
+    }, [onReceiveMessage]);
 };
 
 export default useSignalR;

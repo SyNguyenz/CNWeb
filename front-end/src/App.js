@@ -5,6 +5,10 @@ import { AuthProvider } from './components/AuthContext/AuthContext';
 import useSignalR from './components/useSignalR/useSignalR';
 
 function App() {
+  const onReceiveMessage = (message) => {
+    alert(message);
+  }
+  useSignalR(onReceiveMessage);
   return (
     <>
     <AuthProvider>

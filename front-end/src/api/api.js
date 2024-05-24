@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//const base_url = "https://cnweb.onrender.com/api/";
-const base_url = "https://localhost:7006/api/";
+export const base_url = "https://cnweb.onrender.com/api/";
+//export const base_url = "https://localhost:7006/api/";
 axios.defaults.withCredentials = true;
 class AllApi {
     register(newUser){
@@ -42,6 +42,12 @@ class AllApi {
     }
     deleteUser(id){
         return axios.delete(base_url + 'User/' + id);
+    }
+    getComments(id){
+        return axios.get(base_url + 'Product/Comments' + id);
+    }
+    addComments(comment){
+        return axios.post(base_url + 'User/Comments', comment);
     }
 }
 export default new AllApi()

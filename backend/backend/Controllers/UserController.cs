@@ -141,6 +141,62 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPost("Comments")]
+        public async Task<IActionResult> AddComment([FromBody] CommentModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return BadRequest("Not signed in");
+            }
+            var product = _context.HangHoas.FirstOrDefault(p => p.MaHangHoa == model.ProductId);
+            if (product == null)
+            {
+                return BadRequest("Product not exist");
+            }
+            var orders = _context.DonHangs
+                .Include(o => o.ChiTietDonHangs)
+                .ThenInclude(o => o.Variant)
+                .ThenInclude(v => v.HangHoa)
+                .Where(o => o.UserId == user.Id).ToList();
+            bool notBought = true;
+            foreach(var order in orders)
+            {
+                foreach(var detail in order.ChiTietDonHangs)
+                {
+                    if(detail.Variant.ProductId == model.ProductId)
+                    {
+                        notBought = false;
+                    }
+                }
+            }
+            if (notBought)
+            {
+                return BadRequest("Not purchased");
+            }
+
+            var comment = new Comments
+            {
+                Comment = model.Comment,
+                Rating = model.Rating,
+                UserId = user.Id,
+                ProductId = model.ProductId,
+                User = user,
+                Product = product
+            };
+            switch(model.Rating)
+            {
+                case 1: product.Star1++; break;
+                case 2: product.Star2++; break;
+                case 3: product.Star3++; break;
+                case 4: product.Star4++; break;
+                case 5: product.Star5++; break;
+            }
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+            return Ok(comment);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(string id,string currentPassword, [FromBody] UserModel model)
         {

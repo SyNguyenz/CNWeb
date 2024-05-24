@@ -5,7 +5,8 @@ import ReactStars from 'react-rating-stars-component';
 import product_comments from '../Assets/comments.js';
 import no_avt from '../Assets/no-avt.png'
 import ProductRating from '../ProductRating/ProductRating.js';
-import LoginPopup from '../LoginPopup/LoginPopup.js'; 
+import LoginPopup from '../LoginPopup/LoginPopup.js';
+import AllApi from '../../api/api';
 
 const CommentAndRating = ({product, onOpenPopup}) => {
   const [comments, setComments] = useState([]);
@@ -15,14 +16,27 @@ const CommentAndRating = ({product, onOpenPopup}) => {
     setRating(newRating);
   };
   
-/* useEffect(() => {
-   if (product.id) {
-     axios.get(`http://localhost:5000/products/${product.id}/comments`)
-       .then(response => setComments(response.data))
-       .catch(error => console.error(error));
-   }
- }, [product.id]);
-  */
+  const handleContentChange = (event) => {
+    setContent(event.target.value); 
+  };
+
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (product?.id) {
+        try {
+          const response = await AllApi.getComments(product.id);
+          setComments(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+
+    fetchComments();
+    console.log(comments);
+  }, [product?.id]);
+  
  useEffect(() => {
   if (product.id) {
     const filteredComments = product_comments.filter(comment => comment.product_id === product.id);
@@ -32,19 +46,24 @@ const CommentAndRating = ({product, onOpenPopup}) => {
 }, [product.id]);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-  //  axios.post(`http://localhost:5000/products/${product.id}/comments`, {
-  //      user_id: 'USER_ID',  
-  //      content,
-  //      rating
-  //  })
-  //  .then(response => {
-  //      setComments([...comments, response.data]);
-  //      setContent('');
-  //      setRating(0);
-  //  })
-  //  .catch(error => console.error(error));
+   try{
+    const response = await AllApi.addComments({
+      productId: product.id,
+      comment: content,
+      rating: rating
+     });
+     setComments([...comments, response.data]);
+     setContent('');
+     setRating(0);
+   }
+   catch(error){
+    console.log(error);
+    if(error.response.data == "Not purchased")
+      alert("Bạn chưa mua mặt hàng này!");
+   }
+
 };
 
 
@@ -63,7 +82,7 @@ const CommentAndRating = ({product, onOpenPopup}) => {
             <form onClick={onOpenPopup}className = "product-rating-box" onSubmit={handleSubmit}>          
               <div className = "comment-part">
                 <textarea title="Nội dung" placeholder="Nội dung. Tối thiểu 15 ký tự *"
-                name="Content" 
+                name="Content" value = {content} onChange = {handleContentChange}
                 ></textarea>
               </div>
               <div className = "rating-part">
@@ -88,10 +107,10 @@ const CommentAndRating = ({product, onOpenPopup}) => {
               <img className = "avt-yin"src = {no_avt}/>
             </div>
             <div className = "info-comment">
-              <strong class = "user-name">{comment.user_id.username}</strong> 
-              <span> ( {new Date(comment.created_at).toLocaleDateString()} )</span>
+              <strong class = "user-name">{comment.user.userName}</strong> 
+              <span> ( {new Date(comment.created).toLocaleDateString()} )</span>
               <ProductRating rating = {comment.rating}/> 
-              <div className = "review-item">{comment.content}</div>
+              <div className = "review-item">{comment.comment}</div>
 
             </div>
           

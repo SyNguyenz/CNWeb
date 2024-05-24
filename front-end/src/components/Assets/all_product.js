@@ -305,15 +305,11 @@ const all_products = [];
 for (let i = 0; i < response.data.length; i++) {
     const item = response.data[i];
     const totalRatings = item.star5 + item.star4 + item.star3 + item.star2 + item.star1;
-    let rating = 5
-    if(totalRatings !== 0) {
-      rating = (5*item.star5 + 4*item.star4 + 3*item.star3 + 2*item.star2 + item.star1)/totalRatings;
-    }
     
     let product = {
         id: item.maHangHoa,
         name: item.tenHangHoa,
-        rating: rating,
+        rating: item.ratings,
         old_price: item.gia,
         category: item.loaiHangHoa,
         sale: item.variants[0].sale,
