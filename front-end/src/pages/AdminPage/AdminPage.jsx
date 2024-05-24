@@ -16,24 +16,9 @@ const items = [
   getItem("Sản phẩm", "products", <ProductOutlined />, ),
   getItem("Người dùng", "users", <UserOutlined />, ),
 ];
-// const getLevelKeys = (items1) => {
-//   const key = {};
-//   const func = (items2, level = 1) => {
-//     items2.forEach((item) => {
-//       if (item.key) {
-//         key[item.key] = level;
-//       }
-//       if (item.children) {
-//         return func(item.children, level + 1);
-//       }
-//     });
-//   };
-//   func(items1);
-//   return key;
-// };
-// const levelKeys = getLevelKeys(items);
-const Admin = () => {
-  const [keySelected, setKeySelected] = useState('users');
+
+const App = () => {
+  const [keySelected, setKeySelected] = useState('products');
 
   const handleOnClick = ({ item, key, keyPath, domEvent }) => {
     setKeySelected(key);
@@ -60,7 +45,8 @@ const Admin = () => {
         mode="inline"
         defaultSelectedKeys={[keySelected]}
         style={{
-          width: 256,
+          minWidth: 150,
+          maxWidth: 150,
           height: "100vh",
         }}
         items={items}

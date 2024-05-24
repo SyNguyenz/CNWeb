@@ -1,175 +1,170 @@
-import React, { useState } from "react";
-import { Button, Modal, Space, Table, message } from "antd";
-import { PlusCircleFilled } from "@ant-design/icons";
-import AddProduct from "../AddProduct/AddProduct";
-const data = [
-  {
-    key: "1",
-    maHangHoa: "DT001",
-    tenHangHoa: "Điện thoại di động",
-    gia: 15000000, // Giá 15 triệu đồng
-    giamGia: 0.1, // Giảm giá 10%
-    soLuongTon: 100,
-    rating: 4.8,
-  },
-  {
-    key: "2",
-    maHangHoa: "MT001",
-    tenHangHoa: "Máy tính xách tay",
-    gia: 25000000, // Giá 25 triệu đồng
-    giamGia: 0.15, // Giảm giá 15%
-    soLuongTon: 50,
-    rating: 4.7,
-  },
-  {
-    key: "3",
-    maHangHoa: "TN001",
-    tenHangHoa: "Tai nghe không dây",
-    gia: 3500000, // Giá 3.5 triệu đồng
-    giamGia: 0.05, // Giảm giá 5%
-    soLuongTon: 200,
-    rating: 4.9,
-  },
-  {
-    key: "4",
-    maHangHoa: "MT002",
-    tenHangHoa: "Máy tính để bàn",
-    gia: 18000000, // Giá 18 triệu đồng
-    giamGia: 0.12, // Giảm giá 12%
-    soLuongTon: 80,
-    rating: 4.5,
-  },
-  {
-    key: "5",
-    maHangHoa: "DS001",
-    tenHangHoa: "Màn hình cong OLED",
-    gia: 12000000, // Giá 12 triệu đồng
-    giamGia: 0.08, // Giảm giá 8%
-    soLuongTon: 60,
-    rating: 4.7,
-  },
-  {
-    key: "6",
-    maHangHoa: "DP001",
-    tenHangHoa: "Dây cáp sạc nhanh",
-    gia: 500000, // Giá 500 nghìn đồng
-    giamGia: 0.0, // Không giảm giá
-    soLuongTon: 300,
-    rating: 4.8,
-  },
-  {
-    key: "7",
-    maHangHoa: "SM001",
-    tenHangHoa: "Smartwatch",
-    gia: 8000000, // Giá 8 triệu đồng
-    giamGia: 0.1, // Giảm giá 10%
-    soLuongTon: 120,
-    rating: 4.6,
-  },
-  {
-    key: "8",
-    maHangHoa: "MS001",
-    tenHangHoa: "Mouse gaming",
-    gia: 1200000, // Giá 1.2 triệu đồng
-    giamGia: 0.0, // Không giảm giá
-    soLuongTon: 180,
-    rating: 4.9,
-  },
-  {
-    key: "9",
-    maHangHoa: "KB001",
-    tenHangHoa: "Bàn phím cơ",
-    gia: 1500000, // Giá 1.5 triệu đồng
-    giamGia: 0.05, // Giảm giá 5%
-    soLuongTon: 90,
-    rating: 4.8,
-  },
-  {
-    key: "10",
-    maHangHoa: "TS001",
-    tenHangHoa: "Tai nghe gaming",
-    gia: 2500000, // Giá 2.5 triệu đồng
-    giamGia: 0.1, // Giảm giá 10%
-    soLuongTon: 150,
-    rating: 4.7,
-  },
-  {
-    key: "11",
-    maHangHoa: "MT003",
-    tenHangHoa: "Máy tính bảng",
-    gia: 6000000, // Giá 6 triệu đồng
-    giamGia: 0.0, // Không giảm giá
-    soLuongTon: 70,
-    rating: 4.5,
-  },
-  {
-    key: "12",
-    maHangHoa: "PS001",
-    tenHangHoa: "Pin dự phòng",
-    gia: 800000, // Giá 800 nghìn đồng
-    giamGia: 0.0, // Không giảm giá
-    soLuongTon: 200,
-    rating: 4.8,
-  },
-  {
-    key: "13",
-    maHangHoa: "CV001",
-    tenHangHoa: "Camera an ninh",
-    gia: 3000000, // Giá 3 triệu đồng
-    giamGia: 0.15, // Giảm giá 15%
-    soLuongTon: 40,
-    rating: 4.6,
-  },
-  {
-    key: "14",
-    maHangHoa: "MS002",
-    tenHangHoa: "Màn hình máy tính",
-    gia: 5000000, // Giá 5 triệu đồng
-    giamGia: 0.0, // Không giảm giá
-    soLuongTon: 100,
-    rating: 4.7,
-  },
-  {
-    key: "15",
-    maHangHoa: "TN002",
-    tenHangHoa: "Tai nghe Bluetooth",
-    gia: 2000000, // Giá 2 triệu đồng
-    giamGia: 0.1, // Giảm giá 10%
-    soLuongTon: 150,
-    rating: 4.6,
-  },
-];
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Modal, Space, Table, message, Input } from "antd";
+import {
+  PlusCircleFilled,
+  DeleteFilled,
+  ExclamationCircleFilled,
+  SearchOutlined,
+} from "@ant-design/icons";
+import Highlighter from 'react-highlight-words';
+import AddProduct from "./AddProduct";
+import ProductDetails from "./ProductDetails";
+import { deleteProductAPI, getProductsAPI } from "./API";
+import data from "./demoData";
 
 const AdminProduct = () => {
-  const [filteredInfo, setFilteredInfo] = useState({});
-  const [sortedInfo, setSortedInfo] = useState({});
-  const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter);
+  const [products, setProducts] = useState(data);
+  const [modalChild, setModalChild] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsData = await getProductsAPI();
+        setProducts(productsData);
+      } catch (error) {
+        console.error(error);
+        message.error('Không thể lấy dữ liệu sản phẩm');
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
   };
-  const clearFilters = () => {
-    setFilteredInfo({});
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => {
+              clearFilters && clearFilters();
+              confirm();
+              setSearchText('');
+              setSearchedColumn(dataIndex);
+            }}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1677ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+      searchedColumn === dataIndex ? (
+        <Highlighter
+          highlightStyle={{
+            backgroundColor: '#ffc069',
+            padding: 0,
+          }}
+          searchWords={[searchText]}
+          autoEscape
+          textToHighlight={text ? text.toString() : ''}
+        />
+      ) : (
+        text
+      ),
+  });
+
+  const deleteProduct = async (record) => {
+    try {
+      await deleteProductAPI(record.product);
+  
+      const updatedProducts = products.filter(
+        (product) => product.maHangHoa !== record.maHangHoa
+      );
+      setProducts(updatedProducts);
+  
+      message.success(`Đã xóa sản phẩm: ${record.tenHangHoa}`);
+    } catch (error) {
+      console.error(error);
+      message.error(`Xóa sản phẩm thất bại: ${record.tenHangHoa}`);
+    }
   };
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
+  
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(value);
   };
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
+
+  const getSoLuong = (record) => {
+    return record.variants.reduce((total, variant) => total + variant.quantity, 0)
+  }
+
+
+  const { confirm } = Modal;
+  const showDeleteConfirm = (product) => {
+    confirm({
+      title: `Xác nhận xóa sản phẩm ${product.tenHangHoa}!`,
+      icon: <ExclamationCircleFilled />,
+      content: `Mã sản phẩm: ${product.maHangHoa}`,
+      onOk() {
+        deleteProduct(product);
+      },
+      onCancel() {},
     });
-  };
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
   };
   const addProduct = () => {};
   const columns = [
@@ -177,94 +172,100 @@ const AdminProduct = () => {
       title: "Mã",
       dataIndex: "maHangHoa",
       key: "ma",
-      // filters: [
-      //   {
-      //     text: 'Joe',
-      //     value: 'Joe',
-      //   },
-      //   {
-      //     text: 'Jim',
-      //     value: 'Jim',
-      //   },
-      // ],
-      // filteredValue: filteredInfo.name || null,
-      // onFilter: (value, record) => record.name.includes(value),
-      // sorter: (a, b) => a.name.length - b.name.length,
-      // sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
       ellipsis: true,
+      sorter: (a, b) => a.maHangHoa.localeCompare(b.maHangHoa),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('maHangHoa'),
     },
     {
       title: "Tên",
       dataIndex: "tenHangHoa",
       key: "ten",
-      // sorter: (a, b) => a.age - b.age,
-      // sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
       ellipsis: true,
+      sorter: (a, b) => a.tenHangHoa.localeCompare(b.tenHangHoa),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('tenHangHoa'),
+    },
+    {
+      title: "Loại",
+      dataIndex: "loaiHangHoa",
+      key: "loaiHangHoa",
+      ellipsis: true,
+      sorter: (a, b) => a.loaiHangHoa.localeCompare(b.loaiHangHoa),
+      sortDirections: ['descend', 'ascend'],
+      ...getColumnSearchProps('loaiHangHoa'),
     },
     {
       title: "Giá",
       dataIndex: "gia",
       key: "gia",
+      render: (text) => formatCurrency(text),
       ellipsis: true,
-    },
-    {
-      title: "Giảm giá",
-      dataIndex: "giamGia",
-      key: "giamGia",
-      ellipsis: true,
+      sorter: (a, b) => a.gia - b.gia,
+      sortDirections: ['descend', 'ascend'],
     },
     {
       title: "Số lượng",
-      dataIndex: "soLuongTon",
-      key: "soLuongTon",
+      key: "soLuong",
+      render: (record) => getSoLuong(record),
       ellipsis: true,
     },
     {
       title: "Đánh giá",
       dataIndex: "rating",
       key: "rating",
+      sorter: (a, b) => a.rating - b.rating,
+      sortDirections: ['descend', 'ascend'],
       ellipsis: true,
+    },
+    {
+      width: 62,
+      render: (_, record) => (
+        <Button
+          style={{transform: "scale(1.5,1.5)"}}
+          type="text"
+          size="small"
+          shape="circle"
+          danger
+          icon={<DeleteFilled />}
+          onClick={(e) => {
+            e.stopPropagation();
+            showDeleteConfirm(record);
+          }}
+        />
+      ),
     },
   ];
   return (
-    <>
+    <div style={{paddingLeft: 8}}>
       <Space
         style={{
           marginBottom: 16,
         }}
       >
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-        <Button type="primary" onClick={showModal}>
+        <Button type="primary" onClick={()=>setModalChild(<AddProduct setModalChild={setModalChild} />)}>
           <PlusCircleFilled />
           Thêm sản phẩm
         </Button>
-        <Modal
-          title="Thêm sản phẩm"
-          centered
-          open={isModalOpen}
-          // onOk={handleOk}
-          onCancel={handleCancel}
-          maskClosable={false}
-          footer={null}
-          destroyOnClose={true}
-        >
-          <AddProduct onClose={handleCancel} />
-        </Modal>
       </Space>
+
+      <Modal
+        title={false}
+        centered
+        open={modalChild !== null}
+        onCancel={() => setModalChild(null)}
+        maskClosable={false}
+        footer={null}
+        destroyOnClose={true}
+        width="auto"
+      >
+        {modalChild}
+      </Modal>
       <Table
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              message.info(`Click on row: ${record.tenHangHoa}`);
-            },
-            onDoubleClick: () => {
-              message.info(`Double click on row: ${record.tenHangHoa}`);
-            },
-            onContextMenu: (event) => {
-              event.preventDefault(); // Prevent the browser context menu
-              message.info(`Right click on row: ${record.tenHangHoa}`);
+              setModalChild(<ProductDetails product={record} setModalChild={setModalChild} />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
@@ -275,10 +276,9 @@ const AdminProduct = () => {
           };
         }}
         columns={columns}
-        dataSource={data}
-        onChange={handleChange}
+        dataSource={products}
       />
-    </>
+    </div>
   );
 };
 export default AdminProduct;
