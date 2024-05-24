@@ -17,7 +17,7 @@ const items = [
   getItem("Người dùng", "users", <UserOutlined />, ),
 ];
 
-const App = () => {
+const Admin = () => {
   const [keySelected, setKeySelected] = useState('products');
 
   const handleOnClick = ({ item, key, keyPath, domEvent }) => {
