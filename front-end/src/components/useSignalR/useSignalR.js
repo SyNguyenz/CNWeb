@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import * as signalR from '@microsoft/signalr';
-import {AllApi, base_url} from '../../api/api';
+import { base_url} from '../../api/api';
+import AllApi from '../../api/api';
 
 const useSignalR = (onReceiveMessage) => {
     const group = '';

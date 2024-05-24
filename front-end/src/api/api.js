@@ -50,4 +50,6 @@ class AllApi {
         return axios.post(base_url + 'User/Comments', comment);
     }
 }
-export default new AllApi()
+const apiInstance = new AllApi();
+export default apiInstance;
+export { AllApi };
