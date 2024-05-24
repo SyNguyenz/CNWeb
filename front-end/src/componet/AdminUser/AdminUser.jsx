@@ -23,12 +23,13 @@ const usersData = [
 ];
 
 const AdminUser = () => {
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const usersData = await getUsersAPI();
+        const response = await getUsersAPI();
+        const usersData = response.data;
         setUsers(usersData);
       } catch (error) {
         console.error(error);
@@ -137,24 +138,24 @@ const AdminUser = () => {
 
   const deleteUser = async (record) => {
     try {
-      await deleteUserAPI(record.product);
+      await deleteUserAPI(record.id);
   
       const updatedUsers = users.filter(
-        (user) => user.userId !== record.userId
+        (user) => user.id !== record.id
       );
       setUsers(updatedUsers);
   
-      message.success(`Đã xóa user: ${record.userId}`);
+      message.success(`Đã xóa user: ${record.id}`);
     } catch (error) {
       console.error(error);
-      message.error(`Xóa user thất bại: ${record.userId}`);
+      message.error(`Xóa user thất bại: ${record.id}`);
     }
   };
 
   const { confirm } = Modal;
   const showDeleteConfirm = (user) => {
     confirm({
-      title: `Xác nhận xóa user ${user.userId}!`,
+      title: `Xác nhận xóa user ${user.id}!`,
       icon: <ExclamationCircleFilled />,
       content: `User name: ${user.userName}`,
       onOk() {
@@ -166,12 +167,12 @@ const AdminUser = () => {
   const columns = [
     {
       title: "ID",
-      dataIndex: "userId",
+      dataIndex: "id",
       key: "id",
       ellipsis: true,
-      sorter: (a, b) => a.userId - b.userId,
+      sorter: (a, b) => a.id - b.id,
       sortDirections: ['descend', 'ascend'],
-      ...getColumnSearchProps('userId'),
+      ...getColumnSearchProps('id'),
     },
     {
       title: "User name",

@@ -1,3 +1,4 @@
+import AllApi from '../../api/api'
 const BASE_URL = 'http://localhost:8080/api/products';
 
 const handleResponse = async (response) => {
@@ -25,16 +26,15 @@ const apiCall = async (url, method, body = null) => {
   }
 };
 
-export const addProductAPI = async (formData) => {
-  return apiCall(`${BASE_URL}/add`, 'POST', formData);
-};
-
-export const updateProductAPI = async (formData) => {
-  return apiCall(BASE_URL, 'PUT', formData);
+export const addProductAPI = async (product) => {
+  return AllApi.addProduct(product);
+}
+export const updateProductAPI = async (id, product) => {
+  return AllApi.updateProduct(id, product);
 };
 
 export const deleteProductAPI = async (productId) => {
-  return apiCall(`${BASE_URL}/${productId}`, 'DELETE');
+  return AllApi.deleteProduct(productId);
 };
 
 export const getProductAPI = async (productId) => {
@@ -42,7 +42,7 @@ export const getProductAPI = async (productId) => {
 };
 
 export const getProductsAPI = async () => {
-  return apiCall(BASE_URL, 'GET');
+  return AllApi.getAllProduct();
 };
 
 // Thêm các hàm gọi API khác tại đây nếu cần

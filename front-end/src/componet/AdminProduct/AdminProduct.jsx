@@ -13,13 +13,14 @@ import { deleteProductAPI, getProductsAPI } from "./API";
 import data from "./demoData";
 
 const AdminProduct = () => {
-  const [products, setProducts] = useState(data);
+  const [products, setProducts] = useState(null);
   const [modalChild, setModalChild] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsData = await getProductsAPI();
+        const response = await getProductsAPI()
+        const productsData = response.data;
         setProducts(productsData);
       } catch (error) {
         console.error(error);

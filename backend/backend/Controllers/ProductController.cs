@@ -34,77 +34,67 @@ namespace backend.Controllers
                 else return Ok(product);
             }
         }
+
         [HttpPost]
         public IActionResult AddProduct([FromBody] ProductModel productModel)
         {
             if (ModelState.IsValid)
             {
-                var product = new HangHoa
-                {
-                    Gia = productModel.Gia,
-                    HangSanXuat = productModel.HangSanXuat,
-                    LoaiHangHoa = productModel.LoaiHangHoa,
-                    TenHangHoa = productModel.TenHangHoa,
-                    ThongSo = productModel.ThongSo,
-                    ThongTin = productModel.ThongTin,
-                    Star1 = productModel.Star1,
-                    Star2 = productModel.Star2,
-                    Star3 = productModel.Star3,
-                    Star4 = productModel.Star4,
-                    Star5 = productModel.Star5,
-                };
-                _context.HangHoas.Add(product);
-                _context.SaveChanges();
-
-                return Ok(new {product});
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        [HttpPost("AddVariants{id}")]
-        public IActionResult AddVariants(Guid id, [FromBody] VariantInputModel model)
-        {
-            var product = _context.HangHoas.Include(h => h.Variants).FirstOrDefault(p => p.MaHangHoa == id);
-            if (product == null)
-            {
-                return Ok(new ApiResponse
-                {
-                    Success = false,
-                    Message = "Product not exist",
-                });
-            }
-            else
-            {
                 using (var transaction = _context.Database.BeginTransaction())
                 {
                     try
                     {
-                        var variant = new VariantModel
+                        var product = new HangHoa
                         {
-                            image = model.image,
-                            color = model.color,
-                            quantity = model.quantity,
-                            sale = model.sale,
+                            Gia = productModel.Gia,
+                            HangSanXuat = productModel.HangSanXuat,
+                            LoaiHangHoa = productModel.LoaiHangHoa,
+                            TenHangHoa = productModel.TenHangHoa,
+                            ThongSo = productModel.ThongSo,
+                            ThongTin = productModel.ThongTin,
+                            Star1 = productModel.Star1,
+                            Star2 = productModel.Star2,
+                            Star3 = productModel.Star3,
+                            Star4 = productModel.Star4,
+                            Star5 = productModel.Star5,
                         };
 
-                        product.Variants.Add(variant);
-                        variant.ProductId = product.MaHangHoa;
-                        variant.HangHoa = product;
+                        _context.HangHoas.Add(product);
+                        _context.SaveChanges();
+
+                        foreach (var variantModel in productModel.Variants)
+                        {
+                            var variant = new VariantModel
+                            {
+                                image = variantModel.image,
+                                color = variantModel.color,
+                                quantity = variantModel.quantity,
+                                sale = variantModel.sale,
+                                ProductId = product.MaHangHoa,
+                                HangHoa = product
+                            };
+
+                            _context.Variants.Add(variant); 
+                        }
+
                         _context.SaveChanges();
                         transaction.Commit();
 
-                        return Ok (product);
+                        return Ok(product);
                     }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
-                        return StatusCode(500, ex);
+                        return StatusCode(500, ex.Message);
                     }
                 }
             }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
+
         [HttpPut("UpdateProduct{id}")]
         public IActionResult UpdateProduct(Guid id, [FromBody] ProductModel model)
         {

@@ -13,7 +13,7 @@ import {
   Image,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import { updateProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
+import { deleteProductAPI, addProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -88,7 +88,6 @@ const EditProduct = ({ product, setModalChild }) => {
 
   const onFinish = async (values) => {
     try {
-      const formData = new FormData();
       const data = {
         maHangHoa: values.maHangHoa,
         tenHangHoa: values.tenHangHoa,
@@ -120,18 +119,12 @@ const EditProduct = ({ product, setModalChild }) => {
         }
       });
 
-      for (let i = 0; i < images.length; i++) {
-        formData.append("images", images[i]);
-      }
 
-      const jsonObject = JSON.stringify(data);
-      formData.append("jsonObject", jsonObject);
-
-      await updateProductAPI(product.id, formData);
+      await deleteProductAPI(product.id);
+      await addProductAPI(data);
       message.success("Sản phẩm được cập nhật thành công!");
       setModalChild(null);
     } catch (e) {
-      console.log("nghia");
       message.error(e.message);
     }
   };

@@ -80,7 +80,6 @@ const AddProduct = ({ setModalChild }) => {
 
   const onFinish = async (values) => {
     try {
-      const formData = new FormData();
 
       const data = {
         maHangHoa: values.maHangHoa,
@@ -123,14 +122,8 @@ const AddProduct = ({ setModalChild }) => {
         }
       });
 
-      for (var i = 0; i < images.length; i++) {
-        formData.append("images", images[i]);
-      }
-      var jsonObject = JSON.stringify(data);
-      formData.append("jsonObject", jsonObject);
-
-      await addProductAPI(formData);
-      message.success("Sản phẩm được cập nhật thành công!");
+      await addProductAPI(data);
+      message.success("Sản phẩm được thêm thành công!");
       setModalChild(null);
     } catch (e) {
       message.error(e.message);

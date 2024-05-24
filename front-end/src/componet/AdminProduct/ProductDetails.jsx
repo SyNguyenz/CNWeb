@@ -39,6 +39,7 @@ const ProductDetails = ({ product, setModalChild }) => {
     value: variant,
   }));
   console.log(options);
+  console.log(product);
   const [variant, setVariant] = useState(options[0].value || null);
 
   const onChange = ({ target: { value } }) => {
@@ -78,7 +79,7 @@ const ProductDetails = ({ product, setModalChild }) => {
                   fontSize: 16,
                 }}
               >
-                {product.rating}
+                {product.ratings}
               </span>
               <ConfigProvider
                 theme={{
@@ -89,7 +90,7 @@ const ProductDetails = ({ product, setModalChild }) => {
               >
                 <Rate
                   allowHalf
-                  defaultValue={product.rating}
+                  defaultValue={product.ratings}
                   disabled
                   style={{ fontSize: 14, marginLeft: 5, color: "#d0011b" }}
                 />
@@ -122,7 +123,7 @@ const ProductDetails = ({ product, setModalChild }) => {
 
           <CustomRow label="Mã hàng hóa" value={product.maHangHoa} />
           <CustomRow label="Loại hàng hóa" value={product.loaiHangHoa} />
-          <CustomRow label="Hãng sản xuất" value={product.hangSanXuat} />
+          <CustomRow label="Hãng sản xuất" value={product.hangSanXuat[0]} />
           <CustomRow label="Tổng số lượng" value={getSoLuong(product)} />
           <CustomRow
             label="Màu"
@@ -171,7 +172,10 @@ const ProductDetails = ({ product, setModalChild }) => {
               marginLeft: 10,
             }}
           >
-            {product.thongTin}
+            {product.thongTin
+            .map((item) => item.trim())
+            .join("\n")
+            }
           </Paragraph>
 
           <div style={{ fontSize: 18, marginTop: 10 }}>Thông số: </div>
@@ -184,9 +188,9 @@ const ProductDetails = ({ product, setModalChild }) => {
             }}
           >
             {product.thongSo
-              .split(",")
-              .map((item) => item.trim())
-              .join("\n")}
+               .map((item) => item.trim())
+               .join("\n")
+            }
           </Paragraph>
         </Col>
       </Row>

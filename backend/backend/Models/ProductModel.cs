@@ -19,5 +19,6 @@ namespace backend.Models
         public int Star3 { get; set; }
         public int Star2 { get; set; }
         public int Star1 { get; set; }
+        public List<VariantInputModel> Variants { get; set; }
     }
 }

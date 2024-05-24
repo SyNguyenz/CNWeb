@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const base_url = "https://cnweb.onrender.com/api/";
-//const base_url = "https://localhost:7006/api/";
+//const base_url = "https://cnweb.onrender.com/api/";
+const base_url = "https://localhost:7006/api/";
 axios.defaults.withCredentials = true;
 class AllApi {
     register(newUser){
@@ -27,6 +27,21 @@ class AllApi {
             ids: ids,
             numbers: numbers
         });
+    }
+    addProduct(product){
+        return axios.post(base_url + 'Product', product)
+    }
+    updateProduct(id, product){
+        return axios.put(base_url + 'Product/UpdateProduct' + id, product)
+    }
+    deleteProduct(id){
+        return axios.delete(base_url + 'Product/' + id);
+    }
+    getUser(id){
+        return axios.get(base_url + 'User', id);
+    }
+    deleteUser(id){
+        return axios.delete(base_url + 'User/' + id);
     }
 }
 export default new AllApi()
