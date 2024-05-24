@@ -141,8 +141,35 @@ background: hsla(0, 0%, 100%, .2);
 display: flex;
 align-items: center;
 justify-content: space-between;
-}
+background: hsla(0, 0%, 100%, .2);
+border-radius: 10px;
+height: 38px;
+padding: 4px 0 4px 8px;
 
+}
+.notification-icon{
+  background-color: transparent;
+  display: flex;
+  width: 60px;
+}
+.icon-noti{
+  height: 20px;
+}
+.unread-dot{
+  color: var(--color7);
+}
+.tooltip-noti {
+  background: var(--color8);
+  color: #444;
+  padding: 20px;
+  border-radius: 8px;
+  position: absolute;
+  top: 5px; 
+  left: -50px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+}
 
 @media only screen and (min-width: 1300px) {
   .menu {
