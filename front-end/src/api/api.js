@@ -52,6 +52,17 @@ class AllApi {
     addComments(comment){
         return axios.post(base_url + 'User/Comments', comment);
     }
+    changePassword(id, currentPassword, newPassword) {
+        return axios.put(base_url + 'User/ChangePassword', {
+            id: id,
+            currentPassword: currentPassword,
+            newPassword: newPassword
+        });
+    }
+    getOrder(id) {
+        return axios.get(base_url + 'Order/' + id);
+    }
+ 
 }
 const apiInstance = new AllApi();
 export default apiInstance;

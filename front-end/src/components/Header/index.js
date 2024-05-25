@@ -76,21 +76,19 @@ function Header() {
                 <div className="menu-list">
                     <Search />
                 </div>
-                <a className="about-contact">
+                
+                <Link to="/check" className="about-delivery-tracking">
                     <div className="box-icon">
                         <div className='my-icon'>
-                            <FontAwesomeIcon icon={faPhoneVolume} className='fa-h-24px' />
+                            <FontAwesomeIcon icon={faTruckField} className='fa-h-24px' />
                         </div>
                     </div>
                     <div className="box-content">
                         <p className="title-y">
-                            Gọi mua hàng
-                            <br />
-                            <strong>0396666666</strong>
+                           Đơn hàng
                         </p>
                     </div>
-                </a>
-              
+                </Link>
                 <div className="menu-list">
                     <div className="shop-cart">
                         <Link to="/order" className="shop-cart">

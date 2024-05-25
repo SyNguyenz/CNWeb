@@ -5,7 +5,6 @@ import AllApi from '../../api/api'
 
 const Checkout = () => {
     const { cart, selectedItems } = useContext(CartContext);
-
     const [recipientName, setRecipientName] = useState('');
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
