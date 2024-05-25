@@ -22,6 +22,7 @@ const AdminProduct = () => {
         const response = await getProductsAPI()
         const productsData = response.data;
         setProducts(productsData);
+        console.log(productsData);
       } catch (error) {
         console.error(error);
         message.error('Không thể lấy dữ liệu sản phẩm');

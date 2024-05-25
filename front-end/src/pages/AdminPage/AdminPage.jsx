@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { UserOutlined, ProductOutlined } from "@ant-design/icons";
-import { Menu } from "antd";
+import { Avatar, Menu } from "antd";
 import AdminUser from "../../componet/AdminUser/AdminUser";
 import AdminProduct from "../../componet/AdminProduct/AdminProduct";
+import boxImage from "./box.png";
+import AdminOrder from "../../componet/AdminOrder/AdminOrder";
+
 function getItem(label, key, icon, children, type) {
   return {
     key,
@@ -15,6 +18,7 @@ function getItem(label, key, icon, children, type) {
 const items = [
   getItem("Sản phẩm", "products", <ProductOutlined />, ),
   getItem("Người dùng", "users", <UserOutlined />, ),
+  getItem("Đơn hàng", "orders", <img src={boxImage} alt="Order" width={14}/>),
 ];
 
 const Admin = () => {
@@ -34,6 +38,10 @@ const Admin = () => {
         return (
           <AdminProduct />
         )  
+      case 'orders':
+        return (
+          <AdminOrder />
+        )
       default:
         return <></>  
     }    
