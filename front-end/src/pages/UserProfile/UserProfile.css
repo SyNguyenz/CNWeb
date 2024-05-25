@@ -60,8 +60,11 @@
     font-size: 16px;
     cursor: pointer; 
     margin-left: 20px;
-    background-color: rgb(4, 134, 139);
+    background-color: rgb(5, 150, 155);
     
+}
+.change-user-password button:hover {
+    background-color: rgb(4, 100, 104);
 }
 
 .change-user-password p {
