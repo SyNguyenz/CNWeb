@@ -53,7 +53,7 @@ namespace backend.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Id == id);
             if (user == null)
             {
-                return Ok(new ApiResponse
+                return BadRequest(new ApiResponse
                 {
                     Success = false,
                     Message = "User not found",
@@ -115,6 +115,12 @@ namespace backend.Controllers
                         Message = "Variant not found"
                     });
                 }
+                if (variant.quantity < number)
+                {
+                    _context.ChiTietDonHangs.RemoveRange(order.ChiTietDonHangs);
+                    _context.DonHangs.Remove(order);
+                    return BadRequest("Not enough available products");
+                }
                 var orderDetails = new ChiTietDonHang
                 {
                     MaDonHang = order.MaDonHang,
@@ -130,14 +136,13 @@ namespace backend.Controllers
                 variant.quantity -= number;
                 _context.SaveChanges();
             }
-
-            await _hubContext.Clients.All.SendAsync("NewOrderCreated", "New order created");
+            await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "New Order Created");
 
             return Ok(order);
         }
 
         [HttpPut("UpdateOrderState{id}")]
-        public IActionResult UpdateOrderState(int id)
+        public async Task<IActionResult> UpdateOrderState(int id)
         {
             // Tìm trong cơ sở dữ liệu bằng ID
             var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == id);
@@ -146,11 +151,27 @@ namespace backend.Controllers
                 return NotFound();
             }
 
+            if(order.TinhTrangDonHang == 2)
+            {
+                return BadRequest("Order has been delivered");
+            }
+
+            var user = await _userManager.FindByIdAsync(order.UserId);
+            if(user == null)
+            {
+                return BadRequest(new { message = "User not exist", order, user });
+            }
+
             //Update
             order.TinhTrangDonHang++;
             if (order.TinhTrangDonHang == 2)
             {
                 order.NgayGiao = DateTime.Now;
+                await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Delivered at " + order.NgayGiao);
+            }
+            else
+            {
+                await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Shipping");
             }
 
             _context.SaveChanges();
@@ -176,19 +197,24 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteOrder(int OrderId)
+        public async Task<IActionResult> DeleteOrder(int OrderId)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     var order = _context.DonHangs
-                .Include(o => o.ChiTietDonHangs)
-                .ThenInclude(od => od.Variant)
-                .FirstOrDefault(o => o.MaDonHang == OrderId);
+                    .Include(o => o.ChiTietDonHangs)
+                    .ThenInclude(od => od.Variant)
+                    .FirstOrDefault(o => o.MaDonHang == OrderId);
                     if (order == null)
                     {
                         return NotFound();
+                    }
+                    var user = await _userManager.FindByIdAsync(order.UserId);
+                    if (user == null)
+                    {
+                        return BadRequest("User not exist");
                     }
                     foreach (var details in order.ChiTietDonHangs)
                     {
@@ -200,7 +226,7 @@ namespace backend.Controllers
                     _context.SaveChanges();
 
                     transaction.Commit();
-
+                    await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your order has been canceled");
                     return Ok();
                 }
                 catch (Exception)

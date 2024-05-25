@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from '../Assets/logo.jpg';
@@ -6,18 +6,40 @@ import Search from "../Search";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faCircleUser, faList, faPhoneVolume, faTruckField } from '@fortawesome/free-solid-svg-icons';
 import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react/headless';
 import MenuBar from "../MenuBar/MenuBar";
 import 'tippy.js/dist/tippy.css';
 import { AuthContext } from "../AuthContext/AuthContext";
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import useSignalR from "../useSignalR/useSignalR";
+
 
 function Header() {
     const [isMenu, setIsMenu] = useState(false);
     const { isLoggedIn, user, logout } = useContext(AuthContext);
+    const [isRead, setIsRead] = useState(true); 
 
     const handleLogout = () => {
         logout();
         window.location.replace('/');
     };
+
+    const [visible, setVisible] = useState(false);
+    const [message, setMessage] = useState('');
+    const showMessage = (msg) => {
+        setMessage(msg);
+        setVisible(false); 
+        setIsRead(false);
+      };
+      useSignalR(showMessage);
+    const handleNewMessage = () => {
+    //khi có thông báo mới thì setIsRead(false) để hiện dấu chấm đỏ
+    setIsRead(true);
+    if(message !== ''){
+        setVisible(!visible);
+    }
+  };
+
 
     return (
         <div className="header">
@@ -92,25 +114,42 @@ function Header() {
                 <div>
                     {isLoggedIn ? (
                     <div className="box-user">
-                            <div className="box-icon">
-                                <div className="my-icon">
-                                    <FontAwesomeIcon icon={faCircleUser} className='avatar' />
-                                </div>
+                        <div className="box-icon">
+                            <div className="my-icon">
+                                <FontAwesomeIcon icon={faCircleUser} className='avatar' />
                             </div>
-                    
-                            <span className="title-y">
-                                <Link to='/user_profile'>{user}</Link>
-                            </span>
-                    </div> 
-                    ): <div></div>}
+                        </div>
+                
+                        <span className="title-y">
+                            <Link to='/user_profile'>{user}</Link>
+                        </span>
+                            
+                    <div className="notification-icon">
+                      <Tippy
+                        interactive={true}
+                        visible={visible}
+                        placement="bottom"
+                        onClickOutside={() => setVisible(false)}
+                        render={attrs => (
+                          <div className="tooltip-noti" {...attrs}>
+                            {message}
+                          </div>
+                        )}
+                      >
+                        <button onClick={handleNewMessage} className="notification-icon">
+                          <FontAwesomeIcon icon={faBell} className='icon-noti'/>
+                          {!isRead && <div className="unread-dot"> * </div>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
+                        </button>
+                      </Tippy>
+                    </div>
+                        
+            </div> 
+            ): <div> </div>}
                 </div> 
-
-
                 <div>
                     {isLoggedIn ? (
                         <div className="login-btn" onClick={handleLogout}>
                             <div className="header-item about-member">
-        
                                 <div className="box-content">
                                     <span className="title-y">Đăng xuất</span>
                                 </div>
@@ -120,8 +159,6 @@ function Header() {
                         <Link to='/login'>
                             <div className="login-btn">
                                 <div className="header-item about-member">
-                                    
-                                
                                     <div className="box-content">
                                         <span className="title-y">Đăng nhập</span>
                                     </div>

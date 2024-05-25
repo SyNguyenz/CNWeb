@@ -11,6 +11,7 @@ namespace backend.Data
         public override string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string DiaChi { get; set; }
+        public string ConnectionId { get; set; }
         public User()
         {
             UserName = string.Empty;

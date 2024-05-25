@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './LoginPopup.css'; 
 import computer from '../Assets/computer.png'
 
+
 const LoginPopup = ({ onLogin }) => {
   return (
     <div className="login-popup-container">
@@ -12,7 +13,7 @@ const LoginPopup = ({ onLogin }) => {
           <div className='popup-box'>
             <img src={computer}/>
             <Link to="/login">
-              <button className = "button-popup"onClick={onLogin}>Đăng nhập</button>
+              <button className = "button-popup" onClick={onLogin}>Đăng nhập</button>
             </Link>
           </div>
         </div>

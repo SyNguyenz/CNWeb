@@ -35,6 +35,13 @@ namespace backend.Controllers
             }
         }
 
+        [HttpGet("Comments{id}")]
+        public IActionResult GetComment(Guid id)
+        {
+            var comments = _context.Comments.Include(c => c.User).Where(p => p.ProductId == id).ToList();
+            return Ok(comments);
+        }
+
         [HttpPost]
         public IActionResult AddProduct([FromBody] ProductModel productModel)
         {

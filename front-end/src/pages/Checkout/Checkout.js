@@ -9,6 +9,7 @@ const Checkout = () => {
     const [recipientName, setRecipientName] = useState('');
     const [address, setAddress] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
+    const [isPaymentOptionsVisible, setIsPaymentOptionsVisible] = useState(false);
     const orderDate = new Date();
 
     const selectedProducts = useMemo(() => {
@@ -35,6 +36,9 @@ const Checkout = () => {
         deliveryDate.setDate(deliveryDate.getDate() + days);
         return deliveryDate.toLocaleDateString('vi-VN');
     };
+    const handlePaymentClick = () => {
+        setIsPaymentOptionsVisible(true);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -47,9 +51,31 @@ const Checkout = () => {
         });
         
         console.log(calculateTotalPrice);
-        const orderInfo = await AllApi.addOrder(ids, numbers);
-        const response = await AllApi.checkout(calculateTotalPrice, recipientName + " mua hang", orderInfo.data.maDonHang);
-        window.location.href = response.data;
+        try{
+            const orderInfo = await AllApi.addOrder(ids, numbers);
+            const response = await AllApi.checkout(calculateTotalPrice, recipientName + " mua hang", orderInfo.data.maDonHang);
+            window.location.href = response.data;
+        }
+        catch(error){
+            console.log(error)
+        }
+    };
+
+    const handleCODPayment = async (e) => {
+        e.preventDefault();
+        var ids = [];
+        var numbers = [];
+        
+        selectedProducts.forEach((item) => {
+            ids.push(item.selectedVariant.id);
+            numbers.push(item.quantity);
+        });
+        try{
+            await AllApi.addOrder(ids, numbers);
+        } 
+        catch(error){
+            console.log(error);
+        }
     };
 
     return (
@@ -125,7 +151,23 @@ const Checkout = () => {
                     </div>
 
                     <div className='btn-complete-order-container'>
-                        <button type="submit" className="btn-complete-order">Thanh toán</button>
+                        {!isPaymentOptionsVisible ? (
+                                <button type="button" className="btn-complete-payment" onClick={handlePaymentClick}>
+                                    Thanh toán
+                                </button>
+                            ) : (
+                                <>
+                                    <div className='payment-choice'>
+                                        <button type="button" className="btn-complete-order" onClick={handleCODPayment}>
+                                            Thanh toán khi nhận hàng
+                                        </button>
+                                        <button type="submit" className="btn-complete-order">
+                                            Thanh toán online
+                                        </button>
+                                    </div>
+                                   
+                                </>
+                            )}
                     </div>
                 </form>
             </div>

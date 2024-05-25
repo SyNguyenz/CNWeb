@@ -179,6 +179,40 @@ namespace backend.Migrations
                     b.ToTable("ChiTietDonHang", (string)null);
                 });
 
+            modelBuilder.Entity("backend.Data.Comments", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Created")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comments");
+                });
+
             modelBuilder.Entity("backend.Data.DonHang", b =>
                 {
                     b.Property<int>("MaDonHang")
@@ -270,6 +304,10 @@ namespace backend.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ConnectionId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DiaChi")
@@ -440,6 +478,27 @@ namespace backend.Migrations
                     b.Navigation("DonHang");
 
                     b.Navigation("Variant");
+                });
+
+            modelBuilder.Entity("backend.Data.Comments", b =>
+                {
+                    b.HasOne("backend.Data.HangHoa", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Comments_HangHoa");
+
+                    b.HasOne("backend.Data.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_Comments_User");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("backend.Data.VariantModel", b =>

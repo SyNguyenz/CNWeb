@@ -14,6 +14,7 @@ namespace backend.Data
         public DbSet<VariantModel> Variants { get; set; }
         public DbSet<DonHang> DonHangs { get; set; }
         public DbSet<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public DbSet<Comments> Comments { get; set; }
         public override DbSet<User> Users { get; set; }
         #endregion
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,6 +64,19 @@ namespace backend.Data
                 .WithMany(e => e.Variants)
                 .HasForeignKey(v => v.ProductId)
                 .HasConstraintName("FK_Variant_HangHoa");
+            });
+            modelBuilder.Entity<Comments>(e =>
+            {
+                e.HasKey(e => e.Id);
+                e.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .HasConstraintName("FK_Comments_User");
+                e.HasOne(e => e.Product)
+                .WithMany()
+                .HasForeignKey(e => e.ProductId)
+                .HasConstraintName("FK_Comments_HangHoa");
+                e.Property(e => e.Created).HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
         }
     }

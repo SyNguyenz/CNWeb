@@ -95,7 +95,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<NotificationHub>("/api/notificationHub");
 
 app.Run();
 async Task EnsureRoles(IServiceProvider serviceProvider)

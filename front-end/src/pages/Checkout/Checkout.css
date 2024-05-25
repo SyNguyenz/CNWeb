@@ -1,6 +1,4 @@
-/* Checkout.css */
 
-/* Container for the whole checkout page */
 .checkout-container {
     margin-top: 70px;
     padding: 20px;
@@ -11,11 +9,12 @@
     margin-left: 300px;
     margin-right: 300px;
     border: 2px rgb(127, 126, 124);
-    border-radius: 4px;
+    border-radius: 16px;
     box-shadow:0px 2px 4px rgb(195, 195, 195);
 }
 
-h1 {
+.checkout-container h1 {
+    margin-left: 600px;
     text-align: center;
     margin-bottom: 20px;
 }
@@ -42,10 +41,10 @@ h1 {
 }
 .form-group-inf input{
 
-    width: 440px;
+    width: 358px;
 }
 .form-group-inf-address input {
-    width: 920px;
+    width: 756px;
 }
 
 
@@ -57,7 +56,7 @@ input {
     width: calc(100% - 16px);
 }
 
-/* Styles for the checkout items */
+
 .checkout-items {
     display: flex;
     flex-direction: column;
@@ -65,6 +64,7 @@ input {
     border-color: #a9a9a9;
     border-radius: 4px;
     box-shadow:0px 2px 4px rgb(195, 195, 195);
+    margin-top: 15px;
     margin-left: 20px;
     margin-right: 20px;
 }
@@ -72,7 +72,7 @@ input {
 .checkout-item {
     display: flex;
     gap: 20px;
-    height: 170px;
+    height: 210px;
     align-items: center;
     border-color: #0f0f0f;
     border-radius: 8px;
@@ -84,14 +84,15 @@ input {
     font-size: 14px;
     
 }
-
+.checkout-item:first-child{
+    margin-top: 30px;
+}
 .checkout-item img {
     margin-left: 10px;
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     object-fit: cover;
-    border: 1px solid rgb(137, 141, 158);
-    border-radius: 5px;
+    
 }
 
 .checkout-item-details {
@@ -108,8 +109,8 @@ input {
 
 .btn-complete-order {
     display: inline-block;
-    width: 150px;
-    height: 40px;
+    width: 160px;
+    height: 55px;
     padding: 10px 20px;
     margin-top: 20px;
     font-size: 16px;
@@ -128,5 +129,25 @@ input {
 }
 .date-form{
     margin-top: 15px;
+}
+.btn-complete-order:first-child{
+    margin-right: 180px;
+}
+.btn-complete-payment{
+    display: inline-block;
+    width: 160px;
+    height: 55px;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    background-color: rgb(5, 194, 208);
+}
+.payment-choice{
+    width: 500px;
+    justify-items: center;
 }
 

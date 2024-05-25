@@ -14,7 +14,7 @@ import LoginPopup from '../../components/LoginPopup/LoginPopup.js';
 function Product() {
   const {productId} = useParams();
   const product = all_products.find((item) => item.id === productId)
- const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
+ const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user') !== null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupRef = useRef(null);
   const isFirstRender = useRef(true);

@@ -1,5 +1,7 @@
 ﻿using backend.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Web;
 
 namespace backend.Controllers
@@ -7,14 +9,19 @@ namespace backend.Controllers
     public class VNPayController : Controller
     {
         private readonly MyDbContext _context;
-        public VNPayController(MyDbContext context)
+        private readonly UserManager<User> _userManager;
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public VNPayController(MyDbContext context, UserManager<User> userManager, IHubContext<NotificationHub> hubContext)
         {
             _context = context;
+            _userManager = userManager;
+            _hubContext = hubContext;
         }
         public string url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        public string returnUrl = "https://localhost:7006/api/VNpayAPI/paymentConfirm";
-        //public string returnUrl = "https://cnweb.onrender.com/api/VNpayAPI/paymentConfirm";
-        public string front_end = "http://localhost:3000";
+        //public string returnUrl = "https://localhost:7006/api/VNpayAPI/paymentConfirm";
+        public string returnUrl = "https://cnweb.onrender.com/api/VNpayAPI/paymentConfirm";
+        //public string front_end = "http://localhost:3000";
+        public string front_end = "https://cn-web-plum.vercel.app";
         public string tmnCode = "ZNKSLMUQ";
         public string hashSecret = "ZTZMJ6B33YLMZPP0PNUXIN6FE7NCF2RT";
         [HttpGet("/api/VNPayAPI/{amount}&{infor}&{orderinfor}")]
@@ -42,7 +49,7 @@ namespace backend.Controllers
             return Ok(paymentUrl);
         }
         [HttpGet("/api/VNpayAPI/paymentconfirm")]
-        public IActionResult PaymentConfirm()
+        public async Task<IActionResult> PaymentConfirm()
         {
             if (Request.QueryString.HasValue)
             {
@@ -59,34 +66,37 @@ namespace backend.Controllers
 
                 //return Ok(Request.QueryString.Value.Substring(1, pos-1) + "\n" + vnp_SecureHash + "\n"+ PayLib.HmacSHA512(hashSecret, Request.QueryString.Value.Substring(1, pos-1)));
                 bool checkSignature = ValidateSignature(Request.QueryString.Value.Substring(1, pos - 1), vnp_SecureHash, hashSecret); //check chữ ký đúng hay không?
+                var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == orderId);
+                if (order == null) return Redirect(front_end);
+                var user = await _userManager.FindByIdAsync(order.UserId); ;
+                if (user == null) return Redirect(front_end);
                 if (checkSignature && tmnCode == json["vnp_TmnCode"].ToString())
                 {
                     if (vnp_ResponseCode == "00")
                     {
                         //Thanh toán thành công
-                        var order = _context.DonHangs.FirstOrDefault(o => o.MaDonHang == orderId);
-                        if (order != null)
-                        {
-                            order.DaThanhToan = true;
-                            _context.DonHangs.Update(order);
-                            _context.SaveChanges();
-                        }
+                        order.DaThanhToan = true;
+                        _context.DonHangs.Update(order);
+                        _context.SaveChanges();
+                        await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your Order has been paid");
                         return Redirect(front_end);
                     }
                     else
                     {
                         //Thanh toán không thành công. Mã lỗi: vnp_ResponseCode
-                        return Redirect("LINK");
+                        await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Error! Your order has NOT been paid");
+                        return Redirect(front_end);
                     }
                 }
                 else
                 {
                     //phản hồi không khớp với chữ ký
-                    return Redirect("đường dẫn nếu phản hồi ko hợp lệ");
+                    await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Error! The response does not match");
+                    return Redirect(front_end);
                 }
             }
             //phản hồi không hợp lệ
-            return Redirect("LINK");
+            return Redirect(front_end);
 
         }
         public bool ValidateSignature(string rspraw, string inputHash, string secretKey)
