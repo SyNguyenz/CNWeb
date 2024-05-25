@@ -197,19 +197,24 @@ namespace backend.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeleteOrder(int OrderId)
+        public async Task<IActionResult> DeleteOrder(int OrderId)
         {
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     var order = _context.DonHangs
-                .Include(o => o.ChiTietDonHangs)
-                .ThenInclude(od => od.Variant)
-                .FirstOrDefault(o => o.MaDonHang == OrderId);
+                    .Include(o => o.ChiTietDonHangs)
+                    .ThenInclude(od => od.Variant)
+                    .FirstOrDefault(o => o.MaDonHang == OrderId);
                     if (order == null)
                     {
                         return NotFound();
+                    }
+                    var user = await _userManager.FindByIdAsync(order.UserId);
+                    if (user == null)
+                    {
+                        return BadRequest("User not exist");
                     }
                     foreach (var details in order.ChiTietDonHangs)
                     {
@@ -221,7 +226,7 @@ namespace backend.Controllers
                     _context.SaveChanges();
 
                     transaction.Commit();
-
+                    await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your order has been canceled");
                     return Ok();
                 }
                 catch (Exception)

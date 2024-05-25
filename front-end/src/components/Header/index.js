@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from '../Assets/logo.jpg';
@@ -11,7 +11,7 @@ import MenuBar from "../MenuBar/MenuBar";
 import 'tippy.js/dist/tippy.css';
 import { AuthContext } from "../AuthContext/AuthContext";
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-
+import useSignalR from "../useSignalR/useSignalR";
 
 
 function Header() {
@@ -28,18 +28,16 @@ function Header() {
     const [message, setMessage] = useState('');
     const showMessage = (msg) => {
         setMessage(msg);
-        setVisible(!visible); 
-        setIsRead(true);
+        setVisible(false); 
+        setIsRead(false);
       };
-
-
-
+      useSignalR(showMessage);
     const handleNewMessage = () => {
     //khi có thông báo mới thì setIsRead(false) để hiện dấu chấm đỏ
-    //setIsRead(false);
-    showMessage("You have a new message!");
-
-    
+    setIsRead(true);
+    if(message !== ''){
+        setVisible(!visible);
+    }
   };
 
 

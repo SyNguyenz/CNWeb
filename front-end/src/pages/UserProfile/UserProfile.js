@@ -44,10 +44,16 @@ const UserProfile = () => {
         setIsOldPasswordConfirmed(true);
     };
 
-    const handleChangePassword = () => {
+    const handleChangePassword = async () => {
         console.log('Old Password:', oldPassword);
         console.log('New Password:', newPassword);
         // Sau khi đổi mật khẩu thành công,ẩn form đổi mật khẩu
+        await AllApi.updateUser(user.id, oldPassword, {
+            userName: user.userName,
+            phoneNumber: user.phoneNumber,
+            diaChi: user.diaChi,
+            password: newPassword
+        })
         setShowChangePassword(false);
         setIsOldPasswordConfirmed(false);
         setOldPassword('');

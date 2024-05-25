@@ -119,6 +119,7 @@ namespace backend.Controllers
                 PhoneNumber = model.PhoneNumber,
                 DiaChi = model.DiaChi,
                 UserName = model.UserName,
+                Password = model.Password,
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -198,7 +199,7 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(string id,string currentPassword, [FromBody] UserModel model)
+        public async Task<IActionResult> UpdateUser(string id, string currentPassword, [FromBody] UserModel model)
         {
             // Kiểm tra xem model có hợp lệ không
             if (!ModelState.IsValid)
@@ -213,6 +214,12 @@ namespace backend.Controllers
                 return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy user với ID đã cung cấp
             }
 
+            var checkPassword = await _userManager.CheckPasswordAsync(user, currentPassword);
+            if (!checkPassword)
+            {
+                return BadRequest("Password incorrect");
+            }
+
             var result = await _userManager.ChangePasswordAsync(user, currentPassword, model.Password);
             if (!result.Succeeded)
             {
@@ -223,7 +230,8 @@ namespace backend.Controllers
             user.UserName = model.UserName;
             user.PhoneNumber = model.PhoneNumber;
             user.DiaChi = model.DiaChi;
-            
+            user.Password = model.Password;
+
             // Lưu thay đổi vào cơ sở dữ liệu
             _context.Update(user);
             _context.SaveChanges();

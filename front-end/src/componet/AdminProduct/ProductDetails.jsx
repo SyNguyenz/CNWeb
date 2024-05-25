@@ -38,12 +38,9 @@ const ProductDetails = ({ product, setModalChild }) => {
     label: variant.color,
     value: variant,
   }));
-  console.log(options);
-  console.log(product);
   const [variant, setVariant] = useState(options[0].value || null);
 
   const onChange = ({ target: { value } }) => {
-    console.log("radio3 checked", value);
     setVariant(value);
   };
 
@@ -199,7 +196,6 @@ const ProductDetails = ({ product, setModalChild }) => {
           type="primary"
           icon={<EditOutlined />}
           onClick={() => {
-            console.log("gg");
             setModalChild(
               <EditProduct product={product} setModalChild={setModalChild} />
             );

@@ -34,7 +34,6 @@ const CommentAndRating = ({product, onOpenPopup}) => {
     };
 
     fetchComments();
-    console.log(comments);
   }, [product?.id]);
   
  useEffect(() => {

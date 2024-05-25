@@ -40,6 +40,9 @@ class AllApi {
     getUser(id){
         return axios.get(base_url + 'User', id);
     }
+    updateUser(id, password, model){
+        return axios.put(base_url + 'User' + id, password, model)
+    }
     deleteUser(id){
         return axios.delete(base_url + 'User/' + id);
     }

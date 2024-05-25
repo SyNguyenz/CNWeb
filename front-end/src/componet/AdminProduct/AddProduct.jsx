@@ -34,7 +34,6 @@ const AddProduct = ({ setModalChild }) => {
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
-    console.log(variants);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -94,7 +93,6 @@ const AddProduct = ({ setModalChild }) => {
       var images = [];
 
       variants.forEach((variant, index) => {
-        console.log(variant.image[0]);
         if (variant.image.length > 0) {
           if (variant.image[0].url) {
             data.variants.push({
