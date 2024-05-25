@@ -52,15 +52,11 @@ class AllApi {
     addComments(comment){
         return axios.post(base_url + 'User/Comments', comment);
     }
-    changePassword(id, currentPassword, newPassword) {
-        return axios.put(base_url + 'User/ChangePassword', {
-            id: id,
-            currentPassword: currentPassword,
-            newPassword: newPassword
-        });
+    changePassword(id, currentPassword, model) {
+        return axios.put(base_url + 'User/', + id, currentPassword, model);
     }
     getOrder(id) {
-        return axios.get(base_url + 'Order/' + id);
+        return axios.get(base_url + 'Order/UserId' + id);
     }
  
 }
