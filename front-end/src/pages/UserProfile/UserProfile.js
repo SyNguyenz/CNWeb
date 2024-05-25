@@ -41,7 +41,7 @@ const UserProfile = () => {
                 userName: user.userName,
                 password: currentPassword
             });
-            if (response.data) {
+            if (response.data.success) {
                 setError('');
                 setIscurrentPasswordConfirmed(true);
             } else {
@@ -54,7 +54,12 @@ const UserProfile = () => {
 
     const handleChangePassword = async () => {
         try {
-            await AllApi.changePassword(user.id, currentPassword, newPassword);
+            await AllApi.changePassword(user.id, currentPassword, {
+                userName: user.userName,
+                phoneNumber: user.phoneNumber,
+                password: newPassword,
+                diaChi: user.diaChi
+            });
             setShowChangePassword(false);
             setIscurrentPasswordConfirmed(false);
             setCurrentPassword('');
