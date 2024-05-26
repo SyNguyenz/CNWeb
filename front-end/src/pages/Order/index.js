@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import CartContext from '../../components/CartContext/CartContext';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,7 +21,9 @@ const Order = () => {
     const handleRemoveFromCart = (productId) => {
         removeFromCart({ id: productId });
     };
-   
+    useEffect(() => { 
+        window.scrollTo(0, 0);  
+    });
     const handleQuantityChange = (productId, change) => {
         
         const item = cart.find(item => item.id === productId);

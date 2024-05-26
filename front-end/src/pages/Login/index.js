@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import "./Login.css";
 import AllApi from "../../api/api";
 import { AuthContext } from "../../components/AuthContext/AuthContext";
@@ -9,6 +9,9 @@ export default function LoginPage() {
     const [errors, setErrors] = useState({});
     const { login } = useContext(AuthContext);
 
+    useEffect(() => { 
+        window.scrollTo(0, 0);  
+    });
     const validatePhoneNumber = (phoneNumber) => {
         return /^(0)[3|5|7|8|9][0-9]{8}$/.test(phoneNumber);
     };
