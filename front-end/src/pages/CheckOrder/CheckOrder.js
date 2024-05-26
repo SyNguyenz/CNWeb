@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AllApi from '../../api/api';
 import './CheckOrder.css';
 
-//thiếu image của sản phẩm, css còn lỗi ("chưa mua đơn hàng");
-//css còn xấu
 const CheckOrder = ({ id }) => {
     const [orders, setOrders] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -53,7 +51,7 @@ const CheckOrder = ({ id }) => {
     };
 
     return (
-        <div className='List-order-container'>
+        <div className='list-order-container'>
             <h1>Danh sách đơn hàng</h1>
             {orders.map((order) => {
                 const totalAmount = order.chiTietDonHangs.reduce((sum, item) => sum + item.total, 0);
@@ -63,16 +61,19 @@ const CheckOrder = ({ id }) => {
                         <h3>Sản phẩm:</h3>
                         <ul>
                             {order.chiTietDonHangs.map((item) => (
-                                <li key={item.id}>
-                                    <p><strong>Tên sản phẩm:</strong> {item.variant.hangHoa.tenHangHoa}</p>
-                                    <p><strong>Màu sắc:</strong> {item.variant.color}</p>
-                                    <p><strong>Số lượng:</strong> {item.variant.quantity}</p>
-                                    <p><strong>Giá:</strong> {item.total}</p>
+                                <li key={item.id} className="order-item">
+                                    <img src={item.variant.hangHoa.imageUrl} alt={item.variant.hangHoa.tenHangHoa} className="product-image" />
+                                    <div className="product-details">
+                                        <p><strong>Tên sản phẩm:</strong> {item.variant.hangHoa.tenHangHoa}</p>
+                                        <p><strong>Màu sắc:</strong> {item.variant.color}</p>
+                                        <p><strong>Số lượng:</strong> {item.variant.quantity}</p>
+                                        <p><strong>Giá:</strong> {item.total}</p>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
-                        <p><strong>{order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"}</strong></p>
-                        <p><strong>Tổng số tiền:</strong> {totalAmount}</p>
+                        
+                        <p><strong>Tổng số tiền:</strong> {totalAmount} ({order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"})</p>
                         <p><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
                     </div>
                 );
