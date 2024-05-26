@@ -71,6 +71,7 @@ const CheckOrder = ({ id }) => {
                                 </li>
                             ))}
                         </ul>
+                        <p><strong>{order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"}</strong></p>
                         <p><strong>Tổng số tiền:</strong> {totalAmount}</p>
                         <p><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
                     </div>
