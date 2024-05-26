@@ -4,7 +4,7 @@ import './LoginPopup.css';
 import computer from '../Assets/computer.png'
 
 
-const LoginPopup = ({ onLogin }) => {
+const LoginPopup = ({ onLogin, onClose }) => {
   return (
     <div className="login-popup-container">
       <div className="login-popup">
@@ -13,7 +13,7 @@ const LoginPopup = ({ onLogin }) => {
           <div className='popup-box'>
             <img src={computer}/>
             <Link to="/login">
-              <button className = "button-popup" onClick={onLogin}>Đăng nhập</button>
+              <button className="button-popup" onClick={() => {onLogin(); onClose();}}>Đăng nhập</button>
             </Link>
           </div>
         </div>
