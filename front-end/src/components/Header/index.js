@@ -45,7 +45,7 @@ function Header() {
         <div className="header">
             <div className="menu">
                 <div className="logo">
-                    <img src={logo} alt="Logo" />
+                <img src={logo} alt="Logo" />
                     <span className="about-name">
                         <Link to="/"> <b>TECH STORE</b></Link>
                     </span>
