@@ -152,6 +152,9 @@ padding: 4px 0 4px 8px;
   display: flex;
   width: 60px;
 }
+.notification-icon:hover{
+  background-color: transparent;
+}
 .icon-noti{
   height: 20px;
 }

@@ -39,21 +39,8 @@ function Product() {
     setIsPopupOpen(false);
   };
 
-  useEffect(() => {
-    // Xử lý sự kiện click ra ngoài 
-    const handleClickOutside = (event) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        if (isPopupOpen) {
-          closePopup();
-        }
-      }
-    };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isPopupOpen]);
+  
 
   return (
     <div className='product-container'>

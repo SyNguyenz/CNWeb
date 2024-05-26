@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-    
+    margin-top: 80px;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -19,10 +19,12 @@ body {
 }
 
 .title {
-    font-size: 28px;
+    text-align: center;
+    width: 420px;
+    font-size: 26px;
     font-weight: bold;
     color: #1e0e4b;
-    text-align: center;
+    
 }
 
 .app-name {
@@ -66,6 +68,7 @@ input {
 }
 
 button {
+    margin-top: 25px;
     background-color: rgb(255, 81, 0);
     color: #fff;
     border: none;
@@ -73,6 +76,11 @@ button {
     padding: 15px;
     font-size: 22px;
     cursor: pointer;
+    width: 170px;
+    margin-left: 125px;
+}
+button:hover{
+    background-color: #f6861d;
 }
 
 .signup-link {

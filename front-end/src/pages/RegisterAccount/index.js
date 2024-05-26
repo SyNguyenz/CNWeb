@@ -138,7 +138,7 @@ export default function RegisterPage() {
     };
 
     return (
-        <div className="container">
+        <div className="register-container">
             <div className="login-form">
                 <div className="title">Chào mừng bạn đến với <span className="app-name">TECH STORE</span></div>
                 <div className="subtitle">Tạo tài khoản của bạn</div>
@@ -186,10 +186,11 @@ export default function RegisterPage() {
                         </div>
                         {errors.rePassword && <div className="error">{errors.rePassword}</div>}
                     </div>
+                    <div className="signup-link">Bạn đã có tài khoản? <Link to="/login">Đăng nhập ngay!</Link></div>
                     <button type="submit">Tạo tài khoản</button>
                 </form>
                 {successMessage && <div className="success-message">{successMessage}</div>}
-                <div className="signup-link">Bạn đã có tài khoản? <Link to="/login">Đăng nhập ngay!</Link></div>
+               
             </div>
         </div>
     );
