@@ -43,7 +43,11 @@ export default function LoginPage() {
             if (response.data.success) {
                 console.log(response);
                 login(response.data.message);
-                window.location.href = "/"; // Chuyển hướng đến trang chủ
+                if(response.data.data[0] === "admin") {
+                    localStorage.setItem("role", "admin");
+                    window.location.href = "/admin";
+                }
+                else window.location.href = "/"; // Chuyển hướng đến trang chủ
             } else {
                 const newErrors = { ...errors };
                 if (response.data.message === "Invalid phonenumber") {

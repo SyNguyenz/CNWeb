@@ -13,10 +13,12 @@
         public bool DaThanhToan { get; set; }
         public string UserId {  get; set; }
         public ICollection<ChiTietDonHang> ChiTietDonHangs { get; set; }
+        public User User { get; set; }
         public DonHang()
         {
             ChiTietDonHangs = [];
             UserId = string.Empty;
+            User = new User();
         }
     }
 }

@@ -3,6 +3,7 @@ import { Button, Modal, Space, Table, message, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import OrderDetails from "./OrderDetails";
+import AllApi from '../../api/api'
 
 const AdminOrder = () => {
   const [refresh, setRefresh] = useState(false);
@@ -12,10 +13,10 @@ const AdminOrder = () => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-          // const response = await getProductsAPI()
-          // const productsData = response.data;
-          // setProducts(productsData);
-          // console.log(productsData);
+           const response = await AllApi.getAllOrder()
+           const ordersData = response.data;
+           setOrders(ordersData);
+           console.log(ordersData);
         } catch (error) {
           console.error(error);
           message.error('Không thể lấy dữ liệu đơn hàng!');
@@ -152,21 +153,13 @@ const AdminOrder = () => {
       dataIndex: "maDonHang",
       key: "ma",
       ellipsis: true,
-      sorter: (a, b) => a.maHangHoa - b.maHangHoa,
+      sorter: (a, b) => a.maDonHang - b.maDonHang,
       sortDirections: ["descend", "ascend"],
       ...getColumnSearchProps("maDonHang"),
     },
     {
-      title: "Sản phẩm",
-      dataIndex: "product",
-      key: "product",
-      ellipsis: true,
-      sorter: (a, b) => a.product - b.product,
-      sortDirections: ["descend", "ascend"],
-      ...getColumnSearchProps("product"),
-    },
-    {
       title: "userId",
+      dataIndex: "userId",
       key: "userId",
       ellipsis: true,
     },
@@ -175,7 +168,7 @@ const AdminOrder = () => {
       dataIndex: "ngayDat",
       key: "ngayDat",
       ellipsis: true,
-      sorter: (a, b) => a.tenHangHoa.localeCompare(b.tenHangHoa),
+      sorter: (a, b) => a.ngayDat.localeCompare(b.ngayDat),
       sortDirections: ["descend", "ascend"],
       ...getColumnSearchProps("ngayDat"),
     },
@@ -217,7 +210,7 @@ const AdminOrder = () => {
           return {
             onClick: () => {
 
-              setModalChild(<OrderDetails />);
+              setModalChild(<OrderDetails order={record} />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
@@ -230,7 +223,7 @@ const AdminOrder = () => {
         columns={columns}
         dataSource={orders}
       />
-      <Button onClick={() => setModalChild(<OrderDetails />)}>nghia</Button>
+      <Button onClick={() => setModalChild(<OrderDetails />)}>Xem chi tiết</Button>
     </div>
   );
 };

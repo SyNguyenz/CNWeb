@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const base_url = "https://cnweb.onrender.com/api/";
-//export const base_url = "https://localhost:7006/api/";
+//export const base_url = "https://cnweb.onrender.com/api/";
+export const base_url = "https://localhost:7006/api/";
 axios.defaults.withCredentials = true;
 class AllApi {
     register(newUser){
@@ -21,6 +21,12 @@ class AllApi {
     }
     getUserInfo(){
         return axios.get(base_url + 'User/CurrentUser');
+    }
+    getAllOrder(){
+        return axios.get(base_url + 'Order')
+    }
+    updateOrderStatus(id){
+        return axios.put(base_url + 'Order/UpdateOrderState' + id)
     }
     addOrder(ids, numbers){
         return axios.post(base_url + 'Order',{

@@ -29,8 +29,10 @@ namespace backend.Controllers
             if (id.HasValue)
             {
                 var order = _context.DonHangs
+                    .Include(o => o.User)
                     .Include(o => o.ChiTietDonHangs)
                     .ThenInclude(od => od.Variant)
+                    .ThenInclude(v => v.HangHoa)
                     .FirstOrDefault(o => o.MaDonHang == id);
                 if (order == null)
                 {
@@ -41,8 +43,10 @@ namespace backend.Controllers
             else
             {
                 var order = _context.DonHangs
+                    .Include(o => o.User)
                     .Include(o => o.ChiTietDonHangs)
                     .ThenInclude(od => od.Variant)
+                    .ThenInclude(v => v.HangHoa)
                     .ToList();
                 return Ok(order);
             }
@@ -102,7 +106,8 @@ namespace backend.Controllers
             {
                 UserId = UserId,
                 TinhTrangDonHang = 0,
-                DaThanhToan = false
+                DaThanhToan = false,
+                User = user
             };
 
             _context.DonHangs.Add(order);
@@ -132,7 +137,7 @@ namespace backend.Controllers
                     VariantId = variant.id,
                     SoLuong = number,
                     Total = variant.HangHoa.Gia * (1 - (double)variant.sale / 100) * number,
-                    GiamGia = number * (variant.sale / 100),
+                    GiamGia = number * ((double)variant.sale / 100),
                     DonHang = order,
                     Variant = variant
                 };
@@ -171,7 +176,8 @@ namespace backend.Controllers
             order.TinhTrangDonHang++;
             if (order.TinhTrangDonHang == 2)
             {
-                order.NgayGiao = DateTime.Now;
+                order.NgayGiao = DateTime.Now.ToUniversalTime();
+                order.DaThanhToan = true;
                 await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Delivered at " + order.NgayGiao);
             }
             else

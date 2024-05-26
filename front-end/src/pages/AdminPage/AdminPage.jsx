@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserOutlined, ProductOutlined } from "@ant-design/icons";
 import { Avatar, Button, Menu } from "antd";
 import AdminUser from "../../componet/AdminUser/AdminUser";
@@ -9,6 +9,7 @@ import styles from "./AdminPage.module.css";
 
 const logout = () => {
   console.log("User logged out");
+  localStorage.clear();
   window.location.href = "/";
 };
 
@@ -21,12 +22,17 @@ function getItem(label, key, icon, children, type) {
     type,
   };
 }
+
 const items = [
   getItem("Sản phẩm", "products", <ProductOutlined />),
   getItem("Người dùng", "users", <UserOutlined />),
   getItem("Đơn hàng", "orders", <img src={boxImage} alt="Order" width={14} />),
 ];
 const Admin = () => {
+  useEffect(() => {
+    const role = localStorage.getItem("role");
+    if(role !== "admin") window.location.href = "/";
+  })
   const [keySelected, setKeySelected] = useState("products");
 
   const handleOnClick = ({ item, key, keyPath, domEvent }) => {

@@ -25,6 +25,10 @@ namespace backend.Data
                 e.ToTable("DonHang");
                 e.HasKey(dh => dh.MaDonHang);
                 e.Property(dh => dh.NgayDat).HasDefaultValueSql("CURRENT_TIMESTAMP");
+                e.HasOne(dh => dh.User)
+                .WithMany()
+                .HasForeignKey(dh => dh.UserId)
+                .HasConstraintName("FK_DonHang_User");
             });
             modelBuilder.Entity<ChiTietDonHang>(entity =>
             {

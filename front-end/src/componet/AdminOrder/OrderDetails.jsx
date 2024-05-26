@@ -16,6 +16,7 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import { mockOrder, mockUser, mockProduct, mockVariant } from "./mockData";
+import AllApi from '../../api/api'
 
 const tagStyle = {
   height: "38px",
@@ -78,48 +79,47 @@ const deliveryStatusItems = [
 
 
 const { confirm } = Modal;
-const OrderDetails = ({ handleRefresh }) => {
+const OrderDetails = ({ order }) => {
   var product = mockProduct;
   var variant = mockVariant;
-  var order = mockOrder;
-  var user = mockUser;
-  const [status, setStatus] = useState(order.tinhTrangDonHang);
-  const [deliveryStatus, setDeliveryStatus] = useState(order.daThanhToan);
-  var chiTietDonHangs = null;
+  var user = order.user;
+  const [status, setStatus] = useState(order.daThanhToan);
+  const [deliveryStatus, setDeliveryStatus] = useState(order.tinhTrangDonHang);
+  var chiTietDonHangs = order.chiTietDonHangs;
   const columns = [
     {
       title: "Tên",
-      dataIndex: "",
+      dataIndex: ["variant", "hangHoa", "tenHangHoa"],
       key: "name",
       ellipsis: true,
     },
     {
       title: "Phiên bản",
-      dataIndex: "",
+      dataIndex: ["variant", "color"],
       key: "age",
       ellipsis: true,
     },
     {
       title: "Giá",
-      dataIndex: "address",
-      render: (text) => formatCurrency(text),
+      dataIndex: "",
+      render: (record) => formatCurrency(record.total + record.giamGia),
       align: "right",
-      key: "address",
+      key: "price",
     },
     {
       title: "Số lượng",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "soLuong",
+      key: "soLuong",
     },
     {
       title: "Giảm giá",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: ["variant", "sale"],
+      key: "giamGia",
     },
     {
       title: "Thành tiền",
-      dataIndex: "address",
-      key: "address",
+      dataIndex: "total",
+      key: "total",
     },
   ];
   
@@ -137,20 +137,21 @@ const OrderDetails = ({ handleRefresh }) => {
         onCancel() {},
       });
   };
-  const handleClickDeliveryStatus = ({key}) => {
-    var key = Number(key);
-    var label = deliveryStatusItems.find(item => item.key === key).label;
-    
-    key !== deliveryStatus &&
-      confirm({
-        title: `Xác nhận thay đổi trạng thái đơn hàng sang "${label}"!`,
-        icon: <ExclamationCircleFilled />,
-        onOk() {
-          setDeliveryStatus(key);
-          console.log(key);
-        },
-        onCancel() {},
-      });
+  const handleClickDeliveryStatus = async () => {
+    if (deliveryStatus === 2) alert("Đơn hàng đã được giao");
+    else{
+      try{
+        const response = await AllApi.updateOrderStatus(order.maDonHang)
+        const newDeliveryStatus = deliveryStatus + 1;
+        setDeliveryStatus(newDeliveryStatus);
+        if (newDeliveryStatus === 2){
+          setStatus(true);
+        }
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
   };
   const StatusComponent = (props) => {
     return (
@@ -164,14 +165,6 @@ const OrderDetails = ({ handleRefresh }) => {
             Chưa thanh toán
           </Tag>
         )}
-        <Dropdown
-          menu={{ items: statusItems, onClick: handleClickStatus }}
-          placement="bottomLeft"
-        >
-          <Button icon={<EditOutlined />} size="small">
-            Thay đổi
-          </Button>
-        </Dropdown>
       </div>
     );
   };
@@ -184,27 +177,28 @@ const OrderDetails = ({ handleRefresh }) => {
             Giao thành công
           </Tag>
         );
+        break;
       case 1:
         tag = (
           <Tag color="processing" style={tagStyle}>
             Đang giao
           </Tag>
         );
+        break;
       default:
         tag = (
           <Tag color="processing" style={tagStyle}>
             Đang chuẩn bị
           </Tag>
         );
+        break;
     }
     return (
       <>
         {tag}
-        <Dropdown menu={{ items: deliveryStatusItems, onClick: handleClickDeliveryStatus }} placement="bottomLeft" >
-          <Button icon={<EditOutlined />} size="small">
+          <Button icon={<EditOutlined />} size="small" onClick={handleClickDeliveryStatus}>
             Thay đổi
           </Button>
-        </Dropdown>
       </>
     );
   };
@@ -217,7 +211,7 @@ const OrderDetails = ({ handleRefresh }) => {
 
         <Row1 label="Người mua" value="" />
         <Row2 label="Tên" value={user.userName} />
-        <Row2 label="Id" value="user.id" />
+        <Row2 label="Id" value={user.id}/>
         <Row2 label="Số điện thoại" value={user.phoneNumber} />
         <Row2 label="Địa chỉ" value={user.diaChi} />
 

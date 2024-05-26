@@ -3,8 +3,8 @@
 export const mockOrder = {
   ngayDat: '2023-05-01',
   ngayGiao: '2023-05-05',
-  tinhTrangDonHang: true, // Đã thanh toán
-  daThanhToan: 2, // Giao thành công
+  tinhTrangDonHang: 2, // Đã thanh toán
+  daThanhToan: true, // Giao thành công
   soLuong: 2,
   giamGia: '10%',
 };
