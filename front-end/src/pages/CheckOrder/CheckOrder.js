@@ -1,82 +1,84 @@
-import React, { useState, useEffect} from 'react';
-import './CheckOrder.css'
-function CheckOrder() {
-        const [orderID, setOrderID] = useState('');
-        const [orderInfo, setOrderInfo] = useState(null);
+import React, { useState, useEffect } from 'react';
+import AllApi from '../../api/api';
+import './CheckOrder.css';
 
-        useEffect(() => { 
-          window.scrollTo(0, 0);  
-        },[]);
-    
-        const handleSubmit = (event) => {
-          event.preventDefault();
-          if (validFormCheckOrder()) {
-            // Simulate fetching order information
-            const fetchedOrderInfo = fetchOrderInfoFromServer(orderID);
-            setOrderInfo(fetchedOrderInfo);
-          }
+//thiếu image của sản phẩm, css còn lỗi ("chưa mua đơn hàng");
+//css còn xấu
+const CheckOrder = ({ id }) => {
+    const [orders, setOrders] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            try {
+                const user = await AllApi.getUserInfo();
+                const response = await AllApi.getOrder(user.data.id);
+                console.log('Fetched order data:', response.data);
+                setOrders(response.data);
+            } catch (err) {
+                console.error('Error fetching orders:', err);
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
         };
-      
-        const validFormCheckOrder = () => {
-          if (!orderID) {
-            alert('Vui lòng nhập mã đơn hàng');
-            return false;
-          }
-          return true;
-        };
-      
-        const fetchOrderInfoFromServer = (orderID) => {
-          // Simulated function to fetch order information from the server
-          // Replace this with actual API call
-          return {
-            // Sample order information, replace with actual fetched data
-            orderID: orderID,
-            // Other order details...
-          };
-        };
-      
-  return (
-    <div className="container-check">
-      <div className="check-order-index">
-        <div className="check-order-form">
-          <h1>KIỂM TRA ĐƠN HÀNG CỦA BẠN ^-^</h1>
-          <form onSubmit={handleSubmit} className='form-check'>
-            <div className="">
-              <input
-                className='input-check'
-                type="text"
-                id="OrderID"
-                name="OrderID"
-                title="Mã đơn hàng"
-                placeholder="Vui lòng nhập mã đơn hàng *"
-                value={orderID}
-                onChange={(e) => setOrderID(e.target.value)}
-                required
-              />
-            </div>
-            <div className="">
-              <button className = "button-check"type="submit">TRA CỨU</button>
-            </div>
-          </form>
-          {orderInfo && (
-          <div className="order-info">
-            <h2>Thông tin đơn hàng</h2>
-            <p>Mã đơn hàng: {orderInfo.orderID}</p>
-            {/* Render other order details here */}
-          </div>
-        )}
-        
+
+        fetchOrders();
+    }, [id]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    if (!orders || orders.length === 0) {
+        return <div>Bạn chưa mua đơn hàng nào.</div>;
+    }
+
+    const getOrderStatus = (status) => {
+        switch (status) {
+            case 0:
+                return "Đơn hàng đã được đặt";
+            case 1:
+                return "Đơn hàng đang vận chuyển";
+            case 2:
+                return "Đơn hàng đã được giao";
+            default:
+                return "Trạng thái không xác định";
+        }
+    };
+
+    return (
+        <div className='List-order-container'>
+            <h1>Danh sách đơn hàng</h1>
+            {orders.map((order) => {
+                const totalAmount = order.chiTietDonHangs.reduce((sum, item) => sum + item.total, 0);
+                return (
+                    <div key={order.id} className="order">
+                        <p><strong>Ngày đặt hàng:</strong> {order.ngayDat}</p>
+                        <h3>Sản phẩm:</h3>
+                        <ul>
+                            {order.chiTietDonHangs.map((item) => (
+                                <li key={item.id}>
+                                    <p><strong>Tên sản phẩm:</strong> {item.variant.hangHoa.tenHangHoa}</p>
+                                    <p><strong>Màu sắc:</strong> {item.variant.color}</p>
+                                    <p><strong>Số lượng:</strong> {item.variant.quantity}</p>
+                                    <p><strong>Giá:</strong> {item.total}</p>
+                                </li>
+                            ))}
+                        </ul>
+                        <p><strong>{order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"}</strong></p>
+                        <p><strong>Tổng số tiền:</strong> {totalAmount}</p>
+                        <p><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
+                    </div>
+                );
+            })}
         </div>
-        <div className="you-know">
-          <div className="ctn">
-            <div className="text-check">
-              <strong>ĐĂNG NHẬP SẼ GIÚP BẠN QUẢN LÝ ĐƠN HÀNG CỦA MÌNH VÀ TRẢI NGHIỆM WEBSITE TỐT HƠN !</strong>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+    );
+};
 
 export default CheckOrder;

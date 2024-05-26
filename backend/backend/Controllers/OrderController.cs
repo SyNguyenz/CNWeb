@@ -61,7 +61,11 @@ namespace backend.Controllers
             }
             else
             {
-                var orders = _context.DonHangs.Where(o => o.UserId == id).ToList();
+                var orders = _context.DonHangs
+                    .Include(o => o.ChiTietDonHangs)
+                    .ThenInclude(od => od.Variant)
+                    .ThenInclude(v => v.HangHoa)
+                    .Where(o => o.UserId == id).ToList();
                 return Ok(orders);
             }
         }
@@ -106,7 +110,7 @@ namespace backend.Controllers
             {
                 var id = ids[i];
                 var number = numbers[i];
-                var variant = _context.Variants.FirstOrDefault(p => p.id == id);
+                var variant = _context.Variants.Include(v => v.HangHoa).FirstOrDefault(p => p.id == id);
                 if (variant == null)
                 {
                     return Ok(new ApiResponse
@@ -126,7 +130,7 @@ namespace backend.Controllers
                     MaDonHang = order.MaDonHang,
                     VariantId = variant.id,
                     SoLuong = number,
-                    Total = variant.HangHoa.Gia * (1 - variant.sale / 100) * number,
+                    Total = variant.HangHoa.Gia * (1 - (double)variant.sale / 100) * number,
                     GiamGia = number * (variant.sale / 100),
                     DonHang = order,
                     Variant = variant

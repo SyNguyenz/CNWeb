@@ -63,7 +63,7 @@ export default function LoginPage() {
     return (
         <div className="container">
             <div className="login-form">
-                <div className="title">Chào mừng quay lại với <span className="app-name">YINN</span></div>
+                <div className="title">Chào mừng quay lại với <span className="app-name">TECH STORE</span></div>
                 <div className="subtitle">Đăng nhập vào tài khoản của bạn</div>
                 <form onSubmit={handleSubmit}>
                     <div className="input-container">
@@ -80,12 +80,11 @@ export default function LoginPage() {
                         </div>
                         {errors.password && <div className="error">{errors.password}</div>}
                     </div>
-                    <div className="forgot-password">
-                        <a href="#">Quên mật khẩu?</a>
-                    </div>
+                    <div className="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
+                    
                     <button type="submit">Đăng nhập</button>
                 </form>
-                <div className="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
+               
             </div>
         </div>
     );

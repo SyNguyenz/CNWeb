@@ -55,7 +55,6 @@ padding: 5px;
 }
 
 
-
 .about-contact {
 align-items: center;
 border-radius: 10px;
@@ -67,6 +66,7 @@ padding: 5px 5px;
 position: relative;
 text-decoration: none !important;
 }
+
 .about-delivery-tracking {
 align-items: center;
 border-radius: 10px;
@@ -84,7 +84,7 @@ border-radius: 10px;
 cursor: pointer;
 display: flex;
 height: 50px;
-width: 100px;
+width: 70px;
 padding: 5px 5px;
 position: relative;
 text-decoration: none !important;
@@ -151,6 +151,9 @@ padding: 4px 0 4px 8px;
   background-color: transparent;
   display: flex;
   width: 60px;
+}
+.notification-icon:hover{
+  background-color: transparent;
 }
 .icon-noti{
   height: 20px;

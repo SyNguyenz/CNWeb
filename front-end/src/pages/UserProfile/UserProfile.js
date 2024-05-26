@@ -7,10 +7,10 @@ const UserProfile = () => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showChangePassword, setShowChangePassword] = useState(false);
-    const [oldPassword, setOldPassword] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [error, setError] = useState('');
-    const [isOldPasswordConfirmed, setIsOldPasswordConfirmed] = useState(false);
+    const [iscurrentPasswordConfirmed, setIscurrentPasswordConfirmed] = useState(false);
 
 
 
@@ -35,29 +35,38 @@ const UserProfile = () => {
         return '*'.repeat(password.length);
     };
 
-    const handleConfirmOldPassword = () => {
-        if (oldPassword !== user.password) {
+    const handleConfirmcurrentPassword = async() => {
+        try {
+            const response = await AllApi.login({
+                userName: user.userName,
+                password: currentPassword
+            });
+            if (response.data.success) {
+                setError('');
+                setIscurrentPasswordConfirmed(true);
+            } else {
+                setError('Mật khẩu cũ không đúng');
+            }
+        } catch (error) {
             setError('Mật khẩu cũ không đúng');
-            return;
         }
-        setError('');
-        setIsOldPasswordConfirmed(true);
     };
 
     const handleChangePassword = async () => {
-        console.log('Old Password:', oldPassword);
-        console.log('New Password:', newPassword);
-        // Sau khi đổi mật khẩu thành công,ẩn form đổi mật khẩu
-        await AllApi.updateUser(user.id, oldPassword, {
-            userName: user.userName,
-            phoneNumber: user.phoneNumber,
-            diaChi: user.diaChi,
-            password: newPassword
-        })
-        setShowChangePassword(false);
-        setIsOldPasswordConfirmed(false);
-        setOldPassword('');
-        setNewPassword('');
+        try {
+            await AllApi.changePassword(user.id, currentPassword, {
+                userName: user.userName,
+                phoneNumber: user.phoneNumber,
+                password: newPassword,
+                diaChi: user.diaChi
+            });
+            setShowChangePassword(false);
+            setIscurrentPasswordConfirmed(false);
+            setCurrentPassword('');
+            setNewPassword('');
+        } catch (error) {
+            setError('Đổi mật khẩu thất bại');
+        }
     };
 
     if (isLoading) {
@@ -86,15 +95,15 @@ const UserProfile = () => {
                 </button>
                 {showChangePassword && (
                     <div >
-                        {!isOldPasswordConfirmed ? (
+                        {!iscurrentPasswordConfirmed ? (
                             <>
                                 <input
                                     type="password"
                                     placeholder="Xác nhận mật khẩu cũ"
-                                    value={oldPassword}
-                                    onChange={(e) => setOldPassword(e.target.value)}
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
                                 />
-                                <button onClick={handleConfirmOldPassword}>Xác nhận</button>
+                                <button onClick={handleConfirmcurrentPassword}>Xác nhận</button>
                                 {error && <p className="error">{error}</p>}
                             </>
                         ) : (
