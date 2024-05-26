@@ -16,7 +16,7 @@ import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { deleteProductAPI, addProductAPI, getProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
 import ProductDetails from "./ProductDetails";
 
-const EditProduct = ({ product, setModalChild }) => {
+const EditProduct = ({ product, setModalChild, handleRefresh }) => {
   const initialVariants = (product.variants || []).map((variant) => ({
     ...variant,
     key: Date.now() + Math.random(), // tạo khóa key duy nhất
@@ -69,9 +69,10 @@ const EditProduct = ({ product, setModalChild }) => {
         });
       });
 
-      // await deleteProductAPI(product.id);
-      // await addProductAPI(data);
-      // message.success("Sản phẩm được cập nhật thành công!");
+      await deleteProductAPI(product.id);
+      await addProductAPI(data);
+      message.success("Sản phẩm được cập nhật thành công!");
+      handleRefresh();      
       await getProductAPI(product.id);
       setModalChild(<ProductDetails product={product} setModalChild={setModalChild} />);
     } catch (e) {
@@ -320,6 +321,7 @@ const EditProduct = ({ product, setModalChild }) => {
             offset: 21,
             span: 3,
           }}
+          style={{ marginBottom: 0 }}
         >
           <Space>
             <Button type="primary" htmlType="submit">

@@ -5,24 +5,29 @@ import Highlighter from "react-highlight-words";
 import OrderDetails from "./OrderDetails";
 
 const AdminOrder = () => {
+  const [refresh, setRefresh] = useState(false);
   const [orders, setOrders] = useState(null);
   const [modalChild, setModalChild] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      //   try {
-      //     const response = await getProductsAPI()
-      //     const productsData = response.data;
-      //     setProducts(productsData);
-      //     console.log(productsData);
-      //   } catch (error) {
-      //     console.error(error);
-      //     message.error('Không thể lấy dữ liệu sản phẩm');
-      //   }
+        try {
+          // const response = await getProductsAPI()
+          // const productsData = response.data;
+          // setProducts(productsData);
+          // console.log(productsData);
+        } catch (error) {
+          console.error(error);
+          message.error('Không thể lấy dữ liệu đơn hàng!');
+        }
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
+
+  const onRefresh = () => {
+    setRefresh(prev => !prev);
+  };
 
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
@@ -194,7 +199,7 @@ const AdminOrder = () => {
     },
   ];
   return (
-    <div style={{ paddingLeft: 8 }}>
+    <div>
       <Modal
         title={false}
         centered
@@ -211,7 +216,8 @@ const AdminOrder = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              setModalChild(<OrderDetails/>);
+
+              setModalChild(<OrderDetails />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
@@ -224,9 +230,7 @@ const AdminOrder = () => {
         columns={columns}
         dataSource={orders}
       />
-      <Button onClick={()=>
-              setModalChild(<OrderDetails/>)}
-            >nghia</Button>
+      <Button onClick={() => setModalChild(<OrderDetails />)}>nghia</Button>
     </div>
   );
 };
