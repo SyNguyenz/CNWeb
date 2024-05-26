@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -21,7 +22,7 @@ namespace backend.Controllers
             _hubContext = hubContext;
             _userManager = userManager;
         }
-
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Get(int? id)
         {
@@ -144,7 +145,7 @@ namespace backend.Controllers
 
             return Ok(order);
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPut("UpdateOrderState{id}")]
         public async Task<IActionResult> UpdateOrderState(int id)
         {
@@ -182,6 +183,7 @@ namespace backend.Controllers
 
             return Ok(order);
         }
+        [Authorize(Roles = "admin")]
         [HttpPut("UpdateOrder")]
         public IActionResult UpdateOrder(int variantId, int orderId, int number)
         {
@@ -199,7 +201,7 @@ namespace backend.Controllers
             _context.SaveChanges();
             return Ok(order);
         }
-
+        [Authorize(Roles = "admin")]
         [HttpDelete]
         public async Task<IActionResult> DeleteOrder(int OrderId)
         {

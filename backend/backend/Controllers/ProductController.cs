@@ -1,5 +1,6 @@
 ﻿using backend.Data;
 using backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,7 @@ namespace backend.Controllers
             var comments = _context.Comments.Include(c => c.User).Where(p => p.ProductId == id).ToList();
             return Ok(comments);
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult AddProduct([FromBody] ProductModel productModel)
         {
@@ -101,7 +102,7 @@ namespace backend.Controllers
                 return BadRequest(ModelState);
             }
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPut("UpdateProduct{id}")]
         public IActionResult UpdateProduct(Guid id, [FromBody] ProductModel model)
         {
@@ -138,6 +139,7 @@ namespace backend.Controllers
                 });
             }
         }
+        [Authorize(Roles = "admin")]
         [HttpPut("UpdateVariants{id}")]
         public IActionResult UpdateProductVariants(int id, [FromBody] VariantInputModel model)
         {
@@ -157,6 +159,7 @@ namespace backend.Controllers
             _context.SaveChanges();
             return Ok(variant);
         }
+        [Authorize(Roles = "admin")]
         [HttpDelete("{id}")]
         public IActionResult DeleteProduct(Guid id)
         {
@@ -174,6 +177,7 @@ namespace backend.Controllers
                 return Ok();
             }
         }
+        [Authorize(Roles = "admin")]
         [HttpDelete("DeleteVariant{id}")]
         public IActionResult DeleteVariant(int id)
         {
