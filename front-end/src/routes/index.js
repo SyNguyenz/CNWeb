@@ -26,6 +26,8 @@ const publicRoutes=[
     {path: '/TV', component: Category, layout: userLayout, childPath: ':brandName', category: 'TV'},
     {path: '/dieu hoa', component: Category, layout: userLayout, childPath: ':brandName', category: 'Dieu hoa'},
     {path: '/tu lanh', component: Category, layout: userLayout, childPath: ':brandName', category: 'Tu lanh'},
+    {path: '/smarthome', component: Category, layout: userLayout, childPath: ':brandName', category: 'Smart home'},
+    {path: '/am thanh', component: Category, layout: userLayout, childPath: ':brandName', category: 'Am thanh'},
     {path: '/user_profile',component: UserProfile, layout: userLayout},
     {path: '/checkout', component: Checkout, layout: userLayout},
     {path: '/check', component: CheckOrder, layout: userLayout},

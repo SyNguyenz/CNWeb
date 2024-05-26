@@ -7,20 +7,6 @@ import {
 } from "@ant-design/icons";
 import Highlighter from 'react-highlight-words';
 import { deleteUserAPI, getUsersAPI } from "./API";
-const usersData = [
-  {
-    userId: 1,
-    userName: "John Doe",
-    phoneNumber: "123456789",
-    diaChi: "123 Main Street, City, Country",
-  },
-  {
-    userId: 2,
-    userName: "Jane Smith",
-    phoneNumber: "987654321",
-    diaChi: "456 Elm Street, Town, Country",
-  },
-];
 
 const AdminUser = () => {
   const [users, setUsers] = useState(null);
@@ -214,7 +200,7 @@ const AdminUser = () => {
     },
   ];
   return (
-    <div style={{paddingLeft: 8}}>
+    <div>
       <Table
         columns={columns}
         dataSource={users}

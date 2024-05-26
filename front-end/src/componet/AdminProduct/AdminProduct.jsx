@@ -10,9 +10,9 @@ import Highlighter from 'react-highlight-words';
 import AddProduct from "./AddProduct";
 import ProductDetails from "./ProductDetails";
 import { deleteProductAPI, getProductsAPI } from "./API";
-import data from "./demoData";
 
 const AdminProduct = () => {
+  const [refresh, setRefresh] = useState(false);
   const [products, setProducts] = useState(null);
   const [modalChild, setModalChild] = useState(null);
 
@@ -22,6 +22,7 @@ const AdminProduct = () => {
         const response = await getProductsAPI()
         const productsData = response.data;
         setProducts(productsData);
+        console.log(productsData);
       } catch (error) {
         console.error(error);
         message.error('Không thể lấy dữ liệu sản phẩm');
@@ -29,7 +30,10 @@ const AdminProduct = () => {
     };
 
     fetchData();
-  }, []);
+  }, [refresh]);
+  const onRefresh = () => {
+    setRefresh(prev => !prev);
+  };
 
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
@@ -135,7 +139,6 @@ const AdminProduct = () => {
         (product) => product.maHangHoa !== record.maHangHoa
       );
       setProducts(updatedProducts);
-  
       message.success(`Đã xóa sản phẩm: ${record.tenHangHoa}`);
     } catch (error) {
       console.error(error);
@@ -238,7 +241,7 @@ const AdminProduct = () => {
     },
   ];
   return (
-    <div style={{paddingLeft: 8}}>
+    <div>
       <Space
         style={{
           marginBottom: 16,
@@ -266,7 +269,7 @@ const AdminProduct = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-              setModalChild(<ProductDetails product={record} setModalChild={setModalChild} />);
+              setModalChild(<ProductDetails product={record} setModalChild={setModalChild} handleRefresh={onRefresh} />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
