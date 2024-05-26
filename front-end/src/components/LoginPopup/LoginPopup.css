@@ -31,6 +31,13 @@
     width: 140px;
     height: auto;
   }
+  .popup-content .button-close{
+    width: 60px;
+    height: 60px;
+    margin-left: 350px;
+    margin-bottom: 30px;
+    
+  }
   .popup-box{
     display: flex;
   }
