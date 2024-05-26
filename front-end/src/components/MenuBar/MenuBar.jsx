@@ -41,7 +41,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/fridge'>
+          <Link to='/tu lanh'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -56,7 +56,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/washer'>
+          <Link to='/may giat'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -71,7 +71,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/air-conditioner'>
+          <Link to='/dieu hoa'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -86,7 +86,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/television'>
+          <Link to='/tv'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -101,7 +101,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/headphone'>
+          <Link to='/am thanh'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
@@ -116,7 +116,7 @@ function MenuBar() {
           </Link>
         </div>
         <div className="label-menu-bar">
-          <Link to='/smart-home'>
+          <Link to='/smarthome'>
             <div className="label-item">
               <div className="item-content">
                 <div className="category-icon">
