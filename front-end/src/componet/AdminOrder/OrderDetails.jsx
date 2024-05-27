@@ -16,7 +16,7 @@ import {
 } from "antd";
 import React, { useState } from "react";
 import { mockOrder, mockUser, mockProduct, mockVariant } from "./mockData";
-import AllApi from '../../api/api'
+import AllApi from "../../api/api";
 
 const tagStyle = {
   height: "38px",
@@ -29,6 +29,21 @@ const formatCurrency = (value) => {
     currency: "VND",
   }).format(value);
 };
+function formatDate(isoString) {
+  // Chuyển đổi chuỗi ISO 8601 thành đối tượng Date
+  const date = new Date(isoString);
+
+  // Lấy các thành phần của ngày và giờ theo giờ địa phương
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() trả về giá trị từ 0 đến 11
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+
+  // Định dạng thành chuỗi theo định dạng DD/MM/YYYY HH:MM:SS
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
 
 const Row2 = ({ label, value }) => (
   <Row gutter={[16, 16]}>
@@ -63,23 +78,13 @@ const statusItems = [
   },
 ];
 const deliveryStatusItems = [
-  {
-    label: "Giao thành công",
-    key: 2,
-  },
-  {
-    label: "Đang giao",
-    key: 1,
-  },
-  {
-    label: "Đang chuẩn bị",
-    key: 0,
-  },
+  "Đang chuẩn bị",
+  "Đang giao",
+  "Giao thành công",
 ];
 
-
 const { confirm } = Modal;
-const OrderDetails = ({ order }) => {
+const OrderDetails = ({ order, handleRefresh }) => {
   var product = mockProduct;
   var variant = mockVariant;
   var user = order.user;
@@ -91,77 +96,74 @@ const OrderDetails = ({ order }) => {
       title: "Tên",
       dataIndex: ["variant", "hangHoa", "tenHangHoa"],
       key: "name",
-      ellipsis: true,
+      width: "200px",
     },
     {
       title: "Phiên bản",
       dataIndex: ["variant", "color"],
       key: "age",
-      ellipsis: true,
+      width: 80,
     },
     {
       title: "Giá",
       dataIndex: "",
-      render: (record) => formatCurrency(record.total + record.giamGia),
-      align: "right",
       key: "price",
+      render: (record) => formatCurrency(record.total / (1 - record.giamGia)),
+      align: "right",
     },
     {
       title: "Số lượng",
       dataIndex: "soLuong",
       key: "soLuong",
+      align: "right",
     },
     {
       title: "Giảm giá",
       dataIndex: ["variant", "sale"],
       key: "giamGia",
+      align: "right",
     },
     {
       title: "Thành tiền",
       dataIndex: "total",
       key: "total",
+      render: (text, record) => formatCurrency(text),
+      align: "right",
     },
   ];
-  
-  const handleClickStatus = ({key}) => {
-    const booleanKey = key === 'true' ? true : key === 'false' ? false : key;
-    var label = statusItems.find(item => item.key === booleanKey).label;
-    
-    booleanKey !== status &&
-    confirm({
-      title: `Xác nhận thay đổi trạng thái đơn hàng sang "${label}"!`,
-      icon: <ExclamationCircleFilled />,
-      onOk() {
-        setStatus(booleanKey);
-      },
+
+  const handleClickDeliveryStatus = () => {
+    if (deliveryStatus === 2) message.info("Đơn hàng đã được giao");
+    else {
+      confirm({
+        title: `Xác nhận thay đổi trạng thái đơn hàng sang "${deliveryStatusItems[deliveryStatus+1]}"!`,
+        icon: <ExclamationCircleFilled />,
+        async onOk() {
+          try {
+            const response = await AllApi.updateOrderStatus(order.maDonHang);
+            const newDeliveryStatus = deliveryStatus + 1;
+            setDeliveryStatus(newDeliveryStatus);
+            if (newDeliveryStatus === 2) {
+              setStatus(true);
+            }
+            handleRefresh();
+          } catch (error) {
+            console.log(error);
+          }
+        },
         onCancel() {},
       });
-  };
-  const handleClickDeliveryStatus = async () => {
-    if (deliveryStatus === 2) alert("Đơn hàng đã được giao");
-    else{
-      try{
-        const response = await AllApi.updateOrderStatus(order.maDonHang)
-        const newDeliveryStatus = deliveryStatus + 1;
-        setDeliveryStatus(newDeliveryStatus);
-        if (newDeliveryStatus === 2){
-          setStatus(true);
-        }
-      }
-      catch(error){
-        console.log(error)
-      }
     }
   };
   const StatusComponent = (props) => {
     return (
       <div>
         {props.status ? (
-          <Tag color="success" style={tagStyle}>
+          <Tag bordered={false} color="success" style={tagStyle}>
             Đã thanh toán
           </Tag>
         ) : (
-          <Tag color="processing" style={tagStyle}>
+          <Tag bordered={false} color="processing" style={tagStyle}>
             Chưa thanh toán
           </Tag>
         )}
@@ -173,45 +175,42 @@ const OrderDetails = ({ order }) => {
     switch (props.deliveryStatus) {
       case 2:
         tag = (
-          <Tag color="success" style={tagStyle}>
+          <Tag bordered={false} color="success" style={tagStyle}>
             Giao thành công
           </Tag>
         );
         break;
       case 1:
         tag = (
-          <Tag color="processing" style={tagStyle}>
+          <Tag bordered={false} color="processing" style={tagStyle}>
             Đang giao
           </Tag>
         );
         break;
       default:
         tag = (
-          <Tag color="processing" style={tagStyle}>
+          <Tag bordered={false} color="processing" style={tagStyle}>
             Đang chuẩn bị
           </Tag>
         );
         break;
     }
-    return (
-      <>
-        {tag}
-          <Button icon={<EditOutlined />} size="small" onClick={handleClickDeliveryStatus}>
-            Thay đổi
-          </Button>
-      </>
-    );
+    return tag;
   };
   return (
     <>
       <h2>Đơn hàng</h2>
       <div style={{ width: 800, padding: "0 20px 0 20px" }}>
-        <Row1 label="Ngày đặt" value={order.ngayDat} />
-        <Row1 label="Ngày giao" value={order.ngayGiao} />
+        <Row1 label="Mã" value={order.maDonHang} />
+        <Row1 label="Ngày đặt" value={formatDate(order.ngayDat)} />
+        <Row1
+          label="Ngày giao"
+          value={order.ngayGiao ? formatDate(order.ngayGiao) : "Chưa xác định"}
+        />
 
         <Row1 label="Người mua" value="" />
         <Row2 label="Tên" value={user.userName} />
-        <Row2 label="Id" value={user.id}/>
+        <Row2 label="Id" value={user.id} />
         <Row2 label="Số điện thoại" value={user.phoneNumber} />
         <Row2 label="Địa chỉ" value={user.diaChi} />
 
@@ -221,6 +220,7 @@ const OrderDetails = ({ order }) => {
           dataSource={chiTietDonHangs}
           columns={columns}
           size="small"
+          pagination={false}
           summary={(pageData) => {
             let sum = 0;
             pageData.forEach(({ total }) => {
@@ -232,7 +232,7 @@ const OrderDetails = ({ order }) => {
                 <Table.Summary.Cell index={1}></Table.Summary.Cell>
                 <Table.Summary.Cell index={2}></Table.Summary.Cell>
                 <Table.Summary.Cell index={3}></Table.Summary.Cell>
-                <Table.Summary.Cell index={4}>
+                <Table.Summary.Cell index={4} align="right">
                   Tổng tiền hàng:
                 </Table.Summary.Cell>
                 <Table.Summary.Cell index={5} align="right">
@@ -242,11 +242,29 @@ const OrderDetails = ({ order }) => {
             );
           }}
         />
-        <Row1
-          label="Tình trạng giao hàng"
-          value={<DeliveryStatusComponent deliveryStatus={deliveryStatus} />}
-        />
-        <Row1 label="Trạng thái" value={<StatusComponent status={status} />} />
+        <Row gutter={[16, 16]} style={{ marginTop: 10 }}>
+          <Col span={6} style={{ fontSize: 16, fontWeight: "bold" }}>
+            Tình trạng giao hàng:
+          </Col>
+          <Col span={16} style={{ fontSize: 18 }}>
+            <DeliveryStatusComponent deliveryStatus={deliveryStatus} />
+            <Button
+              icon={<EditOutlined />}
+              onClick={handleClickDeliveryStatus}
+              style={{ width: "fit-content" }}
+            >
+              Thay đổi
+            </Button>
+          </Col>
+        </Row>
+        <Row gutter={[16, 16]} style={{ marginTop: 10 }}>
+          <Col span={6} style={{ fontSize: 16, fontWeight: "bold" }}>
+            Trạng thái:
+          </Col>
+          <Col span={16} style={{ fontSize: 18 }}>
+            <StatusComponent status={status} />
+          </Col>
+        </Row>
       </div>
     </>
   );

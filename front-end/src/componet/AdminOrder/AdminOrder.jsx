@@ -3,7 +3,24 @@ import { Button, Modal, Space, Table, message, Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import OrderDetails from "./OrderDetails";
-import AllApi from '../../api/api'
+import AllApi from '../../api/api';
+
+function formatDate(isoString) {
+  // Chuyển đổi chuỗi ISO 8601 thành đối tượng Date
+  const date = new Date(isoString);
+
+  // Lấy các thành phần của ngày và giờ theo giờ địa phương
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth() trả về giá trị từ 0 đến 11
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+
+  // Định dạng thành chuỗi theo định dạng DD/MM/YYYY HH:MM:SS
+  return `${day}/${month}/${year} ${hours}:${minutes}`;
+}
+
 
 const AdminOrder = () => {
   const [refresh, setRefresh] = useState(false);
@@ -13,8 +30,17 @@ const AdminOrder = () => {
   useEffect(() => {
     const fetchData = async () => {
         try {
-           const response = await AllApi.getAllOrder()
-           const ordersData = response.data;
+           const response = await AllApi.getAllOrder();
+           console.log(response.data);
+           const ordersData = response.data.map(order => ({
+            maDonHang: order.maDonHang,
+            userName: order.user.userName,
+            ngayDat: formatDate(order.ngayDat),
+            ngayGiao: order.ngayGiao ? formatDate(order.ngayGiao) : "Chưa xác định",
+            tinhTrangDonHang: order.tinhTrangDonHang ? "Đã thanh toán" : "Chưa thanh toán",
+            order: order,
+          }));
+
            setOrders(ordersData);
            console.log(ordersData);
         } catch (error) {
@@ -133,20 +159,6 @@ const AdminOrder = () => {
         text
       ),
   });
-
-  const { confirm } = Modal;
-  //   const showDeleteConfirm = (product) => {
-  //     confirm({
-  //       title: `Xác nhận xóa sản phẩm ${product.tenHangHoa}!`,
-  //       icon: <ExclamationCircleFilled />,
-  //       content: `Mã sản phẩm: ${product.maHangHoa}`,
-  //       onOk() {
-  //         deleteProduct(product);
-  //       },
-  //       onCancel() {},
-  //     });
-  //   };
-  const addProduct = () => {};
   const columns = [
     {
       title: "Mã",
@@ -155,19 +167,18 @@ const AdminOrder = () => {
       ellipsis: true,
       sorter: (a, b) => a.maDonHang - b.maDonHang,
       sortDirections: ["descend", "ascend"],
-      ...getColumnSearchProps("maDonHang"),
     },
     {
-      title: "userId",
-      dataIndex: "userId",
-      key: "userId",
+      title: "User name",
+      dataIndex: "userName",
+      key: "userName",
       ellipsis: true,
+      ...getColumnSearchProps("userName"),
     },
     {
       title: "Ngày đặt",
       dataIndex: "ngayDat",
       key: "ngayDat",
-      ellipsis: true,
       sorter: (a, b) => a.ngayDat.localeCompare(b.ngayDat),
       sortDirections: ["descend", "ascend"],
       ...getColumnSearchProps("ngayDat"),
@@ -179,15 +190,13 @@ const AdminOrder = () => {
       ellipsis: true,
       sorter: (a, b) => a.ngayGiao.localeCompare(b.ngayGiao),
       sortDirections: ["descend", "ascend"],
-      ...getColumnSearchProps("loaiHangHoa"),
     },
     {
       title: "Tình trạng",
       dataIndex: "tinhTrangDonHang",
       key: "tinhTrang",
-      render: (text) => text,
       ellipsis: true,
-      sorter: (a, b) => a.tinhTrangDonHang - b.tinhTrangDonHang,
+      sorter: (a, b) => a.tinhTrangDonHang.localeCompare(b.tinhTrangDonHang),
       sortDirections: ["descend", "ascend"],
     },
   ];
@@ -209,8 +218,7 @@ const AdminOrder = () => {
         onRow={(record, rowIndex) => {
           return {
             onClick: () => {
-
-              setModalChild(<OrderDetails order={record} />);
+              setModalChild(<OrderDetails order={record.order} handleRefresh={onRefresh} />);
             },
             onMouseEnter: (event) => {
               event.currentTarget.style.cursor = "pointer";
@@ -223,7 +231,6 @@ const AdminOrder = () => {
         columns={columns}
         dataSource={orders}
       />
-      <Button onClick={() => setModalChild(<OrderDetails />)}>Xem chi tiết</Button>
     </div>
   );
 };

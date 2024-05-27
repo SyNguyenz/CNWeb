@@ -247,7 +247,7 @@ const AdminProduct = () => {
           marginBottom: 16,
         }}
       >
-        <Button type="primary" onClick={()=>setModalChild(<AddProduct setModalChild={setModalChild} />)}>
+        <Button type="primary" onClick={()=>setModalChild(<AddProduct setModalChild={setModalChild} handleRefresh={onRefresh}/>)}>
           <PlusCircleFilled />
           Thêm sản phẩm
         </Button>

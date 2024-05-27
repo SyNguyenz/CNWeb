@@ -33,7 +33,7 @@ const getSoLuong = (product) => {
   );
 };
 
-const ProductDetails = ({ product, setModalChild }) => {
+const ProductDetails = ({ product, setModalChild, handleRefresh }) => {
   var options = product.variants.map((variant) => ({
     label: variant.color,
     value: variant,
@@ -197,7 +197,7 @@ const ProductDetails = ({ product, setModalChild }) => {
           icon={<EditOutlined />}
           onClick={() => {
             setModalChild(
-              <EditProduct product={product} setModalChild={setModalChild} />
+              <EditProduct product={product} setModalChild={setModalChild} handleRefresh={handleRefresh}/>
             );
           }}
         >

@@ -15,7 +15,7 @@ import {
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import { addProductAPI } from "./API";
 
-const AddProduct = ({ setModalChild }) => {
+const AddProduct = ({ setModalChild, handleRefresh }) => {
   const [variants, setVariants] = useState([]);
   const [productImage, setProductImage] = useState(null);
 
@@ -62,9 +62,10 @@ const AddProduct = ({ setModalChild }) => {
         });
       });
 
-      // await addProductAPI(data);
-      // message.success("Sản phẩm được thêm thành công!");
-      // setModalChild(null);
+      await addProductAPI(data);
+      message.success("Sản phẩm được thêm thành công!");
+      handleRefresh();
+      setModalChild(null);
     } catch (e) {
       message.error(e.message);
     }

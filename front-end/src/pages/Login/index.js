@@ -89,7 +89,7 @@ export default function LoginPage() {
                     </div>
                     <div className="signup-link">Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay!</a></div>
                     
-                    <button type="submit">Đăng nhập</button>
+                    <button className="button" type="submit">Đăng nhập</button>
                 </form>
                
             </div>
