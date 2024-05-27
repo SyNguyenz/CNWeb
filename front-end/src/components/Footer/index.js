@@ -31,7 +31,7 @@ function Footer(props) {
                         <h2>Payment</h2>
                         <ul>
                             <li>
-                            Phương thức thanh toán: Chọn thanh toán bằng thẻ, chuyển khoản, COD và ví điện tử. 
+                            Phương thức thanh toán: Thanh toán khi nhận hàng hoặc thanh toán thuận tiện an toàn qua VNPay.
                             </li>
                             <li>
                             Voucher: Nhận ưu đãi đặc biệt với voucher tiền mặt. Theo dõi để không bỏ lỡ các ưu đãi mới!
