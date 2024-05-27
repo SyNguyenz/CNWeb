@@ -76,7 +76,7 @@ button {
     padding: 15px;
     font-size: 22px;
     cursor: pointer;
-    width: 170px;
+    /* width: 170px; xóa do ghi đè các button khác */ 
     margin-left: 125px;
 }
 button:hover{
