@@ -13,17 +13,12 @@ function Footer(props) {
                         <ul>
                         
                             <li>
-                                - Về Chúng Tôi
+                            Tech Store là địa chỉ tin cậy cho mọi người khi tìm kiếm các sản phẩm điện máy và điện tử chất lượng cao.
                             </li>
                             <li>
-                                - Blog
+                            Với cam kết về chất lượng và dịch vụ chuyên nghiệp, chúng tôi luôn đảm bảo rằng mỗi khách hàng đều có trải nghiệm mua sắm tốt nhất khi đến với chúng tôi. Hãy ghé thăm cửa hàng của chúng tôi ngay hôm nay để khám phá thế giới công nghệ đầy sáng tạo và tiện ích!
                             </li>
-                            <li>
-                                - Cơ Hội Nghề Nghiệp
-                            </li>
-                            <li>
-                                - Cửa Hàng
-                            </li>
+                            
                         
                         </ul>
                     </div>
@@ -33,16 +28,13 @@ function Footer(props) {
                         <p>- Delivery 039 6666 666 (07:00-21:00)</p>
                     </div>
                     <div className="footer-top-delivery">
-                        <h2>Delivery</h2>
+                        <h2>Payment</h2>
                         <ul>
                             <li>
-                                - Shipping methods
+                            Phương thức thanh toán: Chọn thanh toán bằng thẻ, chuyển khoản, COD và ví điện tử. 
                             </li>
                             <li>
-                                - Payment
-                            </li>
-                            <li>
-                                - Cash voucher
+                            Voucher: Nhận ưu đãi đặc biệt với voucher tiền mặt. Theo dõi để không bỏ lỡ các ưu đãi mới!
                             </li>
                             
                         </ul>

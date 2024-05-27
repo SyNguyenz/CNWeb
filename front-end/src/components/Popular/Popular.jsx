@@ -118,7 +118,7 @@ function Popular({ category }) {
         <div className='popular'>
           <div className="product-list-title">
             <Link to={`/${category.toLowerCase()}`} className='title'>
-                <h2>{title}</h2>
+                <h2>{title} - HOT DEAL</h2>
             </Link>
           </div>
           <div className="product-list">

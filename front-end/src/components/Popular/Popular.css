@@ -20,11 +20,16 @@
 }
 
 .popular .product-list-title .title h2 {
-    font-size: 100%;
-    color: var(--main-color2);
+    font-size: 30px;
+    color: black;
+    margin: 30px;
+    transition: color 0.3s; 
+
 
 }   
-
+.popular .product-list-title .title h2:hover {
+    color: var(--main-color2);
+}
 .popular .swiper-container {
     padding: 0.5rem !important;
     overflow-x: hidden;
@@ -37,8 +42,9 @@
 
 .product-list-swiper .swiper-container .swiper-wrapper .swiper-slide {
     border-radius: 15px;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, .1), 0 2px 6px 2px rgba(60, 64, 67, .15);
     height: auto;
+    box-shadow: 0 1px 2px 0 rgba(22, 72, 180, 0.1), 0 2px 6px 2px rgba(32, 80, 200, 0.15);
+
 }
 
 

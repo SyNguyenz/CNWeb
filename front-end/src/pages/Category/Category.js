@@ -218,7 +218,7 @@ function Category(props) {
             20 - 30 triệu
           </a>
           <a
-            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 && activeFilter.max === 10000000000 ? 'active' : ''}`}
+            className={`btn-filter button__sort ${activeFilter && activeFilter.min === 30000000 && activeFilter.max === 1000000000 ? 'active' : ''}`}
             onClick={() => filterByPriceRange(30000000, 1000000000)}
           >
             <div className="filter-icon">
