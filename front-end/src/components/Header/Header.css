@@ -151,6 +151,8 @@ padding: 4px 0 4px 8px;
   background-color: transparent;
   display: flex;
   width: 60px;
+  color:#fff;
+  border-color: transparent;
 }
 .notification-icon:hover{
   background-color: transparent;
