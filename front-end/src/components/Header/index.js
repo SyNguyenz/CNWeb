@@ -15,6 +15,10 @@ import useSignalR from "../useSignalR/useSignalR";
 
 
 function Header() {
+    useEffect(() => {
+        const role = localStorage.getItem("role");
+        if(role === "admin") window.location.href = "/admin";
+      });
     const [isMenu, setIsMenu] = useState(false);
     const { isLoggedIn, user, logout } = useContext(AuthContext);
     const [isRead, setIsRead] = useState(true); 
@@ -31,7 +35,7 @@ function Header() {
         setVisible(false); 
         setIsRead(false);
       };
-      useSignalR(showMessage);
+      useSignalR(showMessage, '');
     const handleNewMessage = () => {
     //khi có thông báo mới thì setIsRead(false) để hiện dấu chấm đỏ
     setIsRead(true);

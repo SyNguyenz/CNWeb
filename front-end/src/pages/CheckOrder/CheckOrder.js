@@ -26,15 +26,15 @@ const CheckOrder = ({ id }) => {
     }, [id]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div style={{paddingTop: "200px"}}>Loading...</div>;
     }
 
     if (error) {
-        return <div>Error: {error.message}</div>;
+        return <div style={{paddingTop: "200px"}}>Error: {error.message}</div>;
     }
 
     if (!orders || orders.length === 0) {
-        return <div>Bạn chưa mua đơn hàng nào.</div>;
+        return <div style={{paddingTop: "200px"}}>Bạn chưa mua đơn hàng nào.</div>;
     }
 
     const getOrderStatus = (status) => {

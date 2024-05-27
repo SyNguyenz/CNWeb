@@ -18,6 +18,7 @@ namespace backend.Data
             PhoneNumber = string.Empty;
             DiaChi = string.Empty;
             Password = string.Empty;
+            ConnectionId = string.Empty;
         }
     }
 }

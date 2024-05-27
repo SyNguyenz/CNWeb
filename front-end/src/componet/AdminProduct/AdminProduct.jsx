@@ -216,7 +216,7 @@ const AdminProduct = () => {
     },
     {
       title: "Đánh giá",
-      dataIndex: "rating",
+      dataIndex: "ratings",
       key: "rating",
       sorter: (a, b) => a.rating - b.rating,
       sortDirections: ['descend', 'ascend'],

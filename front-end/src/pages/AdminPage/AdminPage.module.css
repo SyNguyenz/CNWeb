@@ -41,3 +41,30 @@
   width: calc(100% - 150px);
   padding: 8px 10px;
 }
+
+.notification-icon{
+  background-color: transparent;
+  display: flex;
+  width: 60px;
+}
+
+.icon-noti{
+  height: 20px;
+}
+
+.unread-dot{
+  color: white;
+}
+
+.tooltip-noti {
+  background: var(--color8);
+  color: #444;
+  padding: 20px;
+  border-radius: 8px;
+  position: absolute;
+  top: 5px; 
+  left: -50px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+}

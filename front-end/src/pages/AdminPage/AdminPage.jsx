@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { UserOutlined, ProductOutlined } from "@ant-design/icons";
-import { Avatar, Button, Menu } from "antd";
+import { Avatar, Button, Flex, Menu } from "antd";
 import AdminUser from "../../componet/AdminUser/AdminUser";
 import AdminProduct from "../../componet/AdminProduct/AdminProduct";
 import boxImage from "./box.png";
 import AdminOrder from "../../componet/AdminOrder/AdminOrder";
 import styles from "./AdminPage.module.css";
+import useSignalR from "../../components/useSignalR/useSignalR";
+import { faBell } from '@fortawesome/free-solid-svg-icons';
+import 'tippy.js/dist/tippy.css';
+import Tippy from '@tippyjs/react/headless';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const logout = () => {
   console.log("User logged out");
@@ -32,7 +37,24 @@ const Admin = () => {
   useEffect(() => {
     const role = localStorage.getItem("role");
     if(role !== "admin") window.location.href = "/";
-  })
+  });
+  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isRead, setIsRead] = useState(true); 
+  const showMessage = (msg) => {
+      setMessage(msg);
+      setVisible(false); 
+      setIsRead(false);
+    };
+    useSignalR(showMessage, "admin");
+  const handleNewMessage = () => {
+  //khi có thông báo mới thì setIsRead(false) để hiện dấu chấm đỏ
+  setIsRead(true);
+  if(message !== ''){
+      setVisible(!visible);
+  }
+};
+
   const [keySelected, setKeySelected] = useState("products");
 
   const handleOnClick = ({ item, key, keyPath, domEvent }) => {
@@ -56,7 +78,27 @@ const Admin = () => {
     <>
       <header className={styles.header}>
         <h1 className={styles.headerTitle}>Admin</h1>
-        <Button ghost onClick={() => logout()}>Đăng xuất</Button>
+        <div style={{display: "flex", alignItems: "center"}}>
+          <div className="notification-icon">
+            <Tippy
+              interactive={true}
+              visible={visible}
+              placement="bottom"
+              onClickOutside={() => setVisible(false)}
+              render={attrs => (
+                <div className="tooltip-noti" {...attrs}>
+                  {message}
+                </div>
+              )}
+            >
+              <button onClick={handleNewMessage} className="notification-icon">
+                <FontAwesomeIcon icon={faBell} className='icon-noti'/>
+                {!isRead && <div className="unread-dot"> * </div>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
+              </button>
+            </Tippy>
+          </div>
+          <Button ghost onClick={() => logout()}>Đăng xuất</Button>
+        </div>
       </header>
       <div style={{ display: "flex", paddingTop: "60px" }}>
         <div className={styles.menuContainer}>

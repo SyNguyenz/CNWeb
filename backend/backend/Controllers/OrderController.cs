@@ -147,6 +147,7 @@ namespace backend.Controllers
                 _context.SaveChanges();
             }
             await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "New Order Created");
+            await _hubContext.Clients.Group("admin").SendAsync("ReceiveMessage", user.UserName + " just added a order");
 
             return Ok(order);
         }

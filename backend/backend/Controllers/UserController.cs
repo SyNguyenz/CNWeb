@@ -61,30 +61,36 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string? phone)
+        public async Task<IActionResult> Get(string? id)
         {
             // Kiểm tra xem phone có giá trị không và có đúng định dạng không
-            if (!string.IsNullOrEmpty(phone))
+            if (!string.IsNullOrEmpty(id))
             {
-                // Kiểm tra độ dài của phone và xác định rằng nó phải có 10 ký tự và tất cả là số
-                if (phone.Length == 10 && phone.All(char.IsDigit) && phone.StartsWith('0'))
+                var user = await _userManager.FindByIdAsync(id);
+                
+                if (user == null)
                 {
-                    var user = _context.Users.FirstOrDefault(u => u.PhoneNumber == phone);
-                    if (user == null)
-                    {
-                        return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy user với số điện thoại đã cung cấp
-                    }
-                    return Ok(user); // Trả về user tìm thấy
+                    return NotFound(); // Trả về mã lỗi 404 nếu không tìm thấy user với số điện thoại đã cung cấp
                 }
-                else
-                {
-                    return BadRequest(); // Trả về mã lỗi 400 nếu số điện thoại không đúng định dạng
-                }
+                var role = await _userManager.GetRolesAsync(user);
+                if (role[0] == "admin") { return BadRequest("User is admin"); }
+                return Ok(user); // Trả về user tìm thấy
             }
             else
             {
-                var users = _context.Users.ToList();
-                return Ok(users); // Trả về toàn bộ danh sách users nếu không có số điện thoại được cung cấp
+                var allUsers = _userManager.Users.ToList();
+                var usersWithoutAdminRole = new List<User>();
+
+                foreach (var user in allUsers)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    if (!roles.Contains("admin"))
+                    {
+                        usersWithoutAdminRole.Add(user);
+                    }
+                }
+
+                return Ok(usersWithoutAdminRole);
             }
         }
 
