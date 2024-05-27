@@ -63,10 +63,10 @@ const AdminOrder = () => {
         (order) => order.maDonHang !== record.maDonHang
       );
       setOrders(updatedOrders);
-      message.success(`Đã xóa đơn hàng của: ${record.user.userName}`);
+      message.success(`Đã hủy đơn hàng của: ${record.user.userName}`);
     } catch (error) {
       console.error(error);
-      message.error(`Xóa đơn hàng thất bại: Mã ${record.maDonHang}`);
+      message.error(`Hủy đơn hàng thất bại: Mã ${record.maDonHang}`);
     }
   };
 

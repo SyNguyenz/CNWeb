@@ -187,13 +187,19 @@ const OrderDetails = ({ order, handleRefresh }) => {
           </Tag>
         );
         break;
-      default:
+      case 0:
         tag = (
           <Tag bordered={false} color="processing" style={tagStyle}>
             Đang chuẩn bị
           </Tag>
         );
         break;
+      default:
+        tag = (
+          <Tag bordered={false} color="processing" style={tagStyle}>
+            Đơn hàng đã bị hủy
+          </Tag>
+        );
     }
     return tag;
   };

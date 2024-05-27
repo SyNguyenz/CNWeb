@@ -232,10 +232,9 @@ namespace backend.Controllers
                     foreach (var details in order.ChiTietDonHangs)
                     {
                         details.Variant.quantity += details.SoLuong;
-                        _context.ChiTietDonHangs.Remove(details);
                     }
-
-                    _context.DonHangs.Remove(order);
+                    order.TinhTrangDonHang = -1;
+                    
                     _context.SaveChanges();
 
                     transaction.Commit();

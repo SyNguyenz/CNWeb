@@ -45,6 +45,7 @@ function Header() {
   };
 
 
+console.log(isLoggedIn)
     return (
         <div className="header">
             <div className="menu">
@@ -80,8 +81,7 @@ function Header() {
                 <div className="menu-list">
                     <Search />
                 </div>
-                
-                <Link to="/check" className="about-delivery-tracking">
+                <Link to="/check" className="about-delivery-tracking" >
                     <div className="box-icon">
                         <div className='my-icon'>
                             <FontAwesomeIcon icon={faTruckField} className='fa-h-24px' />
@@ -89,7 +89,7 @@ function Header() {
                     </div>
                     <div className="box-content">
                         <p className="title-y">
-                           Đơn hàng
+                        Đơn hàng
                         </p>
                     </div>
                 </Link>

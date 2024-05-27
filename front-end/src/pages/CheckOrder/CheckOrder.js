@@ -9,6 +9,7 @@ const CheckOrder = ({ id }) => {
     const [orders, setOrders] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cancelState, setCancelState] = useState("Hủy đơn hàng")
     const formatDateTime = (isoDate) => {
         const date = new Date(isoDate);
         const day = date.getDate().toString().padStart(2, '0');
@@ -26,13 +27,21 @@ const CheckOrder = ({ id }) => {
       }
 
 
-      const handleCancelOrder = (orderId) => {
-        /////
-        /////
-
+      const handleCancelOrder = async (order) => {
+        try{
+            await AllApi.deleteOrder(order.maDonHang);
+            alert("Đơn hàng của bạn đã được hủy");
+            window.location.refresh();
+        }
+        catch(error){
+            console.log(error)
+        }
     };
 
     useEffect(() => {
+        if(localStorage.getItem("user") === null) {
+            window.location.href = "/login";
+        }
         const fetchOrders = async () => {
             try {
                 const user = await AllApi.getUserInfo();
@@ -81,7 +90,7 @@ const CheckOrder = ({ id }) => {
             case 2:
                 return "Đơn hàng đã được giao";
             default:
-                return "Trạng thái không xác định";
+                return "Đơn hàng đã bị hủy";
         }
     };
 
@@ -131,8 +140,8 @@ const CheckOrder = ({ id }) => {
                         
                         <p><strong>Tổng số tiền:</strong> {formatPrice(totalAmount)} ({order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"})</p>
                         <p className='link-to'><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
-                        {order.tinhTrangDonHang !== 2 && (
-                            <button className='btn-cancel' onClick={handleCancelOrder}>Huỷ đơn hàng</button>
+                        {order.tinhTrangDonHang === 0 && (
+                            <button className='btn-cancel' onClick={handleCancelOrder(order)}>Hủy đơn hàng</button>
                         )}
 
                     </div>
