@@ -25,6 +25,13 @@ const CheckOrder = ({ id }) => {
         return priceString.replace(/\s/g, '');
       }
 
+
+      const handleCancelOrder = (orderId) => {
+        /////
+        /////
+
+    };
+
     useEffect(() => {
         const fetchOrders = async () => {
             try {
@@ -124,8 +131,9 @@ const CheckOrder = ({ id }) => {
                         
                         <p><strong>Tổng số tiền:</strong> {formatPrice(totalAmount)} ({order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"})</p>
                         <p className='link-to'><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
-
-
+                        {order.tinhTrangDonHang === 0 && (
+                            <button className='btn-cancel' onClick={handleCancelOrder}>Huỷ đơn hàng</button>
+                        )}
 
                     </div>
                 );

@@ -67,7 +67,7 @@ input {
     margin-top: 10px;
 }
 
-#button {
+button {
     margin-top: 25px;
     background-color: rgb(255, 81, 0);
     color: #fff;
@@ -79,7 +79,7 @@ input {
     width: 170px;
     margin-left: 125px;
 }
-#button:hover{
+button:hover{
     background-color: #f6861d;
 }
 

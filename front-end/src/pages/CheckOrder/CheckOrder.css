@@ -74,6 +74,24 @@
     font-family:'Futura-Regular', sans-serif;
     margin-top: 10px;
 }
+.btn-y:hover {
+    background-color: var(--color1); 
+}
+.btn-cancel{
+    background-color: var(--bg-color);
+    color: #444;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: background-color 0.3s ease; 
+}
+.btn-cancel:hover {
+    background-color: var(--color4); 
+}
 .link-to{
     color: var(--main-color1)
 }
