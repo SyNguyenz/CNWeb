@@ -62,7 +62,7 @@ const CheckOrder = ({ id }) => {
                         <ul>
                             {order.chiTietDonHangs.map((item) => (
                                 <li key={item.id} className="order-item">
-                                    <img src={item.variant.hangHoa.imageUrl} alt={item.variant.hangHoa.tenHangHoa} className="product-image" />
+                                    <img src={item.variant.image} alt={item.variant.hangHoa.tenHangHoa} className="product-image" />
                                     <div className="product-details">
                                         <p><strong>Tên sản phẩm:</strong> {item.variant.hangHoa.tenHangHoa}</p>
                                         <p><strong>Màu sắc:</strong> {item.variant.color}</p>

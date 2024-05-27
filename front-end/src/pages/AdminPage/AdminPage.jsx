@@ -7,7 +7,7 @@ import boxImage from "./box.png";
 import AdminOrder from "../../componet/AdminOrder/AdminOrder";
 import styles from "./AdminPage.module.css";
 import useSignalR from "../../components/useSignalR/useSignalR";
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faComment } from '@fortawesome/free-solid-svg-icons';
 import 'tippy.js/dist/tippy.css';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -93,7 +93,7 @@ const Admin = () => {
             >
               <button onClick={handleNewMessage} className="notification-icon">
                 <FontAwesomeIcon icon={faBell} className='icon-noti'/>
-                {!isRead && <div className="unread-dot"> * </div>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
+                {!isRead && <FontAwesomeIcon icon={faComment} className="unread-dot"/>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
               </button>
             </Tippy>
           </div>

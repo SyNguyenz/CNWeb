@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Modal, Space, Table, message, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, DeleteFilled, ExclamationCircleFilled } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import OrderDetails from "./OrderDetails";
 import AllApi from '../../api/api'
@@ -28,6 +28,31 @@ const AdminOrder = () => {
 
   const onRefresh = () => {
     setRefresh(prev => !prev);
+  };
+  const deleteOrder = async (record) => {
+    try {
+      await AllApi.deleteOrder(record.maDonHang);
+  
+      const updatedOrders = orders.filter(
+        (order) => order.maDonHang !== record.maDonHang
+      );
+      setOrders(updatedOrders);
+      message.success(`Đã xóa đơn hàng của: ${record.user.userName}`);
+    } catch (error) {
+      console.error(error);
+      message.error(`Xóa đơn hàng thất bại: Mã ${record.maDonHang}`);
+    }
+  };
+  const showDeleteConfirm = (order) => {
+    confirm({
+      title: `Xác nhận xóa đơn hàng của ${order.user.userName}!`,
+      icon: <ExclamationCircleFilled />,
+      content: `Mã đơn hang: ${order.maDonHang}`,
+      onOk() {
+        deleteOrder(order);
+      },
+      onCancel() {},
+    });
   };
 
   const [searchText, setSearchText] = useState("");
@@ -189,6 +214,23 @@ const AdminOrder = () => {
       ellipsis: true,
       sorter: (a, b) => a.tinhTrangDonHang - b.tinhTrangDonHang,
       sortDirections: ["descend", "ascend"],
+    },
+    {
+      width: 62,
+      render: (_, record) => (
+        <Button
+          style={{transform: "scale(1.5,1.5)"}}
+          type="text"
+          size="small"
+          shape="circle"
+          danger
+          icon={<DeleteFilled />}
+          onClick={(e) => {
+            e.stopPropagation();
+            showDeleteConfirm(record);
+          }}
+        />
+      ),
     },
   ];
   return (

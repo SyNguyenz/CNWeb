@@ -64,7 +64,9 @@ class AllApi {
     getOrder(id) {
         return axios.get(base_url + 'Order/UserId' + id);
     }
- 
+    deleteOrder(id){
+        return axios.delete(base_url + 'Order', id)
+    }
 }
 const apiInstance = new AllApi();
 export default apiInstance;

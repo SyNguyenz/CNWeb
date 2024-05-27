@@ -60,6 +60,7 @@ namespace backend.Controllers
             });
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public async Task<IActionResult> Get(string? id)
         {
