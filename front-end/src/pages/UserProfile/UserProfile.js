@@ -70,11 +70,11 @@ const UserProfile = () => {
     };
 
     if (isLoading) {
-        return <p>Đang tải thông tin người dùng...</p>;
+        return <div style={{paddingTop: "200px",marginLeft:"600px", marginBottom:"200px",fontSize:"25px"}}>Loading...</div>;
     }
 
     if (!user) {
-        return <p>Bạn chưa đăng nhập.</p>;
+        return <div style={{paddingTop: "200px",marginLeft:"600px", marginBottom:"200px",fontSize:"25px"}}>Bạn chưa đăng nhập!</div>;
     }
 
     return (
