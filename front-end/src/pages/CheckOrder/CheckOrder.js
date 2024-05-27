@@ -26,15 +26,16 @@ const CheckOrder = ({ id }) => {
     }, [id]);
 
     if (loading) {
-        return <div style={{paddingTop: "200px"}}>Loading...</div>;
+        return <div style={{paddingTop: "200px",marginLeft:"600px", marginBottom:"200px",fontSize:"25px"}}>Loading...</div>;
     }
 
     if (error) {
-        return <div style={{paddingTop: "200px"}}>Error: {error.message}</div>;
+        return <div style={{paddingTop: "200px",marginLeft:"600px", marginBottom:"200px",fontSize:"25px"}}>Error: {error.message}</div>;
     }
 
     if (!orders || orders.length === 0) {
-        return <div style={{paddingTop: "200px"}}>Bạn chưa mua đơn hàng nào.</div>;
+       
+        return <div style={{paddingTop: "200px",marginLeft:"600px", marginBottom:"200px",fontSize:"25px"}}>Bạn chưa mua đơn hàng nào.</div>;
     }
 
     const getOrderStatus = (status) => {
@@ -62,7 +63,7 @@ const CheckOrder = ({ id }) => {
                         <ul>
                             {order.chiTietDonHangs.map((item) => (
                                 <li key={item.id} className="order-item">
-                                    <img src={item.variant.hangHoa.imageUrl} alt={item.variant.hangHoa.tenHangHoa} className="product-image" />
+                                    <img src={item.variant.image} alt={item.variant.hangHoa.tenHangHoa} className="product-image" />
                                     <div className="product-details">
                                         <p><strong>Tên sản phẩm:</strong> {item.variant.hangHoa.tenHangHoa}</p>
                                         <p><strong>Màu sắc:</strong> {item.variant.color}</p>

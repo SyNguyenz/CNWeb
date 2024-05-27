@@ -10,7 +10,7 @@ import Tippy from '@tippyjs/react/headless';
 import MenuBar from "../MenuBar/MenuBar";
 import 'tippy.js/dist/tippy.css';
 import { AuthContext } from "../AuthContext/AuthContext";
-import { faBell } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faComment } from '@fortawesome/free-solid-svg-icons';
 import useSignalR from "../useSignalR/useSignalR";
 
 
@@ -140,7 +140,7 @@ function Header() {
                       >
                         <button onClick={handleNewMessage} className="notification-icon">
                           <FontAwesomeIcon icon={faBell} className='icon-noti'/>
-                          {!isRead && <div className="unread-dot"> * </div>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
+                          {!isRead && <FontAwesomeIcon icon={faComment} className="unread-dot"/>} {/* Hiển thị chấm đỏ nếu thông báo chưa đọc */}
                         </button>
                       </Tippy>
                     </div>

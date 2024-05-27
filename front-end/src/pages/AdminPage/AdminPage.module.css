@@ -54,6 +54,8 @@
 
 .unread-dot{
   color: white;
+  width: 50%;
+  display: flex;
 }
 
 .tooltip-noti {
