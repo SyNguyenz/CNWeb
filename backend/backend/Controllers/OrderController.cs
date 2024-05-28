@@ -212,37 +212,31 @@ namespace backend.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteOrder(int OrderId)
         {
-                try
-                {
-                    var order = _context.DonHangs
-                    .Include(o => o.ChiTietDonHangs)
-                    .ThenInclude(od => od.Variant)
-                    .FirstOrDefault(o => o.MaDonHang == OrderId);
-                    if (order == null)
-                    {
-                        return NotFound();
-                    }
-                    var user = await _userManager.FindByIdAsync(order.UserId);
-                    if (user == null)
-                    {
-                        return BadRequest("User not exist");
-                    }
-                    foreach (var details in order.ChiTietDonHangs)
-                    {
-                        details.Variant.quantity += details.SoLuong;
-                    }
-                    order.TinhTrangDonHang = -1;
-                    
-                    _context.SaveChanges();
-
-                    await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your order has been canceled");
-                    return Ok();
-                }
-                catch (Exception)
-                {
-                    return StatusCode(500, "An error occurred while deleting the order.");
-                }
+            var order = _context.DonHangs
+            .Include(o => o.ChiTietDonHangs)
+            .ThenInclude(od => od.Variant)
+            .FirstOrDefault(o => o.MaDonHang == OrderId);
+            if (order == null)
+            {
+                return NotFound();
             }
-             
+            var user = await _userManager.FindByIdAsync(order.UserId);
+            if (user == null)
+            {
+                return BadRequest("User not exist");
+            }
+            foreach (var details in order.ChiTietDonHangs)
+            {
+                details.Variant.quantity += details.SoLuong;
+            }
+            order.TinhTrangDonHang = -1;
+                    
+            _context.SaveChanges();
+
+            await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your order has been canceled");
+            return Ok();
+                
         }
+             
     }
+}
