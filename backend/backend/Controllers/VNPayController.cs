@@ -18,10 +18,10 @@ namespace backend.Controllers
             _hubContext = hubContext;
         }
         public string url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        //public string returnUrl = "https://localhost:7006/api/VNpayAPI/paymentConfirm";
-        public string returnUrl = "https://cnweb.onrender.com/api/VNpayAPI/paymentConfirm";
-        //public string front_end = "http://localhost:3000";
-        public string front_end = "https://cn-web-plum.vercel.app";
+        public string returnUrl = "https://localhost:7006/api/VNpayAPI/paymentConfirm";
+        //public string returnUrl = "https://cnweb.onrender.com/api/VNpayAPI/paymentConfirm";
+        public string front_end = "http://localhost:3000";
+        //public string front_end = "https://cn-web-plum.vercel.app";
         public string tmnCode = "ZNKSLMUQ";
         public string hashSecret = "ZTZMJ6B33YLMZPP0PNUXIN6FE7NCF2RT";
         [HttpGet("/api/VNPayAPI/{amount}&{infor}&{orderinfor}")]
