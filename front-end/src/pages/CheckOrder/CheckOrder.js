@@ -142,6 +142,9 @@ const CheckOrder = ({ id }) => {
                         
                         <p><strong>Tổng số tiền:</strong> {formatPrice(totalAmount)} ({order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"})</p>
                         <p className='link-to'><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
+                        {order.tinhTrangDonHang === 0 && (
+                            <button className='btn-cancel' onClick={() => handleCancelOrder(order)}>Hủy đơn hàng</button>
+                        )}
 
                     </div>
                 );
