@@ -37,6 +37,7 @@ const Admin = () => {
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role !== "admin") window.location.href = "/";
+    
   });
   const [visible, setVisible] = useState(false);
   const [message, setMessage] = useState("");

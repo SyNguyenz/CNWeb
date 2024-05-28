@@ -13,7 +13,7 @@ import {
   Image,
 } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import { deleteProductAPI, addProductAPI, getProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
+import { deleteProductAPI, addProductAPI, getProductAPI, updateProductAPI } from "./API"; // Giả sử bạn có một hàm API để cập nhật sản phẩm
 import ProductDetails from "./ProductDetails";
 
 const EditProduct = ({ product, setModalChild, handleRefresh }) => {
@@ -69,12 +69,10 @@ const EditProduct = ({ product, setModalChild, handleRefresh }) => {
         });
       });
 
-      await deleteProductAPI(product.id);
-      await addProductAPI(data);
+      await updateProductAPI(data.maHangHoa, data);
       message.success("Sản phẩm được cập nhật thành công!");
       handleRefresh();      
-      await getProductAPI(product.id);
-      setModalChild(<ProductDetails product={product} setModalChild={setModalChild} />);
+      setModalChild(null);
     } catch (e) {
       message.error(e.message);
     }
