@@ -212,8 +212,6 @@ namespace backend.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteOrder(int OrderId)
         {
-            using (var transaction = _context.Database.BeginTransaction())
-            {
                 try
                 {
                     var order = _context.DonHangs
@@ -237,18 +235,14 @@ namespace backend.Controllers
                     
                     _context.SaveChanges();
 
-                    transaction.Commit();
                     await _hubContext.Clients.Client(user.ConnectionId).SendAsync("ReceiveMessage", "Your order has been canceled");
                     return Ok();
                 }
                 catch (Exception)
                 {
-                    // Rollback the transaction in case of an error
-                    transaction.Rollback();
                     return StatusCode(500, "An error occurred while deleting the order.");
                 }
             }
              
         }
     }
-}
