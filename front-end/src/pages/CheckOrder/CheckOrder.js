@@ -29,9 +29,11 @@ const CheckOrder = ({ id }) => {
 
       const handleCancelOrder = async (order) => {
         try{
-            await AllApi.deleteOrder(order.maDonHang);
-            alert("Đơn hàng của bạn đã được hủy");
-            window.location.refresh();
+            const response = await AllApi.deleteOrder(order.maDonHang);
+            if (response.redirected) {
+                window.location.href = response.url.replace('http://', 'https://');
+            }
+            return response.json();
         }
         catch(error){
             console.log(error)
@@ -141,7 +143,7 @@ const CheckOrder = ({ id }) => {
                         <p><strong>Tổng số tiền:</strong> {formatPrice(totalAmount)} ({order.daThanhToan ? "Đã Thanh toán" : "Chưa thanh toán"})</p>
                         <p className='link-to'><strong>Trạng thái:</strong> {getOrderStatus(order.tinhTrangDonHang)}</p>
                         {order.tinhTrangDonHang === 0 && (
-                            <button className='btn-cancel' onClick={handleCancelOrder(order)}>Hủy đơn hàng</button>
+                            <button className='btn-cancel' onClick={() => handleCancelOrder(order)}>Hủy đơn hàng</button>
                         )}
 
                     </div>
