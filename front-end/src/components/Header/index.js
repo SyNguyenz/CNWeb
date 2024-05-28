@@ -107,7 +107,7 @@ console.log(isLoggedIn)
                                     <br />
                                     hàng
                                 </p>
-                                <span className="count">0</span>
+                                <span className="count"></span>
                             </div>        
                         </Link>
                     </div>
